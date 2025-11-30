@@ -1,0 +1,132 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Teenuse Tulemuse Seadistamine",
+        "description": "Seadistage andur, mis kuvab Home Assistant teenuse kutsungi vastust.\n\nValige teenus rippmenüüst või kleepige YAML otse Arendaja tööriistad → Teenused alt.",
+        "data": {
+          "name": "Nimi",
+          "service_action": "Teenuse toiming",
+          "service_data_yaml": "Teenuse andmed (YAML)",
+          "response_data_path": "Vastuse andmete tee",
+          "attribute_name": "Atribuudi nimi",
+          "update_mode": "Uuendusrežiim",
+          "scan_interval": "Küsitlusintervall",
+          "trigger_entity": "Päästiku olem",
+          "trigger_from_state": "Päästik olekust",
+          "trigger_to_state": "Päästik olekusse"
+        },
+        "data_description": {
+          "name": "Sõbralik nimi sellele andurile (nt 'Tibber hinnad')",
+          "service_action": "Valige kutsutav teenus/toiming. Kui kleepite allpool täieliku YAML, tuvastatakse see automaatselt.",
+          "service_data_yaml": "Valikulised teenuse andmed. Saate kleepida täieliku YAML Arendaja tööriistadest - kõik 'data:' all olevad väljad säilitatakse.",
+          "response_data_path": "Valikuline tee andmete eraldamiseks vastusest (nt 'results.0.items'). Jätke tühjaks täieliku vastuse jaoks.",
+          "attribute_name": "Atribuudi nimi, mis sisaldab vastuse andmeid. Vaikimisi on 'data'.",
+          "update_mode": "Kuidas uuendusi käivitatakse: Küsitlus (tsükliline intervalliga), Käsitsi (update_entity teenuse kaudu) või Olemi oleku päästik (kui teine olem muudab olekut).",
+          "scan_interval": "Kui tihti teenust kutsutakse sekundites (ainult Küsitluse režiimis). Minimaalselt 10 sekundit.",
+          "trigger_entity": "Olem, mida jälgida oleku muutuste jaoks (ainult Oleku päästiku režiimis).",
+          "trigger_from_state": "Käivita ainult sellest olekust muutumisel (valikuline). Jätke tühjaks mis tahes eelmise oleku jaoks.",
+          "trigger_to_state": "Käivita ainult sellesse olekusse muutumisel (valikuline). Jätke tühjaks mis tahes uue oleku jaoks."
+        }
+      },
+      "reconfigure": {
+        "title": "Teenuse Tulemuse Ümberseadistamine",
+        "description": "Uuendage teenuse seadistust selle anduri jaoks.",
+        "data": {
+          "name": "Nimi",
+          "service_action": "Teenuse toiming",
+          "service_data_yaml": "Teenuse andmed (YAML)",
+          "response_data_path": "Vastuse andmete tee",
+          "attribute_name": "Atribuudi nimi",
+          "update_mode": "Uuendusrežiim",
+          "scan_interval": "Küsitlusintervall",
+          "trigger_entity": "Päästiku olem",
+          "trigger_from_state": "Päästik olekust",
+          "trigger_to_state": "Päästik olekusse"
+        },
+        "data_description": {
+          "name": "Sõbralik nimi sellele andurile",
+          "service_action": "Valige kutsutav teenus/toiming",
+          "service_data_yaml": "Valikulised teenuse andmed. Saate kleepida täieliku YAML Arendaja tööriistadest - kõik 'data:' all olevad väljad säilitatakse.",
+          "response_data_path": "Valikuline tee andmete eraldamiseks vastusest (nt 'results.0.items'). Jätke tühjaks täieliku vastuse jaoks.",
+          "attribute_name": "Atribuudi nimi, mis sisaldab vastuse andmeid. Vaikimisi on 'data'.",
+          "update_mode": "Kuidas uuendusi käivitatakse: Küsitlus (tsükliline intervalliga), Käsitsi (update_entity teenuse kaudu) või Olemi oleku päästik (kui teine olem muudab olekut).",
+          "scan_interval": "Kui tihti teenust kutsutakse sekundites (ainult Küsitluse režiimis). Minimaalselt 10 sekundit.",
+          "trigger_entity": "Olem, mida jälgida oleku muutuste jaoks (ainult Oleku päästiku režiimis).",
+          "trigger_from_state": "Käivita ainult sellest olekust muutumisel (valikuline). Jätke tühjaks mis tahes eelmise oleku jaoks.",
+          "trigger_to_state": "Käivita ainult sellesse olekusse muutumisel (valikuline). Jätke tühjaks mis tahes uue oleku jaoks."
+        }
+      }
+    },
+    "error": {
+      "service_not_found": "Teenust ei leitud. Kontrollige, et valitud toiming eksisteerib ja integratsioon on laaditud.",
+      "yaml_parse_error": "Vigane YAML süntaks. Kontrollige teenuse andmete vormingut.",
+      "yaml_not_dict": "Teenuse andmed peavad olema YAML sõnaraamat (võtme: väärtuse paarid).",
+      "data_not_dict": "'data' jaotis YAML peab olema sõnaraamat (võtme: väärtuse paarid).",
+      "no_service_selected": "Valige teenuse toiming rippmenüüst või esitage see YAML-is.",
+      "service_call_failed": "Teenuse kutsung ebaõnnestus: {error_message}",
+      "trigger_entity_not_found": "Päästiku olem ei eksisteeri. Valige kehtiv olem.",
+      "invalid_trigger_state": "Määratud päästiku olek pole valitud olemi jaoks kehtiv.",
+      "unknown": "Ilmnes ootamatu viga. Kontrollige logisid üksikasjade saamiseks."
+    },
+    "abort": {
+      "already_configured": "See kirje on juba seadistatud."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Valikute Seadistamine",
+        "description": "Kohandage küsitlusintervalli. Teenuse seadistuse muutmiseks kasutage Ümberseadistamist.",
+        "data": {
+          "scan_interval": "Küsitlusintervall"
+        },
+        "data_description": {
+          "scan_interval": "Kui tihti teenust kutsutakse (sekundites). Minimaalselt 10 sekundit."
+        }
+      }
+    }
+  },
+  "selector": {
+    "update_mode": {
+      "options": {
+        "polling": "Küsitlus (tsükliline)",
+        "manual": "Käsitsi (update_entity)",
+        "state_trigger": "Olemi oleku päästik"
+      }
+    }
+  },
+  "exceptions": {
+    "yaml_parse_error": {
+      "message": "Teenuse andmete YAML parsimine ebaõnnestus: {error}"
+    },
+    "service_not_found": {
+      "message": "Seadistatud teenust '{service}' ei leitud. Integratsioon võib olla eemaldatud või pole laaditud."
+    },
+    "service_call_failed": {
+      "message": "Teenuse '{service}' kutsumine ebaõnnestus: {error}"
+    },
+    "service_temporarily_unavailable": {
+      "message": "Teenus '{service}' on ajutiselt kättesaamatu. Proovitakse automaatselt uuesti."
+    },
+    "response_path_invalid": {
+      "message": "Seadistatud vastuse tee '{path}' ei eksisteeri teenuse vastuses."
+    },
+    "trigger_entity_unavailable": {
+      "message": "Päästiku olem '{entity}' pole saadaval."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "service_result": {
+        "name": "Teenuse Tulemus",
+        "state": {
+          "ok": "OK",
+          "error": "Viga",
+          "unavailable": "Pole saadaval",
+          "retrying": "Proovitakse uuesti"
+        }
+      }
+    }
+  }
+}
