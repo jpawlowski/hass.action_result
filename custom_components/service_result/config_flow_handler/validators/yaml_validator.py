@@ -78,9 +78,10 @@ def parse_service_yaml(
     entry_id: str | None = None
     cleaned_data: dict[str, Any] = {}
 
-    # Check if this looks like full Developer Tools YAML
+    # Check if this looks like full Developer Tools YAML format
+    # Supports both modern "action:" key and legacy "service:" key
+    # When both are present, "action" takes precedence (modern syntax preferred)
     if "action" in parsed or "service" in parsed:
-        # Extract action (prefer "action" over "service" for modern syntax)
         action = parsed.get("action") or parsed.get("service")
 
         # Extract data section
@@ -91,8 +92,8 @@ def parse_service_yaml(
             if "entry_id" in cleaned_data:
                 entry_id = cleaned_data.pop("entry_id")
         else:
-            # data section is not a dict
-            return None, action, None, "yaml_not_dict"
+            # data section is not a dict - use more specific error
+            return None, action, None, "data_not_dict"
     else:
         # This is just plain service data
         cleaned_data = dict(parsed)

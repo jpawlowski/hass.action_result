@@ -178,6 +178,12 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
         2. Optionally paste full YAML from Developer Tools
         3. The system auto-extracts action and cleans the data
 
+        Action Precedence Logic:
+        - If user pastes YAML containing "action:" key, that takes priority
+        - The dropdown is automatically updated to match the YAML action
+        - This allows users who paste full YAML to skip dropdown selection
+        - If no action in YAML, the dropdown selection is used
+
         Args:
             user_input: The user input from the config flow form, or None for initial display.
 

@@ -34,6 +34,7 @@
       "service_not_found": "Service not found. Verify the selected action exists.",
       "yaml_parse_error": "Invalid YAML syntax. Please check the service data.",
       "yaml_not_dict": "Service data must be a YAML dictionary (key: value pairs).",
+      "data_not_dict": "The 'data' section in the YAML must be a dictionary (key: value pairs).",
       "no_service_selected": "Please select a service action from the dropdown or provide it in the YAML.",
       "service_call_failed": "Failed to call the service. Please verify the service works in Developer Tools first.",
       "unknown": "An unknown error occurred."
