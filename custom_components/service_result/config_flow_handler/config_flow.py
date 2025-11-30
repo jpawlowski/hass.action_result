@@ -24,10 +24,13 @@ import yaml
 from custom_components.service_result.config_flow_handler.schemas import get_reconfigure_schema, get_user_schema
 from custom_components.service_result.config_flow_handler.validators import dict_to_yaml, parse_service_yaml
 from custom_components.service_result.const import (
+    CONF_ATTRIBUTE_NAME,
     CONF_NAME,
+    CONF_RESPONSE_DATA_PATH,
     CONF_SCAN_INTERVAL,
     CONF_SERVICE_ACTION,
     CONF_SERVICE_DATA_YAML,
+    DEFAULT_ATTRIBUTE_NAME,
     DEFAULT_SCAN_INTERVAL_SECONDS,
     DOMAIN,
     LOGGER,
@@ -247,6 +250,8 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
             if not errors:
                 # Create the entry
                 name = user_input.get(CONF_NAME, f"{domain}.{service_name}")
+                response_path = user_input.get(CONF_RESPONSE_DATA_PATH, "")
+                attribute_name = user_input.get(CONF_ATTRIBUTE_NAME, DEFAULT_ATTRIBUTE_NAME)
 
                 return self.async_create_entry(
                     title=name,
@@ -254,6 +259,8 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
                         CONF_NAME: name,
                         CONF_SERVICE_ACTION: action_selector_data,
                         CONF_SERVICE_DATA_YAML: updated_input.get(CONF_SERVICE_DATA_YAML, clean_yaml),
+                        CONF_RESPONSE_DATA_PATH: response_path,
+                        CONF_ATTRIBUTE_NAME: attribute_name,
                     },
                     options={
                         CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL_SECONDS,
@@ -341,6 +348,8 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
 
             if not errors:
                 name = user_input.get(CONF_NAME, f"{domain}.{service_name}")
+                response_path = user_input.get(CONF_RESPONSE_DATA_PATH, "")
+                attribute_name = user_input.get(CONF_ATTRIBUTE_NAME, DEFAULT_ATTRIBUTE_NAME)
 
                 return self.async_update_reload_and_abort(
                     entry,
@@ -348,6 +357,8 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
                         CONF_NAME: name,
                         CONF_SERVICE_ACTION: action_selector_data,
                         CONF_SERVICE_DATA_YAML: updated_input.get(CONF_SERVICE_DATA_YAML, clean_yaml),
+                        CONF_RESPONSE_DATA_PATH: response_path,
+                        CONF_ATTRIBUTE_NAME: attribute_name,
                     },
                 )
 

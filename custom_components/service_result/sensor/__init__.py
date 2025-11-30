@@ -9,9 +9,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from custom_components.service_result.const import (
+    CONF_ATTRIBUTE_NAME,
     CONF_NAME,
-    CONF_SERVICE_DOMAIN,
-    CONF_SERVICE_NAME,
+    CONF_RESPONSE_DATA_PATH,
+    CONF_SERVICE_ACTION,
+    DEFAULT_ATTRIBUTE_NAME,
     PARALLEL_UPDATES as PARALLEL_UPDATES,
     STATE_ERROR,
     STATE_OK,
@@ -46,7 +48,7 @@ class ServiceResultSensor(SensorEntity, ServiceResultEntitiesEntity):
     """Sensor entity that exposes service response data.
 
     The main purpose of this sensor is to expose the full service response
-    in the `data` attribute. The state is a simple status indicator (ok/error).
+    in a configurable attribute. The state is a simple status indicator (ok/error).
     """
 
     _attr_has_entity_name = True
@@ -71,6 +73,51 @@ class ServiceResultSensor(SensorEntity, ServiceResultEntitiesEntity):
         # Set translation key for proper naming
         self._attr_translation_key = "service_result"
 
+    def _get_service_info(self) -> str:
+        """Get the service name from config."""
+        service_action = self._entry.data.get(CONF_SERVICE_ACTION)
+        if service_action and isinstance(service_action, dict):
+            return service_action.get("action", "unknown")
+        return "unknown"
+
+    def _extract_data_at_path(self, data: Any, path: str) -> Any:
+        """
+        Extract data from a nested structure using a dot-notation path.
+
+        Args:
+            data: The data structure to traverse.
+            path: A dot-separated path (e.g., "results.0.values" or "data.items").
+
+        Returns:
+            The data at the specified path, or the original data if path is empty/invalid.
+        """
+        if not path or not path.strip():
+            return data
+
+        current = data
+        for key in path.strip().split("."):
+            if current is None:
+                return None
+
+            # Handle list indices
+            if isinstance(current, list):
+                try:
+                    index = int(key)
+                    if 0 <= index < len(current):
+                        current = current[index]
+                    else:
+                        return None
+                except ValueError:
+                    # Key is not a valid index for a list
+                    return None
+            elif isinstance(current, dict):
+                current = current.get(key)
+            else:
+                # Cannot traverse further
+                return None
+
+        return current
+
     @property
     def native_value(self) -> str:
         """Return the state of the sensor.
@@ -90,28 +137,40 @@ class ServiceResultSensor(SensorEntity, ServiceResultEntitiesEntity):
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return additional state attributes.
 
-        The 'data' attribute contains the full service response.
+        The data attribute (with configurable name) contains the service response,
+        optionally extracted from a specific path in the response structure.
         """
         attributes: dict[str, Any] = {}
 
         # Get service info
-        service_domain = self._entry.data.get(CONF_SERVICE_DOMAIN, "")
-        service_name = self._entry.data.get(CONF_SERVICE_NAME, "")
-        attributes["service"] = f"{service_domain}.{service_name}"
+        attributes["service"] = self._get_service_info()
+
+        # Get configuration for data extraction
+        response_path = self._entry.data.get(CONF_RESPONSE_DATA_PATH, "")
+        attribute_name = self._entry.data.get(CONF_ATTRIBUTE_NAME, DEFAULT_ATTRIBUTE_NAME)
 
         if self.coordinator.data:
-            # The main data attribute contains the service response
+            # Get the service response
             response = self.coordinator.data.get("response")
-            attributes["data"] = response
+
+            # Extract data at the specified path (if configured)
+            extracted_data = self._extract_data_at_path(response, response_path)
+
+            # Use the configured attribute name
+            attributes[attribute_name] = extracted_data
 
             # Add metadata
             attributes["last_update"] = self.coordinator.data.get("last_update")
             attributes["success"] = self.coordinator.data.get("success", False)
 
+            # Include path info if configured
+            if response_path:
+                attributes["response_path"] = response_path
+
             if self.coordinator.data.get("error"):
                 attributes["error_message"] = self.coordinator.data.get("error")
         else:
-            attributes["data"] = None
+            attributes[attribute_name] = None
             attributes["success"] = False
 
         # Include error from coordinator if any

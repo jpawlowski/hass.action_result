@@ -13,7 +13,14 @@ from typing import Any
 
 import voluptuous as vol
 
-from custom_components.service_result.const import CONF_NAME, CONF_SERVICE_ACTION, CONF_SERVICE_DATA_YAML
+from custom_components.service_result.const import (
+    CONF_ATTRIBUTE_NAME,
+    CONF_NAME,
+    CONF_RESPONSE_DATA_PATH,
+    CONF_SERVICE_ACTION,
+    CONF_SERVICE_DATA_YAML,
+    DEFAULT_ATTRIBUTE_NAME,
+)
 from homeassistant.helpers import selector
 
 
@@ -53,6 +60,22 @@ def get_user_schema(defaults: Mapping[str, Any] | None = None) -> vol.Schema:
                 selector.TextSelectorConfig(
                     type=selector.TextSelectorType.TEXT,
                     multiline=True,
+                ),
+            ),
+            vol.Optional(
+                CONF_RESPONSE_DATA_PATH,
+                default=defaults.get(CONF_RESPONSE_DATA_PATH, ""),
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(
+                    type=selector.TextSelectorType.TEXT,
+                ),
+            ),
+            vol.Optional(
+                CONF_ATTRIBUTE_NAME,
+                default=defaults.get(CONF_ATTRIBUTE_NAME, DEFAULT_ATTRIBUTE_NAME),
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(
+                    type=selector.TextSelectorType.TEXT,
                 ),
             ),
         },
@@ -99,6 +122,22 @@ def get_reconfigure_schema(current_data: Mapping[str, Any]) -> vol.Schema:
                 selector.TextSelectorConfig(
                     type=selector.TextSelectorType.TEXT,
                     multiline=True,
+                ),
+            ),
+            vol.Optional(
+                CONF_RESPONSE_DATA_PATH,
+                default=current_data.get(CONF_RESPONSE_DATA_PATH, ""),
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(
+                    type=selector.TextSelectorType.TEXT,
+                ),
+            ),
+            vol.Optional(
+                CONF_ATTRIBUTE_NAME,
+                default=current_data.get(CONF_ATTRIBUTE_NAME, DEFAULT_ATTRIBUTE_NAME),
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(
+                    type=selector.TextSelectorType.TEXT,
                 ),
             ),
         },

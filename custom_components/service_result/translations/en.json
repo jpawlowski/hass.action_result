@@ -7,12 +7,16 @@
         "data": {
           "name": "Name",
           "service_action": "Service Action",
-          "service_data_yaml": "Service Data (YAML)"
+          "service_data_yaml": "Service Data (YAML)",
+          "response_data_path": "Response Data Path",
+          "attribute_name": "Attribute Name"
         },
         "data_description": {
           "name": "A friendly name for this sensor (e.g., 'Tibber Prices')",
           "service_action": "Select the service/action to call. If you paste full YAML below, this will be auto-detected.",
-          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools - redundant parts (action, entry_id) will be cleaned automatically."
+          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools - redundant parts (action, entry_id) will be cleaned automatically.",
+          "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
+          "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'."
         }
       },
       "reconfigure": {
@@ -21,12 +25,16 @@
         "data": {
           "name": "Name",
           "service_action": "Service Action",
-          "service_data_yaml": "Service Data (YAML)"
+          "service_data_yaml": "Service Data (YAML)",
+          "response_data_path": "Response Data Path",
+          "attribute_name": "Attribute Name"
         },
         "data_description": {
           "name": "A friendly name for this sensor",
           "service_action": "Select the service/action to call",
-          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools."
+          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools.",
+          "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
+          "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'."
         }
       }
     },
