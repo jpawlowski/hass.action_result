@@ -23,7 +23,7 @@ from custom_components.service_result.const import (
     STATE_UNAVAILABLE,
 )
 from custom_components.service_result.entity import ServiceResultEntitiesEntity
-from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
 
 if TYPE_CHECKING:
     from custom_components.service_result.coordinator import ServiceResultEntitiesDataUpdateCoordinator
@@ -61,6 +61,8 @@ class ServiceResultSensor(SensorEntity, ServiceResultEntitiesEntity):
 
     _attr_has_entity_name = True
     _attr_icon = "mdi:api"
+    _attr_device_class = SensorDeviceClass.ENUM
+    _attr_options = [STATE_OK, STATE_ERROR, STATE_RETRYING, STATE_UNAVAILABLE]
 
     def __init__(
         self,
