@@ -16,6 +16,7 @@ import yaml
 
 from custom_components.service_result.const import (
     CONF_NAME,
+    CONF_SERVICE_ACTION,
     CONF_SERVICE_DATA_YAML,
     CONF_SERVICE_DOMAIN,
     CONF_SERVICE_NAME,
@@ -55,6 +56,29 @@ class ServiceResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         self.last_success_time: str | None = None
         self.service_response: dict[str, Any] | list[Any] | None = None
 
+    def _get_service_info(self) -> tuple[str, str]:
+        """
+        Extract service domain and name from config entry.
+
+        Supports both new format (service_action) and legacy format
+        (service_domain + service_name).
+
+        Returns:
+            A tuple of (domain, service_name).
+        """
+        # Try new format first
+        service_action = self.config_entry.data.get(CONF_SERVICE_ACTION)
+        if service_action and isinstance(service_action, dict):
+            action = service_action.get("action", "")
+            if action and "." in action:
+                parts = action.split(".", 1)
+                return (parts[0], parts[1])
+
+        # Fall back to legacy format
+        domain = self.config_entry.data.get(CONF_SERVICE_DOMAIN, "")
+        service_name = self.config_entry.data.get(CONF_SERVICE_NAME, "")
+        return (domain, service_name)
+
     async def _async_setup(self) -> None:
         """
         Set up the coordinator.
@@ -62,11 +86,12 @@ class ServiceResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         This method is called automatically during async_config_entry_first_refresh()
         and is the ideal place for one-time initialization tasks.
         """
+        service_domain, service_name = self._get_service_info()
         LOGGER.debug(
             "Coordinator setup complete for %s (service: %s.%s)",
             self.config_entry.entry_id,
-            self.config_entry.data.get(CONF_SERVICE_DOMAIN),
-            self.config_entry.data.get(CONF_SERVICE_NAME),
+            service_domain,
+            service_name,
         )
 
     async def _async_update_data(self) -> dict[str, Any]:
@@ -83,8 +108,7 @@ class ServiceResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         Raises:
             UpdateFailed: If the service call fails.
         """
-        service_domain = self.config_entry.data.get(CONF_SERVICE_DOMAIN, "")
-        service_name = self.config_entry.data.get(CONF_SERVICE_NAME, "")
+        service_domain, service_name = self._get_service_info()
         service_data_yaml = self.config_entry.data.get(CONF_SERVICE_DATA_YAML, "")
         entry_name = self.config_entry.data.get(CONF_NAME, "Unknown")
 

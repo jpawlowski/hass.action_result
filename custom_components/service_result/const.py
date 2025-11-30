@@ -13,10 +13,13 @@ PARALLEL_UPDATES = 1
 
 # Config entry data keys
 CONF_NAME = "name"
-CONF_SERVICE_DOMAIN = "service_domain"
-CONF_SERVICE_NAME = "service_name"
+CONF_SERVICE_ACTION = "service_action"  # New: stores the action selector result
 CONF_SERVICE_DATA_YAML = "service_data_yaml"
 CONF_SCAN_INTERVAL = "scan_interval"
+
+# Legacy config entry data keys (for migration)
+CONF_SERVICE_DOMAIN = "service_domain"
+CONF_SERVICE_NAME = "service_name"
 
 # Default configuration values
 DEFAULT_SCAN_INTERVAL_SECONDS = 300  # 5 minutes

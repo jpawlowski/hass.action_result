@@ -22,11 +22,20 @@ from homeassistant.const import Platform
 import homeassistant.helpers.config_validation as cv
 from homeassistant.loader import async_get_loaded_integration
 
-from .const import CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL_SECONDS, DOMAIN, LOGGER
+from .const import (
+    CONF_SCAN_INTERVAL,
+    CONF_SERVICE_ACTION,
+    CONF_SERVICE_DOMAIN,
+    CONF_SERVICE_NAME,
+    DEFAULT_SCAN_INTERVAL_SECONDS,
+    DOMAIN,
+    LOGGER,
+)
 from .coordinator import ServiceResultEntitiesDataUpdateCoordinator
 from .data import ServiceResultEntitiesData
 
 if TYPE_CHECKING:
+    from homeassistant.config_entries import ConfigEntry
     from homeassistant.core import HomeAssistant
 
     from .data import ServiceResultEntitiesConfigEntry
@@ -55,6 +64,48 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     return True
 
 
+async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
+    """
+    Migrate old config entry to new version.
+
+    This handles migration from VERSION 1 (separate domain/name fields)
+    to VERSION 2 (action selector format).
+
+    Args:
+        hass: The Home Assistant instance.
+        config_entry: The config entry to migrate.
+
+    Returns:
+        True if migration was successful.
+    """
+    LOGGER.debug("Migrating config entry from version %s", config_entry.version)
+
+    if config_entry.version == 1:
+        # Migrate from v1 (service_domain + service_name) to v2 (service_action)
+        old_data = dict(config_entry.data)
+
+        service_domain = old_data.pop(CONF_SERVICE_DOMAIN, "")
+        service_name = old_data.pop(CONF_SERVICE_NAME, "")
+
+        # Build the new action selector format
+        if service_domain and service_name:
+            action_value = f"{service_domain}.{service_name}"
+            old_data[CONF_SERVICE_ACTION] = {"action": action_value}
+
+        hass.config_entries.async_update_entry(
+            config_entry,
+            data=old_data,
+            version=2,
+        )
+
+        LOGGER.info(
+            "Migrated config entry %s from version 1 to version 2",
+            config_entry.entry_id,
+        )
+
+    return True
+
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: ServiceResultEntitiesConfigEntry,
@@ -69,7 +120,7 @@ async def async_setup_entry(
     4. Sets up reload listener for config changes
 
     Data flow in this integration:
-    1. User configures service domain, service name, and YAML data in config flow
+    1. User configures service via action selector and YAML data in config flow
     2. Configuration stored in entry.data
     3. Coordinator calls the configured service with return_response=True
     4. Service response stored in coordinator.data

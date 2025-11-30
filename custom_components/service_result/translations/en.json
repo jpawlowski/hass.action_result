@@ -3,18 +3,16 @@
     "step": {
       "user": {
         "title": "Configure Service Result",
-        "description": "Configure a sensor that exposes the response from a Home Assistant service call. You can copy the service data YAML directly from Developer Tools → Services.",
+        "description": "Configure a sensor that exposes the response from a Home Assistant service call.\n\nSelect a service from the dropdown, or paste YAML directly from Developer Tools → Services.",
         "data": {
           "name": "Name",
-          "service_domain": "Service Domain",
-          "service_name": "Service Name",
+          "service_action": "Service Action",
           "service_data_yaml": "Service Data (YAML)"
         },
         "data_description": {
           "name": "A friendly name for this sensor (e.g., 'Tibber Prices')",
-          "service_domain": "The domain of the service to call (e.g., 'tibber', 'weather')",
-          "service_name": "The name of the service to call (e.g., 'get_price_info')",
-          "service_data_yaml": "Optional YAML data to pass to the service. Copy from Developer Tools → Services."
+          "service_action": "Select the service/action to call. If you paste full YAML below, this will be auto-detected.",
+          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools - redundant parts (action, entry_id) will be cleaned automatically."
         }
       },
       "reconfigure": {
@@ -22,22 +20,22 @@
         "description": "Update the service configuration for this sensor.",
         "data": {
           "name": "Name",
-          "service_domain": "Service Domain",
-          "service_name": "Service Name",
+          "service_action": "Service Action",
           "service_data_yaml": "Service Data (YAML)"
         },
         "data_description": {
           "name": "A friendly name for this sensor",
-          "service_domain": "The domain of the service to call",
-          "service_name": "The name of the service to call",
-          "service_data_yaml": "Optional YAML data to pass to the service"
+          "service_action": "Select the service/action to call",
+          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools."
         }
       }
     },
     "error": {
-      "service_not_found": "Service not found. Verify the domain and service name.",
+      "service_not_found": "Service not found. Verify the selected action exists.",
       "yaml_parse_error": "Invalid YAML syntax. Please check the service data.",
       "yaml_not_dict": "Service data must be a YAML dictionary (key: value pairs).",
+      "no_service_selected": "Please select a service action from the dropdown or provide it in the YAML.",
+      "service_call_failed": "Failed to call the service. Please verify the service works in Developer Tools first.",
       "unknown": "An unknown error occurred."
     },
     "abort": {
