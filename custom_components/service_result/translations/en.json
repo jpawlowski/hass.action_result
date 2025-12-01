@@ -3,18 +3,30 @@
     "step": {
       "user": {
         "title": "Configure Service Result",
-        "description": "Configure a sensor that exposes the response from a Home Assistant service call. You can copy the service data YAML directly from Developer Tools → Services.",
+        "description": "Configure a sensor that exposes the response from a Home Assistant service call.\n\nSelect a service from the dropdown, or paste YAML directly from Developer Tools → Services.",
         "data": {
           "name": "Name",
-          "service_domain": "Service Domain",
-          "service_name": "Service Name",
-          "service_data_yaml": "Service Data (YAML)"
+          "service_action": "Service Action",
+          "service_data_yaml": "Service Data (YAML)",
+          "response_data_path": "Response Data Path",
+          "attribute_name": "Attribute Name",
+          "update_mode": "Update Mode",
+          "scan_interval": "Polling Interval",
+          "trigger_entity": "Trigger Entity",
+          "trigger_from_state": "Trigger From State",
+          "trigger_to_state": "Trigger To State"
         },
         "data_description": {
           "name": "A friendly name for this sensor (e.g., 'Tibber Prices')",
-          "service_domain": "The domain of the service to call (e.g., 'tibber', 'weather')",
-          "service_name": "The name of the service to call (e.g., 'get_price_info')",
-          "service_data_yaml": "Optional YAML data to pass to the service. Copy from Developer Tools → Services."
+          "service_action": "Select the service/action to call. If you paste full YAML below, this will be auto-detected.",
+          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools - all fields under 'data:' are preserved.",
+          "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
+          "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'.",
+          "update_mode": "How to trigger updates: Polling (cyclic at interval), Manual (via update_entity service), or Entity State Trigger (when another entity changes state).",
+          "scan_interval": "How often to call the service in seconds (only for Polling mode). Minimum 10 seconds.",
+          "trigger_entity": "Entity to watch for state changes (only for Entity State Trigger mode).",
+          "trigger_from_state": "Only trigger when changing from this state (optional). Leave empty for any previous state.",
+          "trigger_to_state": "Only trigger when changing to this state (optional). Leave empty for any new state."
         }
       },
       "reconfigure": {
@@ -22,23 +34,40 @@
         "description": "Update the service configuration for this sensor.",
         "data": {
           "name": "Name",
-          "service_domain": "Service Domain",
-          "service_name": "Service Name",
-          "service_data_yaml": "Service Data (YAML)"
+          "service_action": "Service Action",
+          "service_data_yaml": "Service Data (YAML)",
+          "response_data_path": "Response Data Path",
+          "attribute_name": "Attribute Name",
+          "update_mode": "Update Mode",
+          "scan_interval": "Polling Interval",
+          "trigger_entity": "Trigger Entity",
+          "trigger_from_state": "Trigger From State",
+          "trigger_to_state": "Trigger To State"
         },
         "data_description": {
           "name": "A friendly name for this sensor",
-          "service_domain": "The domain of the service to call",
-          "service_name": "The name of the service to call",
-          "service_data_yaml": "Optional YAML data to pass to the service"
+          "service_action": "Select the service/action to call",
+          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools - all fields under 'data:' are preserved.",
+          "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
+          "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'.",
+          "update_mode": "How to trigger updates: Polling (cyclic at interval), Manual (via update_entity service), or Entity State Trigger (when another entity changes state).",
+          "scan_interval": "How often to call the service in seconds (only for Polling mode). Minimum 10 seconds.",
+          "trigger_entity": "Entity to watch for state changes (only for Entity State Trigger mode).",
+          "trigger_from_state": "Only trigger when changing from this state (optional). Leave empty for any previous state.",
+          "trigger_to_state": "Only trigger when changing to this state (optional). Leave empty for any new state."
         }
       }
     },
     "error": {
-      "service_not_found": "Service not found. Verify the domain and service name.",
-      "yaml_parse_error": "Invalid YAML syntax. Please check the service data.",
+      "service_not_found": "Service not found. Verify the selected action exists and the integration is loaded.",
+      "yaml_parse_error": "Invalid YAML syntax. Please check the service data format.",
       "yaml_not_dict": "Service data must be a YAML dictionary (key: value pairs).",
-      "unknown": "An unknown error occurred."
+      "data_not_dict": "The 'data' section in the YAML must be a dictionary (key: value pairs).",
+      "no_service_selected": "Please select a service action from the dropdown or provide it in the YAML.",
+      "service_call_failed": "Service call failed: {error_message}",
+      "trigger_entity_not_found": "The trigger entity does not exist. Please select a valid entity.",
+      "invalid_trigger_state": "The specified trigger state is not valid for the selected entity.",
+      "unknown": "An unexpected error occurred. Please check the logs for details."
     },
     "abort": {
       "already_configured": "This entry is already configured."
@@ -58,21 +87,45 @@
       }
     }
   },
+  "selector": {
+    "update_mode": {
+      "options": {
+        "polling": "Polling (cyclic)",
+        "manual": "Manual (update_entity)",
+        "state_trigger": "Entity State Trigger"
+      }
+    }
+  },
   "exceptions": {
     "yaml_parse_error": {
-      "message": "Failed to parse service data YAML."
+      "message": "Failed to parse service data YAML: {error}"
     },
     "service_not_found": {
-      "message": "The configured service was not found."
+      "message": "The configured service \"{service}\" was not found. The integration may have been removed or is not loaded."
     },
     "service_call_failed": {
-      "message": "Failed to call the configured service."
+      "message": "Failed to call service \"{service}\": {error}"
+    },
+    "service_temporarily_unavailable": {
+      "message": "Service \"{service}\" is temporarily unavailable. Will retry automatically."
+    },
+    "response_path_invalid": {
+      "message": "The configured response path \"{path}\" does not exist in the service response."
+    },
+    "trigger_entity_unavailable": {
+      "message": "The trigger entity \"{entity}\" is unavailable."
     }
   },
   "entity": {
     "sensor": {
       "service_result": {
-        "name": "Service Result"
+        "name": "Service Result",
+        "state": {
+          "ok": "OK",
+          "error": "Error",
+          "unavailable": "Unavailable",
+          "retrying": "Retrying"
+        }
       }
     }
   }
