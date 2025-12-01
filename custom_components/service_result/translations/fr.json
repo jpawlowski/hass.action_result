@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Configurer le résultat du service",
-        "description": "Configure un capteur qui expose la réponse d'un appel de service Home Assistant.\n\nSélectionne un service dans la liste déroulante, ou colle le YAML directement depuis Outils de développement → Services.",
+        "description": "Configure un capteur qui expose la réponse d'un appel de service Home Assistant.\n\nSélectionne et configure une action de service avec l'éditeur visuel ci-dessous.",
         "data": {
           "name": "Nom",
           "service_action": "Action du service",
-          "service_data_yaml": "Données du service (YAML)",
           "response_data_path": "Chemin des données de réponse",
           "attribute_name": "Nom de l'attribut",
           "update_mode": "Mode de mise à jour",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Un nom convivial pour ce capteur (par ex. 'Prix Tibber')",
-          "service_action": "Sélectionne le service/action à appeler. Si tu colles le YAML complet ci-dessous, ceci sera détecté automatiquement.",
-          "service_data_yaml": "Données de service optionnelles. Tu peux coller le YAML complet des Outils de développement - tous les champs sous 'data:' sont préservés.",
+          "service_action": "Sélectionne le service/action à appeler et configure ses paramètres. Utilise 'Afficher YAML' pour coller ou modifier le YAML directement.",
           "response_data_path": "Chemin optionnel pour extraire des données de la réponse (par ex. 'results.0.items'). Laisser vide pour la réponse complète.",
           "attribute_name": "Nom de l'attribut qui contiendra les données de réponse. Par défaut 'data'.",
           "update_mode": "Comment déclencher les mises à jour : Polling (cyclique à intervalle), Manuel (via service update_entity), ou Déclencheur d'état d'entité (quand une autre entité change d'état).",
@@ -31,11 +29,9 @@
       },
       "reconfigure": {
         "title": "Reconfigurer le résultat du service",
-        "description": "Met à jour la configuration du service pour ce capteur.",
+        "description": "Met à jour la configuration du service pour ce capteur.\n\nPour renommer cette entrée, utilise Paramètres → Appareils et services → [entrée] → menu trois points → Renommer.",
         "data": {
-          "name": "Nom",
           "service_action": "Action du service",
-          "service_data_yaml": "Données du service (YAML)",
           "response_data_path": "Chemin des données de réponse",
           "attribute_name": "Nom de l'attribut",
           "update_mode": "Mode de mise à jour",
@@ -45,9 +41,7 @@
           "trigger_to_state": "Déclencher vers l'état"
         },
         "data_description": {
-          "name": "Un nom convivial pour ce capteur",
-          "service_action": "Sélectionne le service/action à appeler",
-          "service_data_yaml": "Données de service optionnelles. Tu peux coller le YAML complet des Outils de développement - tous les champs sous 'data:' sont préservés.",
+          "service_action": "Sélectionne le service/action à appeler et configure ses paramètres. Utilise 'Afficher YAML' pour coller ou modifier le YAML directement.",
           "response_data_path": "Chemin optionnel pour extraire des données de la réponse (par ex. 'results.0.items'). Laisser vide pour la réponse complète.",
           "attribute_name": "Nom de l'attribut qui contiendra les données de réponse. Par défaut 'data'.",
           "update_mode": "Comment déclencher les mises à jour : Polling (cyclique à intervalle), Manuel (via service update_entity), ou Déclencheur d'état d'entité (quand une autre entité change d'état).",
@@ -67,7 +61,8 @@
       "service_call_failed": "L'appel du service a échoué : {error_message}",
       "trigger_entity_not_found": "L'entité déclencheur n'existe pas. Sélectionne une entité valide.",
       "invalid_trigger_state": "L'état déclencheur spécifié n'est pas valide pour l'entité sélectionnée.",
-      "unknown": "Une erreur inattendue s'est produite. Consulte les logs pour plus de détails."
+      "unknown": "Une erreur inattendue s'est produite. Consulte les logs pour plus de détails.",
+      "service_no_response": "Ce service ne renvoie pas de données de réponse. Sélectionne un service qui prend en charge le renvoi de données."
     },
     "abort": {
       "already_configured": "Cette entrée est déjà configurée."

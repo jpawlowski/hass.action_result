@@ -3,58 +3,178 @@
     "step": {
       "user": {
         "title": "Configure Service Result",
-        "description": "Configure a sensor that exposes the response from a Home Assistant service call.\n\nSelect a service from the dropdown, or paste YAML directly from Developer Tools → Services.",
+        "description": "Configure a sensor that exposes the response from a Home Assistant service call.\n\nSelect and configure a service action using the visual editor below.",
         "data": {
           "name": "Name",
-          "service_action": "Service Action",
-          "service_data_yaml": "Service Data (YAML)",
-          "response_data_path": "Response Data Path",
-          "attribute_name": "Attribute Name",
-          "update_mode": "Update Mode",
-          "scan_interval": "Polling Interval",
+          "service_action": "Service Action"
+        },
+        "data_description": {
+          "name": "A friendly name for this sensor (e.g., 'Tibber Prices')",
+          "service_action": "Select the service/action to call and configure its parameters. Use 'Show YAML' to paste or edit YAML directly."
+        }
+      },
+      "update_mode": {
+        "title": "Update Mode",
+        "description": "Choose how the service should be called to update the sensor.",
+        "data": {
+          "update_mode": "Update Mode"
+        },
+        "data_description": {
+          "update_mode": "How to trigger updates: Polling (cyclic at interval), Manual (via update_entity service), or Entity State Trigger (when another entity changes state)."
+        }
+      },
+      "polling_settings": {
+        "title": "Polling Settings",
+        "description": "Configure the polling interval for automatic updates.",
+        "data": {
+          "scan_interval": "Polling Interval"
+        },
+        "data_description": {
+          "scan_interval": "How often to call the service in seconds. Minimum 10 seconds."
+        },
+        "sections": {
+          "advanced_options": {
+            "name": "Advanced Options",
+            "data": {
+              "response_data_path": "Response Data Path",
+              "attribute_name": "Attribute Name"
+            },
+            "data_description": {
+              "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
+              "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'."
+            }
+          }
+        }
+      },
+      "state_trigger_settings": {
+        "title": "State Trigger Settings",
+        "description": "Configure which entity state changes should trigger a service call.",
+        "data": {
           "trigger_entity": "Trigger Entity",
           "trigger_from_state": "Trigger From State",
           "trigger_to_state": "Trigger To State"
         },
         "data_description": {
-          "name": "A friendly name for this sensor (e.g., 'Tibber Prices')",
-          "service_action": "Select the service/action to call. If you paste full YAML below, this will be auto-detected.",
-          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools - all fields under 'data:' are preserved.",
-          "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
-          "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'.",
-          "update_mode": "How to trigger updates: Polling (cyclic at interval), Manual (via update_entity service), or Entity State Trigger (when another entity changes state).",
-          "scan_interval": "How often to call the service in seconds (only for Polling mode). Minimum 10 seconds.",
-          "trigger_entity": "Entity to watch for state changes (only for Entity State Trigger mode).",
+          "trigger_entity": "Entity to watch for state changes.",
           "trigger_from_state": "Only trigger when changing from this state (optional). Leave empty for any previous state.",
           "trigger_to_state": "Only trigger when changing to this state (optional). Leave empty for any new state."
+        },
+        "sections": {
+          "advanced_options": {
+            "name": "Advanced Options",
+            "data": {
+              "response_data_path": "Response Data Path",
+              "attribute_name": "Attribute Name"
+            },
+            "data_description": {
+              "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
+              "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'."
+            }
+          }
+        }
+      },
+      "manual_settings": {
+        "title": "Manual Update Settings",
+        "description": "The sensor will only update when you call the homeassistant.update_entity service.",
+        "sections": {
+          "advanced_options": {
+            "name": "Advanced Options",
+            "data": {
+              "response_data_path": "Response Data Path",
+              "attribute_name": "Attribute Name"
+            },
+            "data_description": {
+              "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
+              "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'."
+            }
+          }
         }
       },
       "reconfigure": {
         "title": "Reconfigure Service Result",
-        "description": "Update the service configuration for this sensor.",
+        "description": "Update the service configuration for this sensor.\n\nTo rename this entry, use Settings → Devices & Services → [entry] → three-dot menu → Rename.",
         "data": {
-          "name": "Name",
-          "service_action": "Service Action",
-          "service_data_yaml": "Service Data (YAML)",
-          "response_data_path": "Response Data Path",
-          "attribute_name": "Attribute Name",
-          "update_mode": "Update Mode",
-          "scan_interval": "Polling Interval",
+          "service_action": "Service Action"
+        },
+        "data_description": {
+          "service_action": "Select the service/action to call and configure its parameters. Use 'Show YAML' to paste or edit YAML directly."
+        }
+      },
+      "reconfigure_update_mode": {
+        "title": "Update Mode",
+        "description": "Choose how the service should be called to update the sensor.",
+        "data": {
+          "update_mode": "Update Mode"
+        },
+        "data_description": {
+          "update_mode": "How to trigger updates: Polling (cyclic at interval), Manual (via update_entity service), or Entity State Trigger (when another entity changes state)."
+        }
+      },
+      "reconfigure_polling_settings": {
+        "title": "Polling Settings",
+        "description": "Configure the polling interval for automatic updates.",
+        "data": {
+          "scan_interval": "Polling Interval"
+        },
+        "data_description": {
+          "scan_interval": "How often to call the service in seconds. Minimum 10 seconds."
+        },
+        "sections": {
+          "advanced_options": {
+            "name": "Advanced Options",
+            "data": {
+              "response_data_path": "Response Data Path",
+              "attribute_name": "Attribute Name"
+            },
+            "data_description": {
+              "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
+              "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'."
+            }
+          }
+        }
+      },
+      "reconfigure_state_trigger_settings": {
+        "title": "State Trigger Settings",
+        "description": "Configure which entity state changes should trigger a service call.",
+        "data": {
           "trigger_entity": "Trigger Entity",
           "trigger_from_state": "Trigger From State",
           "trigger_to_state": "Trigger To State"
         },
         "data_description": {
-          "name": "A friendly name for this sensor",
-          "service_action": "Select the service/action to call",
-          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools - all fields under 'data:' are preserved.",
-          "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
-          "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'.",
-          "update_mode": "How to trigger updates: Polling (cyclic at interval), Manual (via update_entity service), or Entity State Trigger (when another entity changes state).",
-          "scan_interval": "How often to call the service in seconds (only for Polling mode). Minimum 10 seconds.",
-          "trigger_entity": "Entity to watch for state changes (only for Entity State Trigger mode).",
+          "trigger_entity": "Entity to watch for state changes.",
           "trigger_from_state": "Only trigger when changing from this state (optional). Leave empty for any previous state.",
           "trigger_to_state": "Only trigger when changing to this state (optional). Leave empty for any new state."
+        },
+        "sections": {
+          "advanced_options": {
+            "name": "Advanced Options",
+            "data": {
+              "response_data_path": "Response Data Path",
+              "attribute_name": "Attribute Name"
+            },
+            "data_description": {
+              "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
+              "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'."
+            }
+          }
+        }
+      },
+      "reconfigure_manual_settings": {
+        "title": "Manual Update Settings",
+        "description": "The sensor will only update when you call the homeassistant.update_entity service.",
+        "sections": {
+          "advanced_options": {
+            "name": "Advanced Options",
+            "data": {
+              "response_data_path": "Response Data Path",
+              "attribute_name": "Attribute Name"
+            },
+            "data_description": {
+              "response_data_path": "Optional path to extract data from the response (e.g., 'results.0.items'). Leave empty for full response.",
+              "attribute_name": "Name of the attribute that will contain the response data. Default is 'data'."
+            }
+          }
         }
       }
     },
@@ -65,6 +185,7 @@
       "data_not_dict": "The 'data' section in the YAML must be a dictionary (key: value pairs).",
       "no_service_selected": "Please select a service action from the dropdown or provide it in the YAML.",
       "service_call_failed": "Service call failed: {error_message}",
+      "service_no_response": "This service does not return response data. Please select a service that supports returning data.",
       "trigger_entity_not_found": "The trigger entity does not exist. Please select a valid entity.",
       "invalid_trigger_state": "The specified trigger state is not valid for the selected entity.",
       "unknown": "An unexpected error occurred. Please check the logs for details."

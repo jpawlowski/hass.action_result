@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Konfiguriraj Rezultat Usluge",
-        "description": "Konfigurirajte senzor koji prikazuje odgovor poziva usluge Home Assistant.\n\nOdaberite uslugu iz padajućeg izbornika, ili zalijepite YAML izravno iz Razvojnih alata → Usluge.",
+        "description": "Konfiguriraj senzor koji prikazuje odgovor od poziva usluge Home Assistant.\n\nOdaberi i konfiguriraj akciju usluge pomoću vizualnog uređivača ispod.",
         "data": {
           "name": "Naziv",
           "service_action": "Akcija usluge",
-          "service_data_yaml": "Podaci usluge (YAML)",
           "response_data_path": "Put podataka odgovora",
           "attribute_name": "Naziv atributa",
           "update_mode": "Način ažuriranja",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Prijateljski naziv za ovaj senzor (npr. 'Tibber cijene')",
-          "service_action": "Odaberite uslugu/akciju za poziv. Ako zalijepite potpuni YAML ispod, to će se automatski otkriti.",
-          "service_data_yaml": "Opcionalni podaci usluge. Možete zalijepiti potpuni YAML iz Razvojnih alata - sva polja pod 'data:' su sačuvana.",
+          "service_action": "Odaberi uslugu/akciju za pozivanje i konfiguriraj njene parametre. Koristi 'Prikaži YAML' za izravno lijepljenje ili uređivanje YAML-a.",
           "response_data_path": "Opcionalni put za izdvajanje podataka iz odgovora (npr. 'results.0.items'). Ostavite prazno za potpuni odgovor.",
           "attribute_name": "Naziv atributa koji će sadržavati podatke odgovora. Zadano je 'data'.",
           "update_mode": "Kako se pokreću ažuriranja: Prozivanje (ciklički s intervalom), Ručno (putem usluge update_entity), ili Okidač stanja entiteta (kada drugi entitet promijeni stanje).",
@@ -31,11 +29,9 @@
       },
       "reconfigure": {
         "title": "Rekonfiguriraj Rezultat Usluge",
-        "description": "Ažurirajte konfiguraciju usluge za ovaj senzor.",
+        "description": "Ažurirajte konfiguraciju usluge za ovaj senzor.\n\nZa preimenovanje ovog unosa, koristite Postavke → Uređaji i usluge → [unos] → izbornik s tri točke → Preimenuj.",
         "data": {
-          "name": "Naziv",
           "service_action": "Akcija usluge",
-          "service_data_yaml": "Podaci usluge (YAML)",
           "response_data_path": "Put podataka odgovora",
           "attribute_name": "Naziv atributa",
           "update_mode": "Način ažuriranja",
@@ -45,9 +41,7 @@
           "trigger_to_state": "Okidač u stanje"
         },
         "data_description": {
-          "name": "Prijateljski naziv za ovaj senzor",
-          "service_action": "Odaberite uslugu/akciju za poziv",
-          "service_data_yaml": "Opcionalni podaci usluge. Možete zalijepiti potpuni YAML iz Razvojnih alata - sva polja pod 'data:' su sačuvana.",
+          "service_action": "Odaberi uslugu/akciju za pozivanje i konfiguriraj njene parametre. Koristi 'Prikaži YAML' za izravno lijepljenje ili uređivanje YAML-a.",
           "response_data_path": "Opcionalni put za izdvajanje podataka iz odgovora (npr. 'results.0.items'). Ostavite prazno za potpuni odgovor.",
           "attribute_name": "Naziv atributa koji će sadržavati podatke odgovora. Zadano je 'data'.",
           "update_mode": "Kako se pokreću ažuriranja: Prozivanje (ciklički s intervalom), Ručno (putem usluge update_entity), ili Okidač stanja entiteta (kada drugi entitet promijeni stanje).",
@@ -67,7 +61,8 @@
       "service_call_failed": "Poziv usluge nije uspio: {error_message}",
       "trigger_entity_not_found": "Okidač entitet ne postoji. Odaberite važeći entitet.",
       "invalid_trigger_state": "Navedeno okidač stanje nije važeće za odabrani entitet.",
-      "unknown": "Došlo je do neočekivane pogreške. Provjerite zapisnike za detalje."
+      "unknown": "Došlo je do neočekivane pogreške. Provjerite zapisnike za detalje.",
+      "service_no_response": "Ova usluga ne vraća podatke odgovora. Molimo odaberite uslugu koja podržava vraćanje podataka."
     },
     "abort": {
       "already_configured": "Ovaj unos je već konfiguriran."

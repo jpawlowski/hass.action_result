@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Configurare Rezultat Serviciu",
-        "description": "Configurați un senzor care expune răspunsul unui apel de serviciu Home Assistant.\n\nSelectați un serviciu din meniul derulant, sau lipiți YAML direct din Instrumente Dezvoltator → Servicii.",
+        "description": "Configurează un senzor care afișează răspunsul de la un apel de serviciu Home Assistant.\n\nSelectează și configurează o acțiune de serviciu folosind editorul vizual de mai jos.",
         "data": {
           "name": "Nume",
           "service_action": "Acțiune serviciu",
-          "service_data_yaml": "Date serviciu (YAML)",
           "response_data_path": "Cale date răspuns",
           "attribute_name": "Nume atribut",
           "update_mode": "Mod actualizare",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Un nume prietenos pentru acest senzor (ex. 'Prețuri Tibber')",
-          "service_action": "Selectați serviciul/acțiunea de apelat. Dacă lipiți YAML complet mai jos, aceasta va fi detectată automat.",
-          "service_data_yaml": "Date serviciu opționale. Puteți lipi YAML complet din Instrumente Dezvoltator - toate câmpurile sub 'data:' sunt păstrate.",
+          "service_action": "Selectează serviciul/acțiunea de apelat și configurează-i parametrii. Folosește 'Arată YAML' pentru a lipi sau edita YAML direct.",
           "response_data_path": "Cale opțională pentru extragerea datelor din răspuns (ex. 'results.0.items'). Lăsați gol pentru răspunsul complet.",
           "attribute_name": "Numele atributului care va conține datele răspunsului. Implicit este 'data'.",
           "update_mode": "Cum se declanșează actualizările: Interogare (ciclică la interval), Manual (prin serviciu update_entity), sau Declanșator stare entitate (când altă entitate își schimbă starea).",
@@ -31,11 +29,9 @@
       },
       "reconfigure": {
         "title": "Reconfigurare Rezultat Serviciu",
-        "description": "Actualizați configurația serviciului pentru acest senzor.",
+        "description": "Actualizați configurația serviciului pentru acest senzor.\n\nPentru a redenumi această intrare, folosește Setări → Dispozitive și servicii → [intrare] → meniu cu trei puncte → Redenumește.",
         "data": {
-          "name": "Nume",
           "service_action": "Acțiune serviciu",
-          "service_data_yaml": "Date serviciu (YAML)",
           "response_data_path": "Cale date răspuns",
           "attribute_name": "Nume atribut",
           "update_mode": "Mod actualizare",
@@ -45,9 +41,7 @@
           "trigger_to_state": "Declanșează la stare"
         },
         "data_description": {
-          "name": "Un nume prietenos pentru acest senzor",
-          "service_action": "Selectați serviciul/acțiunea de apelat",
-          "service_data_yaml": "Date serviciu opționale. Puteți lipi YAML complet din Instrumente Dezvoltator - toate câmpurile sub 'data:' sunt păstrate.",
+          "service_action": "Selectează serviciul/acțiunea de apelat și configurează-i parametrii. Folosește 'Arată YAML' pentru a lipi sau edita YAML direct.",
           "response_data_path": "Cale opțională pentru extragerea datelor din răspuns (ex. 'results.0.items'). Lăsați gol pentru răspunsul complet.",
           "attribute_name": "Numele atributului care va conține datele răspunsului. Implicit este 'data'.",
           "update_mode": "Cum se declanșează actualizările: Interogare (ciclică la interval), Manual (prin serviciu update_entity), sau Declanșator stare entitate (când altă entitate își schimbă starea).",
@@ -67,7 +61,8 @@
       "service_call_failed": "Apelul serviciului a eșuat: {error_message}",
       "trigger_entity_not_found": "Entitatea declanșator nu există. Selectați o entitate validă.",
       "invalid_trigger_state": "Starea declanșator specificată nu este validă pentru entitatea selectată.",
-      "unknown": "A apărut o eroare neașteptată. Verificați jurnalele pentru detalii."
+      "unknown": "A apărut o eroare neașteptată. Verificați jurnalele pentru detalii.",
+      "service_no_response": "Acest serviciu nu returnează date de răspuns. Te rugăm să selectezi un serviciu care suportă returnarea datelor."
     },
     "abort": {
       "already_configured": "Această intrare este deja configurată."

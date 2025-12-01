@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Ikkonfigura Riżultat tas-Servizz",
-        "description": "Ikkonfigura sensur li juri r-risposta minn sejħa tas-servizz ta' Home Assistant.\n\nAgħżel servizz mill-menu dropdown, jew waħħal YAML direttament minn Għodod tal-Iżvilupp → Servizzi.",
+        "description": "Ikkonfigura sensur li juri r-risposta minn sejħa ta' servizz ta' Home Assistant.\n\nAgħżel u kkonfigura azzjoni ta' servizz billi tuża l-editur viżwali hawn taħt.",
         "data": {
           "name": "Isem",
           "service_action": "Azzjoni tas-servizz",
-          "service_data_yaml": "Data tas-servizz (YAML)",
           "response_data_path": "Triq tad-data tar-risposta",
           "attribute_name": "Isem tal-attribut",
           "update_mode": "Mod tal-aġġornament",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Isem ta' ħbiberija għal dan is-sensur (eż. 'Prezzijiet Tibber')",
-          "service_action": "Agħżel is-servizz/azzjoni biex issejjaħ. Jekk twaħħal YAML sħiħ hawn taħt, dan jiġi awtomatikament skopert.",
-          "service_data_yaml": "Data tas-servizz fakultattiva. Tista' twaħħal YAML sħiħ mill-Għodod tal-Iżvilupp - il-kolonnelli kollha taħt 'data:' jinżammu.",
+          "service_action": "Agħżel is-servizz/azzjoni li trid issejjaħ u kkonfigura l-parametri tagħha. Uża 'Uri YAML' biex twaħħal jew teditja YAML direttament.",
           "response_data_path": "Triq fakultattiva biex tiġbed data mir-risposta (eż. 'results.0.items'). Ħalli vojt għar-risposta sħiħa.",
           "attribute_name": "Isem tal-attribut li jkollu d-data tar-risposta. Default huwa 'data'.",
           "update_mode": "Kif jiġu triggerjati l-aġġornamenti: Polling (ċikliku bi ntervall), Manwali (permezz ta' servizz update_entity), jew Trigger tal-istat tal-entità (meta entità oħra tibdel l-istat).",
@@ -31,11 +29,9 @@
       },
       "reconfigure": {
         "title": "Erġa' Kkonfigura Riżultat tas-Servizz",
-        "description": "Aġġorna l-konfigurazzjoni tas-servizz għal dan is-sensur.",
+        "description": "Aġġorna l-konfigurazzjoni tas-servizz għal dan is-sensur.\n\nBiex issemmi mill-ġdid din l-entrata, uża Settings → Devices & Services → [entrata] → menu bi tliet tikek → Semmi mill-ġdid.",
         "data": {
-          "name": "Isem",
           "service_action": "Azzjoni tas-servizz",
-          "service_data_yaml": "Data tas-servizz (YAML)",
           "response_data_path": "Triq tad-data tar-risposta",
           "attribute_name": "Isem tal-attribut",
           "update_mode": "Mod tal-aġġornament",
@@ -45,9 +41,7 @@
           "trigger_to_state": "Trigger għall-istat"
         },
         "data_description": {
-          "name": "Isem ta' ħbiberija għal dan is-sensur",
-          "service_action": "Agħżel is-servizz/azzjoni biex issejjaħ",
-          "service_data_yaml": "Data tas-servizz fakultattiva. Tista' twaħħal YAML sħiħ mill-Għodod tal-Iżvilupp - il-kolonnelli kollha taħt 'data:' jinżammu.",
+          "service_action": "Agħżel is-servizz/azzjoni li trid issejjaħ u kkonfigura l-parametri tagħha. Uża 'Uri YAML' biex twaħħal jew teditja YAML direttament.",
           "response_data_path": "Triq fakultattiva biex tiġbed data mir-risposta (eż. 'results.0.items'). Ħalli vojt għar-risposta sħiħa.",
           "attribute_name": "Isem tal-attribut li jkollu d-data tar-risposta. Default huwa 'data'.",
           "update_mode": "Kif jiġu triggerjati l-aġġornamenti: Polling (ċikliku bi ntervall), Manwali (permezz ta' servizz update_entity), jew Trigger tal-istat tal-entità (meta entità oħra tibdel l-istat).",
@@ -67,7 +61,8 @@
       "service_call_failed": "Is-sejħa tas-servizz falliet: {error_message}",
       "trigger_entity_not_found": "L-entità tat-trigger ma teżistix. Agħżel entità valida.",
       "invalid_trigger_state": "L-istat tat-trigger speċifikat mhuwiex validu għall-entità magħżula.",
-      "unknown": "Sar żball mhux mistenni. Iċċekkja l-logs għad-dettalji."
+      "unknown": "Sar żball mhux mistenni. Iċċekkja l-logs għad-dettalji.",
+      "service_no_response": "Dan is-servizz ma jirritornax data ta' risposta. Jekk jogħġbok agħżel servizz li jappoġġja r-ritorn tad-data."
     },
     "abort": {
       "already_configured": "Din id-dħul diġà kkonfigurata."

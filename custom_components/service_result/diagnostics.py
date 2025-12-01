@@ -11,17 +11,16 @@ from typing import TYPE_CHECKING, Any
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 from homeassistant.helpers.redact import async_redact_data
 
-from .const import CONF_SERVICE_DATA_YAML
-
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
 
     from .data import ServiceResultEntitiesConfigEntry
 
 # Fields to redact from diagnostics - CRITICAL for security!
-# The service data YAML may contain sensitive information
+# Service data (from ActionSelector) may contain sensitive information
 TO_REDACT = {
-    CONF_SERVICE_DATA_YAML,
+    "service_action",  # Contains action + data which may have secrets
+    "service_data_yaml",  # Legacy field, may contain sensitive data
     "password",
     "api_key",
     "token",

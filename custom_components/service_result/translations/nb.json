@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Konfigurer Tjenesteesultat",
-        "description": "Konfigurer en sensor som eksponerer svaret fra et Home Assistant-tjenestekall.\n\nVelg en tjeneste fra rullegardinmenyen, eller lim inn YAML direkte fra Utviklerverktøy → Tjenester.",
+        "description": "Konfigurer en sensor som viser svaret fra et Home Assistant tjeneste-kall.\n\nVelg og konfigurer en tjenestehandling ved å bruke den visuelle editoren nedenfor.",
         "data": {
           "name": "Navn",
           "service_action": "Tjenestehandling",
-          "service_data_yaml": "Tjenestedata (YAML)",
           "response_data_path": "Svardatasti",
           "attribute_name": "Attributtnavn",
           "update_mode": "Oppdateringsmodus",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Et vennlig navn for denne sensoren (f.eks. 'Tibber-priser')",
-          "service_action": "Velg tjenesten/handlingen som skal kalles. Hvis du limer inn full YAML nedenfor, oppdages dette automatisk.",
-          "service_data_yaml": "Valgfri tjenestedata. Du kan lime inn full YAML fra Utviklerverktøy - alle felt under 'data:' bevares.",
+          "service_action": "Velg tjenesten/handlingen som skal kalles og konfigurer parameterne. Bruk 'Vis YAML' for å lime inn eller redigere YAML direkte.",
           "response_data_path": "Valgfri sti for å trekke ut data fra svaret (f.eks. 'results.0.items'). La være tom for fullt svar.",
           "attribute_name": "Navn på attributten som vil inneholde svardataene. Standard er 'data'.",
           "update_mode": "Hvordan oppdateringer utløses: Polling (syklisk med intervall), Manuell (via update_entity-tjeneste), eller Entitetstilstandstrigger (når en annen entitet endrer tilstand).",
@@ -31,11 +29,9 @@
       },
       "reconfigure": {
         "title": "Omkonfigurer Tjenesteesultat",
-        "description": "Oppdater tjenestekonfigurasjonen for denne sensoren.",
+        "description": "Oppdater tjenestekonfigurasjonen for denne sensoren.\n\nFor å gi nytt navn til denne oppføringen, bruk Innstillinger → Enheter og tjenester → [oppføring] → trepunktsmenyen → Gi nytt navn.",
         "data": {
-          "name": "Navn",
           "service_action": "Tjenestehandling",
-          "service_data_yaml": "Tjenestedata (YAML)",
           "response_data_path": "Svardatasti",
           "attribute_name": "Attributtnavn",
           "update_mode": "Oppdateringsmodus",
@@ -45,9 +41,7 @@
           "trigger_to_state": "Trigger til tilstand"
         },
         "data_description": {
-          "name": "Et vennlig navn for denne sensoren",
-          "service_action": "Velg tjenesten/handlingen som skal kalles",
-          "service_data_yaml": "Valgfri tjenestedata. Du kan lime inn full YAML fra Utviklerverktøy - alle felt under 'data:' bevares.",
+          "service_action": "Velg tjenesten/handlingen som skal kalles og konfigurer parameterne. Bruk 'Vis YAML' for å lime inn eller redigere YAML direkte.",
           "response_data_path": "Valgfri sti for å trekke ut data fra svaret (f.eks. 'results.0.items'). La være tom for fullt svar.",
           "attribute_name": "Navn på attributten som vil inneholde svardataene. Standard er 'data'.",
           "update_mode": "Hvordan oppdateringer utløses: Polling (syklisk med intervall), Manuell (via update_entity-tjeneste), eller Entitetstilstandstrigger (når en annen entitet endrer tilstand).",
@@ -67,7 +61,8 @@
       "service_call_failed": "Tjenestekall mislyktes: {error_message}",
       "trigger_entity_not_found": "Triggerentiteten eksisterer ikke. Velg en gyldig entitet.",
       "invalid_trigger_state": "Den angitte triggertilstanden er ikke gyldig for den valgte entiteten.",
-      "unknown": "En uventet feil oppstod. Sjekk loggene for detaljer."
+      "unknown": "En uventet feil oppstod. Sjekk loggene for detaljer.",
+      "service_no_response": "Denne tjenesten returnerer ikke responsdata. Vennligst velg en tjeneste som støtter retur av data."
     },
     "abort": {
       "already_configured": "Denne oppføringen er allerede konfigurert."

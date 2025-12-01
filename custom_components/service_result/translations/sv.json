@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Konfigurera Serviceresultat",
-        "description": "Konfigurera en sensor som exponerar svaret från ett Home Assistant-serviceanrop.\n\nVälj en tjänst från rullgardinsmenyn, eller klistra in YAML direkt från Utvecklarverktyg → Tjänster.",
+        "description": "Konfigurera en sensor som visar svaret från ett Home Assistant-tjänsteanrop.\n\nVälj och konfigurera en tjänståtgärd med den visuella redigeraren nedan.",
         "data": {
           "name": "Namn",
           "service_action": "Serviceåtgärd",
-          "service_data_yaml": "Servicedata (YAML)",
           "response_data_path": "Svarsdatasökväg",
           "attribute_name": "Attributnamn",
           "update_mode": "Uppdateringsläge",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Ett vänligt namn för denna sensor (t.ex. 'Tibber-priser')",
-          "service_action": "Välj tjänsten/åtgärden att anropa. Om du klistrar in fullständig YAML nedan, detekteras detta automatiskt.",
-          "service_data_yaml": "Valfri servicedata. Du kan klistra in fullständig YAML från Utvecklarverktyg - alla fält under 'data:' bevaras.",
+          "service_action": "Välj tjänsten/åtgärden att anropa och konfigurera dess parametrar. Använd 'Visa YAML' för att klistra in eller redigera YAML direkt.",
           "response_data_path": "Valfri sökväg för att extrahera data från svaret (t.ex. 'results.0.items'). Lämna tomt för fullständigt svar.",
           "attribute_name": "Namn på attributet som kommer innehålla svarsdata. Standard är 'data'.",
           "update_mode": "Hur uppdateringar triggas: Pollning (cykliskt med intervall), Manuell (via update_entity-tjänst), eller Entitetstillståndstrigger (när en annan entitet ändrar tillstånd).",
@@ -31,11 +29,9 @@
       },
       "reconfigure": {
         "title": "Omkonfigurera Serviceresultat",
-        "description": "Uppdatera servicekonfigurationen för denna sensor.",
+        "description": "Uppdatera servicekonfigurationen för denna sensor.\n\nFör att byta namn på denna post, använd Inställningar → Enheter & tjänster → [post] → trepunktsmenyn → Byt namn.",
         "data": {
-          "name": "Namn",
           "service_action": "Serviceåtgärd",
-          "service_data_yaml": "Servicedata (YAML)",
           "response_data_path": "Svarsdatasökväg",
           "attribute_name": "Attributnamn",
           "update_mode": "Uppdateringsläge",
@@ -45,9 +41,7 @@
           "trigger_to_state": "Trigga till tillstånd"
         },
         "data_description": {
-          "name": "Ett vänligt namn för denna sensor",
-          "service_action": "Välj tjänsten/åtgärden att anropa",
-          "service_data_yaml": "Valfri servicedata. Du kan klistra in fullständig YAML från Utvecklarverktyg - alla fält under 'data:' bevaras.",
+          "service_action": "Välj tjänsten/åtgärden att anropa och konfigurera dess parametrar. Använd 'Visa YAML' för att klistra in eller redigera YAML direkt.",
           "response_data_path": "Valfri sökväg för att extrahera data från svaret (t.ex. 'results.0.items'). Lämna tomt för fullständigt svar.",
           "attribute_name": "Namn på attributet som kommer innehålla svarsdata. Standard är 'data'.",
           "update_mode": "Hur uppdateringar triggas: Pollning (cykliskt med intervall), Manuell (via update_entity-tjänst), eller Entitetstillståndstrigger (när en annan entitet ändrar tillstånd).",
@@ -67,7 +61,8 @@
       "service_call_failed": "Serviceanrop misslyckades: {error_message}",
       "trigger_entity_not_found": "Triggerentiteten finns inte. Välj en giltig entitet.",
       "invalid_trigger_state": "Det angivna triggertillståndet är inte giltigt för den valda entiteten.",
-      "unknown": "Ett oväntat fel inträffade. Kontrollera loggarna för detaljer."
+      "unknown": "Ett oväntat fel inträffade. Kontrollera loggarna för detaljer.",
+      "service_no_response": "Denna tjänst returnerar inte svarsdata. Välj en tjänst som stöder returnering av data."
     },
     "abort": {
       "already_configured": "Denna post är redan konfigurerad."

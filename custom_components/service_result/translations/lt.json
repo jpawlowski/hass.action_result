@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Konfigūruoti Paslaugos Rezultatą",
-        "description": "Sukonfigūruokite jutiklį, kuris rodo Home Assistant paslaugos iškvietimo atsakymą.\n\nPasirinkite paslaugą iš išskleidžiamojo meniu arba įklijuokite YAML tiesiogiai iš Kūrėjo įrankiai → Paslaugos.",
+        "description": "Sukonfigūruok jutiklį, kuris rodo atsakymą iš Home Assistant paslaugos iškvietimo.\n\nPasirink ir sukonfigūruok paslaugos veiksmą naudojant žemiau esantį vaizdinį redaktorių.",
         "data": {
           "name": "Pavadinimas",
           "service_action": "Paslaugos veiksmas",
-          "service_data_yaml": "Paslaugos duomenys (YAML)",
           "response_data_path": "Atsakymo duomenų kelias",
           "attribute_name": "Atributo pavadinimas",
           "update_mode": "Atnaujinimo režimas",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Draugiškas pavadinimas šiam jutikliui (pvz., 'Tibber kainos')",
-          "service_action": "Pasirinkite paslaugą/veiksmą iškviesti. Jei žemiau įklijuosite pilną YAML, tai bus automatiškai aptikta.",
-          "service_data_yaml": "Neprivalomi paslaugos duomenys. Galite įklijuoti pilną YAML iš Kūrėjo įrankių - visi laukai po 'data:' išsaugomi.",
+          "service_action": "Pasirink kvietimą paslaugą/veiksmą ir sukonfigūruok jo parametrus. Naudok 'Rodyti YAML' norėdamas tiesiogiai įklijuoti ar redaguoti YAML.",
           "response_data_path": "Neprivalomas kelias duomenims išgauti iš atsakymo (pvz., 'results.0.items'). Palikite tuščią pilnam atsakymui.",
           "attribute_name": "Atributo, kuriame bus atsakymo duomenys, pavadinimas. Numatytasis yra 'data'.",
           "update_mode": "Kaip paleidžiami atnaujinimai: Apklausa (ciklinė su intervalu), Rankinė (per update_entity paslaugą) arba Esybės būsenos paleidiklis (kai kita esybė pakeičia būseną).",
@@ -31,11 +29,9 @@
       },
       "reconfigure": {
         "title": "Perkonfigūruoti Paslaugos Rezultatą",
-        "description": "Atnaujinkite paslaugos konfigūraciją šiam jutikliui.",
+        "description": "Atnaujinkite paslaugos konfigūraciją šiam jutikliui.\n\nNorėdami pervadinti šį įrašą, naudokite Nustatymai → Įrenginiai ir paslaugos → [įrašas] → trijų taškų meniu → Pervadinti.",
         "data": {
-          "name": "Pavadinimas",
           "service_action": "Paslaugos veiksmas",
-          "service_data_yaml": "Paslaugos duomenys (YAML)",
           "response_data_path": "Atsakymo duomenų kelias",
           "attribute_name": "Atributo pavadinimas",
           "update_mode": "Atnaujinimo režimas",
@@ -45,9 +41,7 @@
           "trigger_to_state": "Paleisti į būseną"
         },
         "data_description": {
-          "name": "Draugiškas pavadinimas šiam jutikliui",
-          "service_action": "Pasirinkite paslaugą/veiksmą iškviesti",
-          "service_data_yaml": "Neprivalomi paslaugos duomenys. Galite įklijuoti pilną YAML iš Kūrėjo įrankių - visi laukai po 'data:' išsaugomi.",
+          "service_action": "Pasirink kvietimą paslaugą/veiksmą ir sukonfigūruok jo parametrus. Naudok 'Rodyti YAML' norėdamas tiesiogiai įklijuoti ar redaguoti YAML.",
           "response_data_path": "Neprivalomas kelias duomenims išgauti iš atsakymo (pvz., 'results.0.items'). Palikite tuščią pilnam atsakymui.",
           "attribute_name": "Atributo, kuriame bus atsakymo duomenys, pavadinimas. Numatytasis yra 'data'.",
           "update_mode": "Kaip paleidžiami atnaujinimai: Apklausa (ciklinė su intervalu), Rankinė (per update_entity paslaugą) arba Esybės būsenos paleidiklis (kai kita esybė pakeičia būseną).",
@@ -67,7 +61,8 @@
       "service_call_failed": "Paslaugos iškvietimas nepavyko: {error_message}",
       "trigger_entity_not_found": "Paleidimo esybė neegzistuoja. Pasirinkite tinkamą esybę.",
       "invalid_trigger_state": "Nurodyta paleidimo būsena nėra tinkama pasirinktai esybei.",
-      "unknown": "Įvyko netikėta klaida. Patikrinkite žurnalus dėl detalių."
+      "unknown": "Įvyko netikėta klaida. Patikrinkite žurnalus dėl detalių.",
+      "service_no_response": "Ši paslauga negrąžina atsakymo duomenų. Pasirinkite paslaugą, kuri palaiko duomenų grąžinimą."
     },
     "abort": {
       "already_configured": "Šis įrašas jau sukonfigūruotas."

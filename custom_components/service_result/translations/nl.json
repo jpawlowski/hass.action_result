@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Service Resultaat Configureren",
-        "description": "Configureer een sensor die het antwoord van een Home Assistant service-aanroep beschikbaar stelt.\n\nSelecteer een service uit de keuzelijst, of plak YAML rechtstreeks vanuit Ontwikkelaarshulpmiddelen → Services.",
+        "description": "Configureer een sensor die het antwoord van een Home Assistant service-aanroep weergeeft.\n\nSelecteer en configureer een service-actie met de visuele editor hieronder.",
         "data": {
           "name": "Naam",
           "service_action": "Service actie",
-          "service_data_yaml": "Service gegevens (YAML)",
           "response_data_path": "Antwoord gegevenspad",
           "attribute_name": "Attribuutnaam",
           "update_mode": "Update modus",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Een vriendelijke naam voor deze sensor (bijv. 'Tibber Prijzen')",
-          "service_action": "Selecteer de service/actie om aan te roepen. Als je hieronder volledige YAML plakt, wordt dit automatisch gedetecteerd.",
-          "service_data_yaml": "Optionele service gegevens. Je kunt de volledige YAML uit Ontwikkelaarshulpmiddelen plakken - alle velden onder 'data:' worden behouden.",
+          "service_action": "Selecteer de service/actie om aan te roepen en configureer de parameters. Gebruik 'Toon YAML' om YAML direct te plakken of te bewerken.",
           "response_data_path": "Optioneel pad om gegevens uit het antwoord te extraheren (bijv. 'results.0.items'). Laat leeg voor volledig antwoord.",
           "attribute_name": "Naam van het attribuut dat de antwoordgegevens zal bevatten. Standaard is 'data'.",
           "update_mode": "Hoe updates worden geactiveerd: Polling (cyclisch op interval), Handmatig (via update_entity service), of Entiteit status trigger (wanneer een andere entiteit van status verandert).",
@@ -31,11 +29,9 @@
       },
       "reconfigure": {
         "title": "Service Resultaat Herconfigureren",
-        "description": "Werk de serviceconfiguratie voor deze sensor bij.",
+        "description": "Werk de serviceconfiguratie voor deze sensor bij.\n\nOm deze invoer te hernoemen, gebruik Instellingen → Apparaten & Services → [invoer] → driepuntsmenu → Hernoemen.",
         "data": {
-          "name": "Naam",
           "service_action": "Service actie",
-          "service_data_yaml": "Service gegevens (YAML)",
           "response_data_path": "Antwoord gegevenspad",
           "attribute_name": "Attribuutnaam",
           "update_mode": "Update modus",
@@ -45,9 +41,7 @@
           "trigger_to_state": "Trigger naar status"
         },
         "data_description": {
-          "name": "Een vriendelijke naam voor deze sensor",
-          "service_action": "Selecteer de service/actie om aan te roepen",
-          "service_data_yaml": "Optionele service gegevens. Je kunt de volledige YAML uit Ontwikkelaarshulpmiddelen plakken - alle velden onder 'data:' worden behouden.",
+          "service_action": "Selecteer de service/actie om aan te roepen en configureer de parameters. Gebruik 'Toon YAML' om YAML direct te plakken of te bewerken.",
           "response_data_path": "Optioneel pad om gegevens uit het antwoord te extraheren (bijv. 'results.0.items'). Laat leeg voor volledig antwoord.",
           "attribute_name": "Naam van het attribuut dat de antwoordgegevens zal bevatten. Standaard is 'data'.",
           "update_mode": "Hoe updates worden geactiveerd: Polling (cyclisch op interval), Handmatig (via update_entity service), of Entiteit status trigger (wanneer een andere entiteit van status verandert).",
@@ -67,7 +61,8 @@
       "service_call_failed": "Service-aanroep mislukt: {error_message}",
       "trigger_entity_not_found": "De trigger-entiteit bestaat niet. Selecteer een geldige entiteit.",
       "invalid_trigger_state": "De opgegeven triggerstatus is niet geldig voor de geselecteerde entiteit.",
-      "unknown": "Er is een onverwachte fout opgetreden. Controleer de logs voor details."
+      "unknown": "Er is een onverwachte fout opgetreden. Controleer de logs voor details.",
+      "service_no_response": "Deze service retourneert geen responsgegevens. Selecteer een service die het retourneren van gegevens ondersteunt."
     },
     "abort": {
       "already_configured": "Deze invoer is al geconfigureerd."

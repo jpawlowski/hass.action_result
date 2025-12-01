@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Configurar Resultado do Serviço",
-        "description": "Configure um sensor que expõe a resposta de uma chamada de serviço do Home Assistant.\n\nSelecione um serviço no menu suspenso, ou cole o YAML diretamente das Ferramentas de desenvolvedor → Serviços.",
+        "description": "Configura um sensor que expõe a resposta de uma chamada de serviço Home Assistant.\n\nSeleciona e configura uma ação de serviço usando o editor visual abaixo.",
         "data": {
           "name": "Nome",
           "service_action": "Ação do serviço",
-          "service_data_yaml": "Dados do serviço (YAML)",
           "response_data_path": "Caminho dos dados de resposta",
           "attribute_name": "Nome do atributo",
           "update_mode": "Modo de atualização",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Um nome amigável para este sensor (ex. 'Preços Tibber')",
-          "service_action": "Selecione o serviço/ação a chamar. Se você colar o YAML completo abaixo, isso será detectado automaticamente.",
-          "service_data_yaml": "Dados de serviço opcionais. Você pode colar o YAML completo das Ferramentas de desenvolvedor - todos os campos sob 'data:' são preservados.",
+          "service_action": "Seleciona o serviço/ação a chamar e configura os seus parâmetros. Usa 'Mostrar YAML' para colar ou editar YAML diretamente.",
           "response_data_path": "Caminho opcional para extrair dados da resposta (ex. 'results.0.items'). Deixe vazio para resposta completa.",
           "attribute_name": "Nome do atributo que conterá os dados de resposta. Padrão é 'data'.",
           "update_mode": "Como disparar atualizações: Polling (cíclico em intervalo), Manual (via serviço update_entity), ou Gatilho de estado de entidade (quando outra entidade muda de estado).",
@@ -31,11 +29,9 @@
       },
       "reconfigure": {
         "title": "Reconfigurar Resultado do Serviço",
-        "description": "Atualize a configuração do serviço para este sensor.",
+        "description": "Atualize a configuração do serviço para este sensor.\n\nPara renomear esta entrada, use Configurações → Dispositivos e Serviços → [entrada] → menu de três pontos → Renomear.",
         "data": {
-          "name": "Nome",
           "service_action": "Ação do serviço",
-          "service_data_yaml": "Dados do serviço (YAML)",
           "response_data_path": "Caminho dos dados de resposta",
           "attribute_name": "Nome do atributo",
           "update_mode": "Modo de atualização",
@@ -45,9 +41,7 @@
           "trigger_to_state": "Disparar para estado"
         },
         "data_description": {
-          "name": "Um nome amigável para este sensor",
-          "service_action": "Selecione o serviço/ação a chamar",
-          "service_data_yaml": "Dados de serviço opcionais. Você pode colar o YAML completo das Ferramentas de desenvolvedor - todos os campos sob 'data:' são preservados.",
+          "service_action": "Seleciona o serviço/ação a chamar e configura os seus parâmetros. Usa 'Mostrar YAML' para colar ou editar YAML diretamente.",
           "response_data_path": "Caminho opcional para extrair dados da resposta (ex. 'results.0.items'). Deixe vazio para resposta completa.",
           "attribute_name": "Nome do atributo que conterá os dados de resposta. Padrão é 'data'.",
           "update_mode": "Como disparar atualizações: Polling (cíclico em intervalo), Manual (via serviço update_entity), ou Gatilho de estado de entidade (quando outra entidade muda de estado).",
@@ -67,7 +61,8 @@
       "service_call_failed": "Chamada do serviço falhou: {error_message}",
       "trigger_entity_not_found": "A entidade gatilho não existe. Por favor selecione uma entidade válida.",
       "invalid_trigger_state": "O estado gatilho especificado não é válido para a entidade selecionada.",
-      "unknown": "Ocorreu um erro inesperado. Por favor verifique os logs para detalhes."
+      "unknown": "Ocorreu um erro inesperado. Por favor verifique os logs para detalhes.",
+      "service_no_response": "Este serviço não retorna dados de resposta. Por favor selecione um serviço que suporte retorno de dados."
     },
     "abort": {
       "already_configured": "Esta entrada já está configurada."

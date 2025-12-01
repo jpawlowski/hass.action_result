@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Määritä Palvelutulos",
-        "description": "Määritä sensori, joka näyttää Home Assistant -palvelukutsun vastauksen.\n\nValitse palvelu pudotusvalikosta tai liitä YAML suoraan Kehittäjätyökalut → Palvelut -osiosta.",
+        "description": "Määritä anturi, joka näyttää vastauksen Home Assistant -palvelukutsusta.\n\nValitse ja määritä palvelutoiminto alla olevalla visuaalisella editorilla.",
         "data": {
           "name": "Nimi",
           "service_action": "Palvelutoiminto",
-          "service_data_yaml": "Palveludata (YAML)",
           "response_data_path": "Vastausdatan polku",
           "attribute_name": "Attribuutin nimi",
           "update_mode": "Päivitystila",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Ystävällinen nimi tälle sensorille (esim. 'Tibber-hinnat')",
-          "service_action": "Valitse kutsuttava palvelu/toiminto. Jos liität täydellisen YAML:n alle, tämä tunnistetaan automaattisesti.",
-          "service_data_yaml": "Valinnainen palveludata. Voit liittää täydellisen YAML:n Kehittäjätyökaluista - kaikki kentät 'data:'-osion alla säilytetään.",
+          "service_action": "Valitse kutsuttava palvelu/toiminto ja määritä sen parametrit. Käytä 'Näytä YAML' liittääksesi tai muokataksesi YAML:ia suoraan.",
           "response_data_path": "Valinnainen polku datan poimimiseen vastauksesta (esim. 'results.0.items'). Jätä tyhjäksi täydelle vastaukselle.",
           "attribute_name": "Attribuutin nimi, joka sisältää vastausdatan. Oletus on 'data'.",
           "update_mode": "Miten päivitykset laukaistaan: Pollaus (syklinen välein), Manuaalinen (update_entity-palvelun kautta) tai Entiteettitilan laukaisin (kun toinen entiteetti vaihtaa tilaa).",
@@ -31,11 +29,9 @@
       },
       "reconfigure": {
         "title": "Määritä Palvelutulos uudelleen",
-        "description": "Päivitä palvelukonfiguraatio tälle sensorille.",
+        "description": "Päivitä palvelukonfiguraatio tälle sensorille.\n\nNimetäksesi tämän merkinnän uudelleen, käytä Asetukset → Laitteet ja palvelut → [merkintä] → kolmen pisteen valikko → Nimeä uudelleen.",
         "data": {
-          "name": "Nimi",
           "service_action": "Palvelutoiminto",
-          "service_data_yaml": "Palveludata (YAML)",
           "response_data_path": "Vastausdatan polku",
           "attribute_name": "Attribuutin nimi",
           "update_mode": "Päivitystila",
@@ -45,9 +41,7 @@
           "trigger_to_state": "Laukaise tilaan"
         },
         "data_description": {
-          "name": "Ystävällinen nimi tälle sensorille",
-          "service_action": "Valitse kutsuttava palvelu/toiminto",
-          "service_data_yaml": "Valinnainen palveludata. Voit liittää täydellisen YAML:n Kehittäjätyökaluista - kaikki kentät 'data:'-osion alla säilytetään.",
+          "service_action": "Valitse kutsuttava palvelu/toiminto ja määritä sen parametrit. Käytä 'Näytä YAML' liittääksesi tai muokataksesi YAML:ia suoraan.",
           "response_data_path": "Valinnainen polku datan poimimiseen vastauksesta (esim. 'results.0.items'). Jätä tyhjäksi täydelle vastaukselle.",
           "attribute_name": "Attribuutin nimi, joka sisältää vastausdatan. Oletus on 'data'.",
           "update_mode": "Miten päivitykset laukaistaan: Pollaus (syklinen välein), Manuaalinen (update_entity-palvelun kautta) tai Entiteettitilan laukaisin (kun toinen entiteetti vaihtaa tilaa).",
@@ -67,7 +61,8 @@
       "service_call_failed": "Palvelukutsu epäonnistui: {error_message}",
       "trigger_entity_not_found": "Laukaisuentiteettiä ei ole olemassa. Valitse kelvollinen entiteetti.",
       "invalid_trigger_state": "Määritetty laukaisutila ei ole kelvollinen valitulle entiteetille.",
-      "unknown": "Odottamaton virhe tapahtui. Tarkista lokit lisätietoja varten."
+      "unknown": "Odottamaton virhe tapahtui. Tarkista lokit lisätietoja varten.",
+      "service_no_response": "Tämä palvelu ei palauta vastausdataa. Valitse palvelu, joka tukee datan palauttamista."
     },
     "abort": {
       "already_configured": "Tämä merkintä on jo määritetty."
