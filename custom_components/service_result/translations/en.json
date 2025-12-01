@@ -3,16 +3,14 @@
     "step": {
       "user": {
         "title": "Configure Service Result",
-        "description": "Configure a sensor that exposes the response from a Home Assistant service call.\n\nSelect a service from the dropdown, or paste YAML directly from Developer Tools → Services.",
+        "description": "Configure a sensor that exposes the response from a Home Assistant service call.\n\nSelect and configure a service action using the visual editor below.",
         "data": {
           "name": "Name",
-          "service_action": "Service Action",
-          "service_data_yaml": "Service Data (YAML)"
+          "service_action": "Service Action"
         },
         "data_description": {
           "name": "A friendly name for this sensor (e.g., 'Tibber Prices')",
-          "service_action": "Select the service/action to call. If you paste full YAML below, this will be auto-detected.",
-          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools - all fields under 'data:' are preserved."
+          "service_action": "Select the service/action to call and configure its parameters. Use 'Show YAML' to paste or edit YAML directly."
         }
       },
       "update_mode": {
@@ -96,12 +94,10 @@
         "title": "Reconfigure Service Result",
         "description": "Update the service configuration for this sensor.\n\nTo rename this entry, use Settings → Devices & Services → [entry] → three-dot menu → Rename.",
         "data": {
-          "service_action": "Service Action",
-          "service_data_yaml": "Service Data (YAML)"
+          "service_action": "Service Action"
         },
         "data_description": {
-          "service_action": "Select the service/action to call",
-          "service_data_yaml": "Optional service data. You can paste the full YAML from Developer Tools - all fields under 'data:' are preserved."
+          "service_action": "Select the service/action to call and configure its parameters. Use 'Show YAML' to paste or edit YAML directly."
         }
       },
       "reconfigure_update_mode": {

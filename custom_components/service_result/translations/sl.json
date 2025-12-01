@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Nastavi Rezultat Storitve",
-        "description": "Nastavite senzor, ki izpostavlja odgovor klica storitve Home Assistant.\n\nIzberite storitev iz spustnega menija ali prilepite YAML neposredno iz Razvojna orodja → Storitve.",
+        "description": "Nastavi senzor, ki prikazuje odziv iz klica storitve Home Assistant.\n\nIzberi in nastavi akcijo storitve z uporabo vizualnega urejevalnika spodaj.",
         "data": {
           "name": "Ime",
           "service_action": "Dejanje storitve",
-          "service_data_yaml": "Podatki storitve (YAML)",
           "response_data_path": "Pot podatkov odgovora",
           "attribute_name": "Ime atributa",
           "update_mode": "Način posodobitve",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Prijazno ime za ta senzor (npr. 'Tibber cene')",
-          "service_action": "Izberite storitev/dejanje za klic. Če spodaj prilepite celoten YAML, bo to samodejno zaznano.",
-          "service_data_yaml": "Neobvezni podatki storitve. Lahko prilepite celoten YAML iz Razvojnih orodij - vsa polja pod 'data:' so ohranjena.",
+          "service_action": "Izberi storitev/dejanje za klic in nastavi njene parametre. Uporabi 'Prikaži YAML' za neposredno lepljenje ali urejanje YAML.",
           "response_data_path": "Neobvezna pot za izvleček podatkov iz odgovora (npr. 'results.0.items'). Pustite prazno za celoten odgovor.",
           "attribute_name": "Ime atributa, ki bo vseboval podatke odgovora. Privzeto je 'data'.",
           "update_mode": "Kako se sprožijo posodobitve: Poizvedovanje (ciklično z intervalom), Ročno (prek storitve update_entity) ali Sprožilec stanja entitete (ko druga entiteta spremeni stanje).",
@@ -34,7 +32,6 @@
         "description": "Posodobite konfiguracijo storitve za ta senzor.\n\nČe želite preimenovati ta vnos, uporabite Nastavitve → Naprave in storitve → [vnos] → meni s tremi pikami → Preimenuj.",
         "data": {
           "service_action": "Dejanje storitve",
-          "service_data_yaml": "Podatki storitve (YAML)",
           "response_data_path": "Pot podatkov odgovora",
           "attribute_name": "Ime atributa",
           "update_mode": "Način posodobitve",
@@ -44,8 +41,7 @@
           "trigger_to_state": "Sproži v stanje"
         },
         "data_description": {
-          "service_action": "Izberite storitev/dejanje za klic",
-          "service_data_yaml": "Neobvezni podatki storitve. Lahko prilepite celoten YAML iz Razvojnih orodij - vsa polja pod 'data:' so ohranjena.",
+          "service_action": "Izberi storitev/dejanje za klic in nastavi njene parametre. Uporabi 'Prikaži YAML' za neposredno lepljenje ali urejanje YAML.",
           "response_data_path": "Neobvezna pot za izvleček podatkov iz odgovora (npr. 'results.0.items'). Pustite prazno za celoten odgovor.",
           "attribute_name": "Ime atributa, ki bo vseboval podatke odgovora. Privzeto je 'data'.",
           "update_mode": "Kako se sprožijo posodobitve: Poizvedovanje (ciklično z intervalom), Ročno (prek storitve update_entity) ali Sprožilec stanja entitete (ko druga entiteta spremeni stanje).",

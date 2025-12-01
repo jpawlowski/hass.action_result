@@ -6,7 +6,7 @@ Schemas for the main configuration flow steps:
 - Reconfiguration - multi-step
 
 The flow is organized in steps:
-1. Basic configuration (Name, Service Action, Service Data)
+1. Basic configuration (Name, Service Action)
 2. Update mode selection
 3. Mode-specific settings + advanced options
 """
@@ -24,7 +24,6 @@ from custom_components.service_result.const import (
     CONF_RESPONSE_DATA_PATH,
     CONF_SCAN_INTERVAL,
     CONF_SERVICE_ACTION,
-    CONF_SERVICE_DATA_YAML,
     CONF_TRIGGER_ENTITY,
     CONF_TRIGGER_FROM_STATE,
     CONF_TRIGGER_TO_STATE,
@@ -100,9 +99,9 @@ def get_user_schema(defaults: Mapping[str, Any] | None = None) -> vol.Schema:
     """
     Get schema for user step (initial setup - Step 1: Basic configuration).
 
-    The schema uses a service action selector (dropdown) for easy service selection.
-    Users can optionally paste full YAML from Developer Tools; the system will
-    auto-extract the action and data.
+    The schema uses a service action selector for easy service selection and configuration.
+    In Home Assistant 2025.11+, the ActionSelector includes a visual editor for service data
+    with an integrated YAML view.
 
     Args:
         defaults: Optional dictionary of default values to pre-populate the form.
@@ -125,15 +124,6 @@ def get_user_schema(defaults: Mapping[str, Any] | None = None) -> vol.Schema:
                 CONF_SERVICE_ACTION,
                 default=defaults.get(CONF_SERVICE_ACTION, vol.UNDEFINED),
             ): selector.ActionSelector(),
-            vol.Optional(
-                CONF_SERVICE_DATA_YAML,
-                default=defaults.get(CONF_SERVICE_DATA_YAML, ""),
-            ): selector.TextSelector(
-                selector.TextSelectorConfig(
-                    type=selector.TextSelectorType.TEXT,
-                    multiline=True,
-                ),
-            ),
         },
     )
 
@@ -266,6 +256,9 @@ def get_reconfigure_schema(current_data: Mapping[str, Any]) -> vol.Schema:
     through Home Assistant's built-in entity renaming mechanism after initial setup.
     The integration uses the config entry's entry_id as a stable unique identifier.
 
+    In Home Assistant 2025.11+, the ActionSelector includes a visual editor for service data
+    with an integrated YAML view.
+
     Args:
         current_data: Current configuration data to pre-fill in the form.
 
@@ -287,15 +280,6 @@ def get_reconfigure_schema(current_data: Mapping[str, Any]) -> vol.Schema:
                 CONF_SERVICE_ACTION,
                 default=service_action if service_action else vol.UNDEFINED,
             ): selector.ActionSelector(),
-            vol.Optional(
-                CONF_SERVICE_DATA_YAML,
-                default=current_data.get(CONF_SERVICE_DATA_YAML, ""),
-            ): selector.TextSelector(
-                selector.TextSelectorConfig(
-                    type=selector.TextSelectorType.TEXT,
-                    multiline=True,
-                ),
-            ),
         },
     )
 

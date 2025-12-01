@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Konfigurovat Výsledek Služby",
-        "description": "Nakonfigurujte senzor, který zpřístupňuje odpověď z volání služby Home Assistant.\n\nVyberte službu z rozbalovací nabídky, nebo vložte YAML přímo z Vývojářských nástrojů → Služby.",
+        "description": "Nakonfiguruj senzor, který zobrazuje odpověď z volání služby Home Assistant.\n\nVyber a nakonfiguruj akci služby pomocí vizuálního editoru níže.",
         "data": {
           "name": "Název",
           "service_action": "Akce služby",
-          "service_data_yaml": "Data služby (YAML)",
           "response_data_path": "Cesta k datům odpovědi",
           "attribute_name": "Název atributu",
           "update_mode": "Režim aktualizace",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Přátelský název pro tento senzor (např. 'Ceny Tibber')",
-          "service_action": "Vyberte službu/akci k zavolání. Pokud níže vložíte úplný YAML, bude to automaticky detekováno.",
-          "service_data_yaml": "Volitelná data služby. Můžete vložit úplný YAML z Vývojářských nástrojů - všechna pole pod 'data:' jsou zachována.",
+          "service_action": "Vyber službu/akci k zavolání a nakonfiguruj její parametry. Použij 'Zobrazit YAML' pro přímé vložení nebo úpravu YAML.",
           "response_data_path": "Volitelná cesta pro extrakci dat z odpovědi (např. 'results.0.items'). Nechte prázdné pro úplnou odpověď.",
           "attribute_name": "Název atributu, který bude obsahovat data odpovědi. Výchozí je 'data'.",
           "update_mode": "Jak se spouštějí aktualizace: Dotazování (cyklické v intervalu), Ruční (přes službu update_entity), nebo Spouštěč stavu entity (když jiná entita změní stav).",
@@ -34,7 +32,6 @@
         "description": "Aktualizujte konfiguraci služby pro tento senzor.\n\nChcete-li tento záznam přejmenovat, použijte Nastavení → Zařízení a služby → [záznam] → tříbodové menu → Přejmenovat.",
         "data": {
           "service_action": "Akce služby",
-          "service_data_yaml": "Data služby (YAML)",
           "response_data_path": "Cesta k datům odpovědi",
           "attribute_name": "Název atributu",
           "update_mode": "Režim aktualizace",
@@ -44,8 +41,7 @@
           "trigger_to_state": "Spustit do stavu"
         },
         "data_description": {
-          "service_action": "Vyberte službu/akci k zavolání",
-          "service_data_yaml": "Volitelná data služby. Můžete vložit úplný YAML z Vývojářských nástrojů - všechna pole pod 'data:' jsou zachována.",
+          "service_action": "Vyber službu/akci k zavolání a nakonfiguruj její parametry. Použij 'Zobrazit YAML' pro přímé vložení nebo úpravu YAML.",
           "response_data_path": "Volitelná cesta pro extrakci dat z odpovědi (např. 'results.0.items'). Nechte prázdné pro úplnou odpověď.",
           "attribute_name": "Název atributu, který bude obsahovat data odpovědi. Výchozí je 'data'.",
           "update_mode": "Jak se spouštějí aktualizace: Dotazování (cyklické v intervalu), Ruční (přes službu update_entity), nebo Spouštěč stavu entity (když jiná entita změní stav).",

@@ -6,7 +6,7 @@ This module implements the main configuration flow including:
 - Reconfiguration of existing entries - multi-step
 
 The config flow is organized in steps:
-1. Basic configuration (Name, Service Action, Service Data YAML)
+1. Basic configuration (Name, Service Action)
 2. Update mode selection (Polling, Manual, State Trigger)
 3. Mode-specific settings with collapsible advanced options
 
@@ -18,8 +18,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-import yaml
-
 from custom_components.service_result.config_flow_handler.schemas import (
     SECTION_ADVANCED_OPTIONS,
     get_manual_settings_schema,
@@ -29,14 +27,12 @@ from custom_components.service_result.config_flow_handler.schemas import (
     get_update_mode_schema,
     get_user_schema,
 )
-from custom_components.service_result.config_flow_handler.validators import dict_to_yaml, parse_service_yaml
 from custom_components.service_result.const import (
     CONF_ATTRIBUTE_NAME,
     CONF_NAME,
     CONF_RESPONSE_DATA_PATH,
     CONF_SCAN_INTERVAL,
     CONF_SERVICE_ACTION,
-    CONF_SERVICE_DATA_YAML,
     CONF_TRIGGER_ENTITY,
     CONF_TRIGGER_FROM_STATE,
     CONF_TRIGGER_TO_STATE,
@@ -208,15 +204,10 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
 
         User can:
         1. Enter a name for the sensor
-        2. Select a service from the dropdown
-        3. Optionally paste full YAML from Developer Tools
-        4. The system auto-extracts action and cleans the data
+        2. Select and configure a service action using the visual ActionSelector
 
-        Action Precedence Logic:
-        - If user pastes YAML containing "action:" key, that takes priority
-        - The dropdown is automatically updated to match the YAML action
-        - This allows users who paste full YAML to skip dropdown selection
-        - If no action in YAML, the dropdown selection is used
+        The ActionSelector in HA 2025.11+ includes a visual editor for service data
+        with an integrated YAML view, so no separate YAML field is needed.
 
         Args:
             user_input: The user input from the config flow form, or None for initial display.
@@ -225,85 +216,50 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
             The config flow result, either showing a form or proceeding to next step.
         """
         errors: dict[str, str] = {}
-        updated_input: dict[str, Any] = {}
         description_placeholders: dict[str, str] = {}
 
         if user_input is not None:
-            service_data_yaml = user_input.get(CONF_SERVICE_DATA_YAML, "")
             action_selector_data = user_input.get(CONF_SERVICE_ACTION)
 
-            # Parse the YAML to extract action and clean data
-            # All service data fields (including entry_id) are preserved
-            cleaned_data, yaml_action, yaml_error = parse_service_yaml(service_data_yaml)
+            # Extract domain and service from the ActionSelector
+            domain: str | None = None
+            service_name: str | None = None
 
-            if yaml_error:
-                errors["base"] = yaml_error
+            if action_selector_data:
+                extracted = self._extract_action_from_selector(action_selector_data)
+                if extracted:
+                    domain, service_name = extracted
+
+            if not domain or not service_name:
+                errors["base"] = "no_service_selected"
+            elif not self.hass.services.has_service(domain, service_name):
+                errors["base"] = "service_not_found"
             else:
-                # Determine the final action to use
-                # Priority: YAML action > dropdown selection
-                domain: str | None = None
-                service_name: str | None = None
+                # Check if service supports returning response data
+                supports_response = self.hass.services.supports_response(domain, service_name)
+                if supports_response == SupportsResponse.NONE:
+                    errors["base"] = "service_no_response"
 
-                if yaml_action:
-                    # User pasted YAML with action - extract and use it
-                    if "." in yaml_action:
-                        domain, service_name = yaml_action.split(".", 1)
-                        # Update the action selector to match
-                        action_selector_data = {"action": yaml_action}
-                        updated_input[CONF_SERVICE_ACTION] = action_selector_data
-                elif action_selector_data:
-                    # Use dropdown selection
-                    extracted = self._extract_action_from_selector(action_selector_data)
-                    if extracted:
-                        domain, service_name = extracted
+            if not errors and domain and service_name:
+                # Get service data from the ActionSelector (it includes the 'data' section)
+                service_data = action_selector_data.get("data", {}) if action_selector_data else {}
 
-                if not domain or not service_name:
-                    errors["base"] = "no_service_selected"
-                elif not self.hass.services.has_service(domain, service_name):
-                    errors["base"] = "service_not_found"
-                else:
-                    # Check if service supports returning response data
-                    supports_response = self.hass.services.supports_response(domain, service_name)
-                    if supports_response == SupportsResponse.NONE:
-                        errors["base"] = "service_no_response"
-
-                if not errors and domain and service_name:
-                    # Convert cleaned data back to YAML
-                    clean_yaml = dict_to_yaml(cleaned_data or {})
-                    updated_input[CONF_SERVICE_DATA_YAML] = clean_yaml
-
-                    # Parse the cleaned YAML to get the actual data dict for validation
-                    try:
-                        validation_data = yaml.safe_load(clean_yaml) if clean_yaml else {}
-                        if validation_data is None:
-                            validation_data = {}
-                    except yaml.YAMLError:
-                        validation_data = {}
-
-                    # Actually call the service to validate it works
-                    success, error_key, error_msg = await self._validate_service_call(
-                        domain, service_name, validation_data
-                    )
-                    if not success and error_key:
-                        errors["base"] = error_key
-                        if error_msg:
-                            description_placeholders["error_message"] = error_msg
+                # Actually call the service to validate it works
+                success, error_key, error_msg = await self._validate_service_call(domain, service_name, service_data)
+                if not success and error_key:
+                    errors["base"] = error_key
+                    if error_msg:
+                        description_placeholders["error_message"] = error_msg
 
             if not errors:
                 # Store data for next step
                 name = user_input.get(CONF_NAME, f"{domain}.{service_name}")
                 self._step_data = {
                     CONF_NAME: name,
-                    CONF_SERVICE_ACTION: updated_input.get(CONF_SERVICE_ACTION, action_selector_data),
-                    CONF_SERVICE_DATA_YAML: updated_input.get(CONF_SERVICE_DATA_YAML, clean_yaml),
+                    CONF_SERVICE_ACTION: action_selector_data,
                 }
                 # Proceed to update mode selection
                 return await self.async_step_update_mode()
-
-            # If we have updates to apply (e.g., action extracted from YAML),
-            # merge them into user_input for the form defaults
-            if updated_input:
-                user_input = {**user_input, **updated_input}
 
         return self.async_show_form(
             step_id="user",
@@ -366,7 +322,6 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
                 data={
                     CONF_NAME: self._step_data[CONF_NAME],
                     CONF_SERVICE_ACTION: self._step_data[CONF_SERVICE_ACTION],
-                    CONF_SERVICE_DATA_YAML: self._step_data[CONF_SERVICE_DATA_YAML],
                     CONF_UPDATE_MODE: UPDATE_MODE_POLLING,
                     CONF_SCAN_INTERVAL: user_input.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL_SECONDS),
                     CONF_RESPONSE_DATA_PATH: response_path,
@@ -406,7 +361,6 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
                 data={
                     CONF_NAME: self._step_data[CONF_NAME],
                     CONF_SERVICE_ACTION: self._step_data[CONF_SERVICE_ACTION],
-                    CONF_SERVICE_DATA_YAML: self._step_data[CONF_SERVICE_DATA_YAML],
                     CONF_UPDATE_MODE: UPDATE_MODE_STATE_TRIGGER,
                     CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL_SECONDS,
                     CONF_RESPONSE_DATA_PATH: response_path,
@@ -446,7 +400,6 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
                 data={
                     CONF_NAME: self._step_data[CONF_NAME],
                     CONF_SERVICE_ACTION: self._step_data[CONF_SERVICE_ACTION],
-                    CONF_SERVICE_DATA_YAML: self._step_data[CONF_SERVICE_DATA_YAML],
                     CONF_UPDATE_MODE: UPDATE_MODE_MANUAL,
                     CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL_SECONDS,
                     CONF_RESPONSE_DATA_PATH: response_path,
@@ -472,6 +425,9 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
         Allows users to update the service configuration without removing
         and re-adding the integration.
 
+        The ActionSelector in HA 2025.11+ includes a visual editor for service data
+        with an integrated YAML view, so no separate YAML field is needed.
+
         Args:
             user_input: The user input from the reconfigure form, or None for initial display.
 
@@ -480,66 +436,40 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
         """
         entry = self._get_reconfigure_entry()
         errors: dict[str, str] = {}
-        updated_input: dict[str, Any] = {}
         description_placeholders: dict[str, str] = {}
 
         if user_input is not None:
-            service_data_yaml = user_input.get(CONF_SERVICE_DATA_YAML, "")
             action_selector_data = user_input.get(CONF_SERVICE_ACTION)
 
-            # Parse the YAML to extract action and clean data
-            # All service data fields (including entry_id) are preserved
-            cleaned_data, yaml_action, yaml_error = parse_service_yaml(service_data_yaml)
+            # Extract domain and service from the ActionSelector
+            domain: str | None = None
+            service_name: str | None = None
 
-            if yaml_error:
-                errors["base"] = yaml_error
+            if action_selector_data:
+                extracted = self._extract_action_from_selector(action_selector_data)
+                if extracted:
+                    domain, service_name = extracted
+
+            if not domain or not service_name:
+                errors["base"] = "no_service_selected"
+            elif not self.hass.services.has_service(domain, service_name):
+                errors["base"] = "service_not_found"
             else:
-                # Determine the final action to use
-                domain: str | None = None
-                service_name: str | None = None
+                # Check if service supports returning response data
+                supports_response = self.hass.services.supports_response(domain, service_name)
+                if supports_response == SupportsResponse.NONE:
+                    errors["base"] = "service_no_response"
 
-                if yaml_action:
-                    # User pasted YAML with action - extract and use it
-                    if "." in yaml_action:
-                        domain, service_name = yaml_action.split(".", 1)
-                        action_selector_data = {"action": yaml_action}
-                        updated_input[CONF_SERVICE_ACTION] = action_selector_data
-                elif action_selector_data:
-                    extracted = self._extract_action_from_selector(action_selector_data)
-                    if extracted:
-                        domain, service_name = extracted
+            if not errors and domain and service_name:
+                # Get service data from the ActionSelector (it includes the 'data' section)
+                service_data = action_selector_data.get("data", {}) if action_selector_data else {}
 
-                if not domain or not service_name:
-                    errors["base"] = "no_service_selected"
-                elif not self.hass.services.has_service(domain, service_name):
-                    errors["base"] = "service_not_found"
-                else:
-                    # Check if service supports returning response data
-                    supports_response = self.hass.services.supports_response(domain, service_name)
-                    if supports_response == SupportsResponse.NONE:
-                        errors["base"] = "service_no_response"
-
-                if not errors and domain and service_name:
-                    # Convert cleaned data back to YAML
-                    clean_yaml = dict_to_yaml(cleaned_data or {})
-                    updated_input[CONF_SERVICE_DATA_YAML] = clean_yaml
-
-                    # Parse for validation
-                    try:
-                        validation_data = yaml.safe_load(clean_yaml) if clean_yaml else {}
-                        if validation_data is None:
-                            validation_data = {}
-                    except yaml.YAMLError:
-                        validation_data = {}
-
-                    # Validate the service call
-                    success, error_key, error_msg = await self._validate_service_call(
-                        domain, service_name, validation_data
-                    )
-                    if not success and error_key:
-                        errors["base"] = error_key
-                        if error_msg:
-                            description_placeholders["error_message"] = error_msg
+                # Validate the service call
+                success, error_key, error_msg = await self._validate_service_call(domain, service_name, service_data)
+                if not success and error_key:
+                    errors["base"] = error_key
+                    if error_msg:
+                        description_placeholders["error_message"] = error_msg
 
             if not errors:
                 # Store data for next step, preserving existing values
@@ -547,8 +477,7 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
                 # Users should use Home Assistant's built-in renaming mechanism instead.
                 self._step_data = {
                     CONF_NAME: entry.data.get(CONF_NAME, entry.title),
-                    CONF_SERVICE_ACTION: updated_input.get(CONF_SERVICE_ACTION, action_selector_data),
-                    CONF_SERVICE_DATA_YAML: updated_input.get(CONF_SERVICE_DATA_YAML, clean_yaml),
+                    CONF_SERVICE_ACTION: action_selector_data,
                     # Preserve existing settings as defaults
                     CONF_UPDATE_MODE: entry.data.get(CONF_UPDATE_MODE, DEFAULT_UPDATE_MODE),
                     CONF_SCAN_INTERVAL: entry.data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL_SECONDS),
@@ -560,9 +489,6 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
                 }
                 # Proceed to update mode selection
                 return await self.async_step_reconfigure_update_mode()
-
-            if updated_input:
-                user_input = {**user_input, **updated_input}
 
         return self.async_show_form(
             step_id="reconfigure",
@@ -627,7 +553,6 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
                 data={
                     CONF_NAME: self._step_data[CONF_NAME],
                     CONF_SERVICE_ACTION: self._step_data[CONF_SERVICE_ACTION],
-                    CONF_SERVICE_DATA_YAML: self._step_data[CONF_SERVICE_DATA_YAML],
                     CONF_UPDATE_MODE: UPDATE_MODE_POLLING,
                     CONF_SCAN_INTERVAL: user_input.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL_SECONDS),
                     CONF_RESPONSE_DATA_PATH: response_path,
@@ -669,7 +594,6 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
                 data={
                     CONF_NAME: self._step_data[CONF_NAME],
                     CONF_SERVICE_ACTION: self._step_data[CONF_SERVICE_ACTION],
-                    CONF_SERVICE_DATA_YAML: self._step_data[CONF_SERVICE_DATA_YAML],
                     CONF_UPDATE_MODE: UPDATE_MODE_STATE_TRIGGER,
                     CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL_SECONDS,
                     CONF_RESPONSE_DATA_PATH: response_path,
@@ -711,7 +635,6 @@ class ServiceResultEntitiesConfigFlowHandler(config_entries.ConfigFlow, domain=D
                 data={
                     CONF_NAME: self._step_data[CONF_NAME],
                     CONF_SERVICE_ACTION: self._step_data[CONF_SERVICE_ACTION],
-                    CONF_SERVICE_DATA_YAML: self._step_data[CONF_SERVICE_DATA_YAML],
                     CONF_UPDATE_MODE: UPDATE_MODE_MANUAL,
                     CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL_SECONDS,
                     CONF_RESPONSE_DATA_PATH: response_path,

@@ -22,7 +22,6 @@ import yaml
 from custom_components.service_result.const import (
     CONF_NAME,
     CONF_SERVICE_ACTION,
-    CONF_SERVICE_DATA_YAML,
     CONF_SERVICE_DOMAIN,
     CONF_SERVICE_NAME,
     ERROR_TYPE_PERMANENT,
@@ -95,6 +94,33 @@ class ServiceResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         domain = self.config_entry.data.get(CONF_SERVICE_DOMAIN, "")
         service_name = self.config_entry.data.get(CONF_SERVICE_NAME, "")
         return (domain, service_name)
+
+    def _get_service_data(self) -> dict[str, Any]:
+        """
+        Extract service data from config entry.
+
+        In HA 2025.11+, the ActionSelector stores the complete action including
+        service data in the 'data' key. For backwards compatibility, also checks
+        the legacy 'service_data_yaml' field.
+
+        Returns:
+            A dictionary of service data parameters.
+        """
+        # Try new format first: ActionSelector stores data in the 'data' key
+        service_action = self.config_entry.data.get(CONF_SERVICE_ACTION)
+        if service_action and isinstance(service_action, dict):
+            return service_action.get("data", {}) or {}
+
+        # Fall back to legacy YAML field for backwards compatibility
+        service_data_yaml = self.config_entry.data.get("service_data_yaml", "")
+        if service_data_yaml and isinstance(service_data_yaml, str) and service_data_yaml.strip():
+            try:
+                parsed = yaml.safe_load(service_data_yaml)
+                return parsed if isinstance(parsed, dict) else {}
+            except yaml.YAMLError:
+                return {}
+
+        return {}
 
     def _classify_error(self, exc: Exception) -> str:
         """
@@ -175,7 +201,6 @@ class ServiceResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         the response for the sensor entity to expose.
 
         Error handling:
-        - YAML parse errors: Permanent, no retry
         - Service not found: Permanent if persistent, temporary if integration loading
         - Service call errors: Classified and retried if temporary
         - Timeouts: Temporary, will retry
@@ -187,32 +212,9 @@ class ServiceResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
             UpdateFailed: If the service call fails.
         """
         service_domain, service_name = self._get_service_info()
-        service_data_yaml = self.config_entry.data.get(CONF_SERVICE_DATA_YAML, "")
+        service_data = self._get_service_data()
         entry_name = self.config_entry.data.get(CONF_NAME, "Unknown")
         service_full_name = f"{service_domain}.{service_name}"
-
-        # Parse YAML service data
-        try:
-            if service_data_yaml.strip():
-                service_data = yaml.safe_load(service_data_yaml)
-                if service_data is None:
-                    service_data = {}
-            else:
-                service_data = {}
-        except yaml.YAMLError as exc:
-            self.last_error = f"Invalid YAML: {exc}"
-            self.last_error_type = ERROR_TYPE_PERMANENT
-            self.consecutive_errors += 1
-            LOGGER.error(
-                "Failed to parse service data YAML for '%s': %s",
-                entry_name,
-                exc,
-            )
-            raise UpdateFailed(
-                translation_domain="service_result",
-                translation_key="yaml_parse_error",
-                translation_placeholders={"error": str(exc)},
-            ) from exc
 
         # Verify service exists
         if not self.hass.services.has_service(service_domain, service_name):

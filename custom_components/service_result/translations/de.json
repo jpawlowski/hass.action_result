@@ -3,16 +3,14 @@
     "step": {
       "user": {
         "title": "Service-Ergebnis konfigurieren",
-        "description": "Konfiguriere einen Sensor, der die Antwort eines Home Assistant Service-Aufrufs bereitstellt.\n\nWähle einen Service aus dem Dropdown oder füge YAML direkt aus Entwicklerwerkzeuge → Aktionen ein.",
+        "description": "Konfiguriere einen Sensor, der die Antwort eines Home Assistant Service-Aufrufs bereitstellt.\n\nWähle und konfiguriere eine Service-Aktion mit dem visuellen Editor unten.",
         "data": {
           "name": "Name",
-          "service_action": "Service-Aktion",
-          "service_data_yaml": "Service-Daten (YAML)"
+          "service_action": "Service-Aktion"
         },
         "data_description": {
           "name": "Ein benutzerfreundlicher Name für diesen Sensor (z.B. 'Tibber Preise')",
-          "service_action": "Wähle die aufzurufende Service-Aktion. Wenn du unten vollständiges YAML einfügst, wird dies automatisch erkannt.",
-          "service_data_yaml": "Optionale Service-Daten. Du kannst das vollständige YAML aus den Entwicklerwerkzeugen einfügen - alle Felder unter 'data:' werden übernommen."
+          "service_action": "Wähle die aufzurufende Service-Aktion und konfiguriere ihre Parameter. Nutze 'YAML anzeigen' um YAML direkt einzufügen oder zu bearbeiten."
         }
       },
       "update_mode": {
@@ -96,12 +94,10 @@
         "title": "Service-Ergebnis neu konfigurieren",
         "description": "Aktualisiere die Service-Konfiguration für diesen Sensor.\n\nUm diesen Eintrag umzubenennen, nutze Einstellungen → Geräte & Dienste → [Eintrag] → Dreipunkt-Menü → Umbenennen.",
         "data": {
-          "service_action": "Service-Aktion",
-          "service_data_yaml": "Service-Daten (YAML)"
+          "service_action": "Service-Aktion"
         },
         "data_description": {
-          "service_action": "Wähle die aufzurufende Service-Aktion",
-          "service_data_yaml": "Optionale Service-Daten. Du kannst das vollständige YAML aus den Entwicklerwerkzeugen einfügen - alle Felder unter 'data:' werden übernommen."
+          "service_action": "Wähle die aufzurufende Service-Aktion und konfiguriere ihre Parameter. Nutze 'YAML anzeigen' um YAML direkt einzufügen oder zu bearbeiten."
         }
       },
       "reconfigure_update_mode": {

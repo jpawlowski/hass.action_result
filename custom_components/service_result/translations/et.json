@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Teenuse Tulemuse Seadistamine",
-        "description": "Seadistage andur, mis kuvab Home Assistant teenuse kutsungi vastust.\n\nValige teenus rippmenüüst või kleepige YAML otse Arendaja tööriistad → Teenused alt.",
+        "description": "Seadista sensor, mis kuvab vastust Home Assistant teenuse kutsest.\n\nVali ja seadista teenuse toiming alloleva visuaalse redaktori abil.",
         "data": {
           "name": "Nimi",
           "service_action": "Teenuse toiming",
-          "service_data_yaml": "Teenuse andmed (YAML)",
           "response_data_path": "Vastuse andmete tee",
           "attribute_name": "Atribuudi nimi",
           "update_mode": "Uuendusrežiim",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Sõbralik nimi sellele andurile (nt 'Tibber hinnad')",
-          "service_action": "Valige kutsutav teenus/toiming. Kui kleepite allpool täieliku YAML, tuvastatakse see automaatselt.",
-          "service_data_yaml": "Valikulised teenuse andmed. Saate kleepida täieliku YAML Arendaja tööriistadest - kõik 'data:' all olevad väljad säilitatakse.",
+          "service_action": "Vali kutsutav teenus/toiming ja seadista selle parameetrid. Kasuta 'Näita YAML' et kleepida või muuta YAML-i otse.",
           "response_data_path": "Valikuline tee andmete eraldamiseks vastusest (nt 'results.0.items'). Jätke tühjaks täieliku vastuse jaoks.",
           "attribute_name": "Atribuudi nimi, mis sisaldab vastuse andmeid. Vaikimisi on 'data'.",
           "update_mode": "Kuidas uuendusi käivitatakse: Küsitlus (tsükliline intervalliga), Käsitsi (update_entity teenuse kaudu) või Olemi oleku päästik (kui teine olem muudab olekut).",
@@ -34,7 +32,6 @@
         "description": "Uuendage teenuse seadistust selle anduri jaoks.\n\nSelle kirje ümbernimetamiseks kasuta Seaded → Seadmed ja teenused → [kirje] → kolme punkti menüü → Nimeta ümber.",
         "data": {
           "service_action": "Teenuse toiming",
-          "service_data_yaml": "Teenuse andmed (YAML)",
           "response_data_path": "Vastuse andmete tee",
           "attribute_name": "Atribuudi nimi",
           "update_mode": "Uuendusrežiim",
@@ -44,8 +41,7 @@
           "trigger_to_state": "Päästik olekusse"
         },
         "data_description": {
-          "service_action": "Valige kutsutav teenus/toiming",
-          "service_data_yaml": "Valikulised teenuse andmed. Saate kleepida täieliku YAML Arendaja tööriistadest - kõik 'data:' all olevad väljad säilitatakse.",
+          "service_action": "Vali kutsutav teenus/toiming ja seadista selle parameetrid. Kasuta 'Näita YAML' et kleepida või muuta YAML-i otse.",
           "response_data_path": "Valikuline tee andmete eraldamiseks vastusest (nt 'results.0.items'). Jätke tühjaks täieliku vastuse jaoks.",
           "attribute_name": "Atribuudi nimi, mis sisaldab vastuse andmeid. Vaikimisi on 'data'.",
           "update_mode": "Kuidas uuendusi käivitatakse: Küsitlus (tsükliline intervalliga), Käsitsi (update_entity teenuse kaudu) või Olemi oleku päästik (kui teine olem muudab olekut).",

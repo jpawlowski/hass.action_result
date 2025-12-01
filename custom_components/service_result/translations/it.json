@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Configura Risultato Servizio",
-        "description": "Configura un sensore che espone la risposta di una chiamata a un servizio Home Assistant.\n\nSeleziona un servizio dal menu a tendina, oppure incolla lo YAML direttamente da Strumenti di sviluppo → Servizi.",
+        "description": "Configura un sensore che espone la risposta da una chiamata a un servizio di Home Assistant.\n\nSeleziona e configura un'azione di servizio usando l'editor visivo qui sotto.",
         "data": {
           "name": "Nome",
           "service_action": "Azione del servizio",
-          "service_data_yaml": "Dati del servizio (YAML)",
           "response_data_path": "Percorso dati risposta",
           "attribute_name": "Nome attributo",
           "update_mode": "Modalità aggiornamento",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Un nome amichevole per questo sensore (es. 'Prezzi Tibber')",
-          "service_action": "Seleziona il servizio/azione da chiamare. Se incolli lo YAML completo sotto, questo verrà rilevato automaticamente.",
-          "service_data_yaml": "Dati del servizio opzionali. Puoi incollare lo YAML completo dagli Strumenti di sviluppo - tutti i campi sotto 'data:' sono preservati.",
+          "service_action": "Seleziona il servizio/azione da chiamare e configura i suoi parametri. Usa 'Mostra YAML' per incollare o modificare YAML direttamente.",
           "response_data_path": "Percorso opzionale per estrarre dati dalla risposta (es. 'results.0.items'). Lascia vuoto per la risposta completa.",
           "attribute_name": "Nome dell'attributo che conterrà i dati della risposta. Predefinito è 'data'.",
           "update_mode": "Come attivare gli aggiornamenti: Polling (ciclico a intervallo), Manuale (via servizio update_entity), o Trigger stato entità (quando un'altra entità cambia stato).",
@@ -34,7 +32,6 @@
         "description": "Aggiorna la configurazione del servizio per questo sensore.\n\nPer rinominare questa voce, usa Impostazioni → Dispositivi e servizi → [voce] → menu a tre punti → Rinomina.",
         "data": {
           "service_action": "Azione del servizio",
-          "service_data_yaml": "Dati del servizio (YAML)",
           "response_data_path": "Percorso dati risposta",
           "attribute_name": "Nome attributo",
           "update_mode": "Modalità aggiornamento",
@@ -44,8 +41,7 @@
           "trigger_to_state": "Trigger a stato"
         },
         "data_description": {
-          "service_action": "Seleziona il servizio/azione da chiamare",
-          "service_data_yaml": "Dati del servizio opzionali. Puoi incollare lo YAML completo dagli Strumenti di sviluppo - tutti i campi sotto 'data:' sono preservati.",
+          "service_action": "Seleziona il servizio/azione da chiamare e configura i suoi parametri. Usa 'Mostra YAML' per incollare o modificare YAML direttamente.",
           "response_data_path": "Percorso opzionale per estrarre dati dalla risposta (es. 'results.0.items'). Lascia vuoto per la risposta completa.",
           "attribute_name": "Nome dell'attributo che conterrà i dati della risposta. Predefinito è 'data'.",
           "update_mode": "Come attivare gli aggiornamenti: Polling (ciclico a intervallo), Manuale (via servizio update_entity), o Trigger stato entità (quando un'altra entità cambia stato).",

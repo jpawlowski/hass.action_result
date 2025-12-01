@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Konfigurer Serviceresultat",
-        "description": "Konfigurer en sensor som eksponerer svaret fra et Home Assistant-servicekald.\n\nVælg en tjeneste fra rullemenuen, eller indsæt YAML direkte fra Udviklerværktøjer → Tjenester.",
+        "description": "Konfigurer en sensor der viser svaret fra et Home Assistant service-kald.\n\nVælg og konfigurer en servicehandling med den visuelle editor nedenfor.",
         "data": {
           "name": "Navn",
           "service_action": "Servicehandling",
-          "service_data_yaml": "Servicedata (YAML)",
           "response_data_path": "Svardatasti",
           "attribute_name": "Attributnavn",
           "update_mode": "Opdateringstilstand",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Et venligt navn for denne sensor (f.eks. 'Tibber-priser')",
-          "service_action": "Vælg tjenesten/handlingen der skal kaldes. Hvis du indsætter fuld YAML nedenfor, detekteres dette automatisk.",
-          "service_data_yaml": "Valgfri servicedata. Du kan indsætte fuld YAML fra Udviklerværktøjer - alle felter under 'data:' bevares.",
+          "service_action": "Vælg tjenesten/handlingen der skal kaldes og konfigurer dens parametre. Brug 'Vis YAML' for at indsætte eller redigere YAML direkte.",
           "response_data_path": "Valgfri sti til at udtrække data fra svaret (f.eks. 'results.0.items'). Lad være tom for fuldt svar.",
           "attribute_name": "Navn på attributten der vil indeholde svardataene. Standard er 'data'.",
           "update_mode": "Hvordan opdateringer udløses: Polling (cyklisk med interval), Manuel (via update_entity-tjeneste), eller Entitetstilstandstrigger (når en anden entitet ændrer tilstand).",
@@ -34,7 +32,6 @@
         "description": "Opdater servicekonfigurationen for denne sensor.\n\nFor at omdøbe denne post, brug Indstillinger → Enheder & Tjenester → [post] → trepunkts-menu → Omdøb.",
         "data": {
           "service_action": "Servicehandling",
-          "service_data_yaml": "Servicedata (YAML)",
           "response_data_path": "Svardatasti",
           "attribute_name": "Attributnavn",
           "update_mode": "Opdateringstilstand",
@@ -44,8 +41,7 @@
           "trigger_to_state": "Trigger til tilstand"
         },
         "data_description": {
-          "service_action": "Vælg tjenesten/handlingen der skal kaldes",
-          "service_data_yaml": "Valgfri servicedata. Du kan indsætte fuld YAML fra Udviklerværktøjer - alle felter under 'data:' bevares.",
+          "service_action": "Vælg tjenesten/handlingen der skal kaldes og konfigurer dens parametre. Brug 'Vis YAML' for at indsætte eller redigere YAML direkte.",
           "response_data_path": "Valgfri sti til at udtrække data fra svaret (f.eks. 'results.0.items'). Lad være tom for fuldt svar.",
           "attribute_name": "Navn på attributten der vil indeholde svardataene. Standard er 'data'.",
           "update_mode": "Hvordan opdateringer udløses: Polling (cyklisk med interval), Manuel (via update_entity-tjeneste), eller Entitetstilstandstrigger (når en anden entitet ændrer tilstand).",

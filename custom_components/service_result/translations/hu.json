@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Szolgáltatás Eredmény Konfigurálása",
-        "description": "Konfiguráljon egy szenzort, amely a Home Assistant szolgáltatáshívás válaszát jeleníti meg.\n\nVálasszon szolgáltatást a legördülő menüből, vagy illessze be a YAML-t közvetlenül a Fejlesztői eszközök → Szolgáltatások menüpontból.",
+        "description": "Konfigurálj egy szenzort, amely megmutatja a Home Assistant szolgáltatás hívás válaszát.\n\nVálaszd ki és konfiguráld a szolgáltatás műveletet az alábbi vizuális szerkesztővel.",
         "data": {
           "name": "Név",
           "service_action": "Szolgáltatás művelet",
-          "service_data_yaml": "Szolgáltatás adatok (YAML)",
           "response_data_path": "Válasz adatok útvonala",
           "attribute_name": "Attribútum neve",
           "update_mode": "Frissítési mód",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Barátságos név ehhez a szenzorhoz (pl. 'Tibber árak')",
-          "service_action": "Válassza ki a hívandó szolgáltatást/műveletet. Ha alább teljes YAML-t illeszt be, ez automatikusan felismerésre kerül.",
-          "service_data_yaml": "Opcionális szolgáltatás adatok. Beillesztheti a teljes YAML-t a Fejlesztői eszközökből - a 'data:' alatti összes mező megőrzésre kerül.",
+          "service_action": "Válaszd ki a hívandó szolgáltatást/műveletet és konfiguráld a paramétereit. Használd a 'YAML megjelenítése' gombot a YAML közvetlen beillesztéséhez vagy szerkesztéséhez.",
           "response_data_path": "Opcionális útvonal az adatok kinyeréséhez a válaszból (pl. 'results.0.items'). Hagyja üresen a teljes válaszhoz.",
           "attribute_name": "Az attribútum neve, amely a válasz adatokat fogja tartalmazni. Alapértelmezett a 'data'.",
           "update_mode": "Hogyan aktiválódnak a frissítések: Lekérdezés (ciklikus intervallummal), Manuális (update_entity szolgáltatáson keresztül), vagy Entitás állapot trigger (amikor másik entitás állapotot vált).",
@@ -34,7 +32,6 @@
         "description": "Frissítse a szolgáltatás konfigurációját ehhez a szenzorhoz.\n\nA bejegyzés átnevezéséhez használd a Beállítások → Eszközök és szolgáltatások → [bejegyzés] → hárompontos menü → Átnevezés lehetőséget.",
         "data": {
           "service_action": "Szolgáltatás művelet",
-          "service_data_yaml": "Szolgáltatás adatok (YAML)",
           "response_data_path": "Válasz adatok útvonala",
           "attribute_name": "Attribútum neve",
           "update_mode": "Frissítési mód",
@@ -44,8 +41,7 @@
           "trigger_to_state": "Trigger állapotba"
         },
         "data_description": {
-          "service_action": "Válassza ki a hívandó szolgáltatást/műveletet",
-          "service_data_yaml": "Opcionális szolgáltatás adatok. Beillesztheti a teljes YAML-t a Fejlesztői eszközökből - a 'data:' alatti összes mező megőrzésre kerül.",
+          "service_action": "Válaszd ki a hívandó szolgáltatást/műveletet és konfiguráld a paramétereit. Használd a 'YAML megjelenítése' gombot a YAML közvetlen beillesztéséhez vagy szerkesztéséhez.",
           "response_data_path": "Opcionális útvonal az adatok kinyeréséhez a válaszból (pl. 'results.0.items'). Hagyja üresen a teljes válaszhoz.",
           "attribute_name": "Az attribútum neve, amely a válasz adatokat fogja tartalmazni. Alapértelmezett a 'data'.",
           "update_mode": "Hogyan aktiválódnak a frissítések: Lekérdezés (ciklikus intervallummal), Manuális (update_entity szolgáltatáson keresztül), vagy Entitás állapot trigger (amikor másik entitás állapotot vált).",

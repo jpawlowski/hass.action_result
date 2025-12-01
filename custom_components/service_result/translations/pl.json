@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Konfiguruj Wynik Usługi",
-        "description": "Skonfiguruj czujnik, który udostępnia odpowiedź z wywołania usługi Home Assistant.\n\nWybierz usługę z listy rozwijanej lub wklej YAML bezpośrednio z Narzędzia deweloperskie → Usługi.",
+        "description": "Skonfiguruj sensor, który wyświetla odpowiedź z wywołania usługi Home Assistant.\n\nWybierz i skonfiguruj akcję usługi za pomocą edytora wizualnego poniżej.",
         "data": {
           "name": "Nazwa",
           "service_action": "Akcja usługi",
-          "service_data_yaml": "Dane usługi (YAML)",
           "response_data_path": "Ścieżka danych odpowiedzi",
           "attribute_name": "Nazwa atrybutu",
           "update_mode": "Tryb aktualizacji",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Przyjazna nazwa dla tego czujnika (np. 'Ceny Tibber')",
-          "service_action": "Wybierz usługę/akcję do wywołania. Jeśli wkleisz pełny YAML poniżej, zostanie to automatycznie wykryte.",
-          "service_data_yaml": "Opcjonalne dane usługi. Możesz wkleić pełny YAML z Narzędzi deweloperskich - wszystkie pola pod 'data:' są zachowane.",
+          "service_action": "Wybierz usługę/akcję do wywołania i skonfiguruj jej parametry. Użyj 'Pokaż YAML' aby bezpośrednio wkleić lub edytować YAML.",
           "response_data_path": "Opcjonalna ścieżka do wyodrębnienia danych z odpowiedzi (np. 'results.0.items'). Pozostaw puste dla pełnej odpowiedzi.",
           "attribute_name": "Nazwa atrybutu, który będzie zawierał dane odpowiedzi. Domyślnie 'data'.",
           "update_mode": "Jak wyzwalać aktualizacje: Odpytywanie (cykliczne w interwale), Ręczne (przez usługę update_entity) lub Wyzwalacz stanu encji (gdy inna encja zmieni stan).",
@@ -34,7 +32,6 @@
         "description": "Zaktualizuj konfigurację usługi dla tego czujnika.\n\nAby zmienić nazwę tego wpisu, użyj Ustawienia → Urządzenia i usługi → [wpis] → menu trzech kropek → Zmień nazwę.",
         "data": {
           "service_action": "Akcja usługi",
-          "service_data_yaml": "Dane usługi (YAML)",
           "response_data_path": "Ścieżka danych odpowiedzi",
           "attribute_name": "Nazwa atrybutu",
           "update_mode": "Tryb aktualizacji",
@@ -44,8 +41,7 @@
           "trigger_to_state": "Wyzwalaj do stanu"
         },
         "data_description": {
-          "service_action": "Wybierz usługę/akcję do wywołania",
-          "service_data_yaml": "Opcjonalne dane usługi. Możesz wkleić pełny YAML z Narzędzi deweloperskich - wszystkie pola pod 'data:' są zachowane.",
+          "service_action": "Wybierz usługę/akcję do wywołania i skonfiguruj jej parametry. Użyj 'Pokaż YAML' aby bezpośrednio wkleić lub edytować YAML.",
           "response_data_path": "Opcjonalna ścieżka do wyodrębnienia danych z odpowiedzi (np. 'results.0.items'). Pozostaw puste dla pełnej odpowiedzi.",
           "attribute_name": "Nazwa atrybutu, który będzie zawierał dane odpowiedzi. Domyślnie 'data'.",
           "update_mode": "Jak wyzwalać aktualizacje: Odpytywanie (cykliczne w interwale), Ręczne (przez usługę update_entity) lub Wyzwalacz stanu encji (gdy inna encja zmieni stan).",

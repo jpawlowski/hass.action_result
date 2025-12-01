@@ -3,11 +3,10 @@
     "step": {
       "user": {
         "title": "Konfigurēt Pakalpojuma Rezultātu",
-        "description": "Konfigurējiet sensoru, kas parāda Home Assistant pakalpojuma izsaukuma atbildi.\n\nIzvēlieties pakalpojumu no nolaižamās izvēlnes vai ielīmējiet YAML tieši no Izstrādātāja rīki → Pakalpojumi.",
+        "description": "Konfigurē sensoru, kas parāda atbildi no Home Assistant pakalpojuma izsaukuma.\n\nIzvēlies un konfigurē pakalpojuma darbību, izmantojot zemāk esošo vizuālo redaktoru.",
         "data": {
           "name": "Nosaukums",
           "service_action": "Pakalpojuma darbība",
-          "service_data_yaml": "Pakalpojuma dati (YAML)",
           "response_data_path": "Atbildes datu ceļš",
           "attribute_name": "Atribūta nosaukums",
           "update_mode": "Atjaunināšanas režīms",
@@ -18,8 +17,7 @@
         },
         "data_description": {
           "name": "Draudzīgs nosaukums šim sensoram (piem., 'Tibber cenas')",
-          "service_action": "Izvēlieties pakalpojumu/darbību, ko izsaukt. Ja zemāk ielīmēsiet pilnu YAML, tas tiks automātiski noteikts.",
-          "service_data_yaml": "Neobligāti pakalpojuma dati. Jūs varat ielīmēt pilnu YAML no Izstrādātāja rīkiem - visi lauki zem 'data:' tiek saglabāti.",
+          "service_action": "Izvēlies izsaucamo pakalpojumu/darbību un konfigurē tā parametrus. Izmanto 'Rādīt YAML' lai tieši ielīmētu vai rediģētu YAML.",
           "response_data_path": "Neobligāts ceļš datu izvilkšanai no atbildes (piem., 'results.0.items'). Atstājiet tukšu pilnai atbildei.",
           "attribute_name": "Atribūta nosaukums, kas saturēs atbildes datus. Noklusējums ir 'data'.",
           "update_mode": "Kā tiek aktivizētas atjaunināšanas: Aptauja (cikliska ar intervālu), Manuāla (caur update_entity pakalpojumu) vai Entītijas stāvokļa aktivizētājs (kad cita entītija maina stāvokli).",
@@ -34,7 +32,6 @@
         "description": "Atjauniniet pakalpojuma konfigurāciju šim sensoram.\n\nLai pārdēvētu šo ierakstu, izmantojiet Iestatījumi → Ierīces un pakalpojumi → [ieraksts] → trīs punktu izvēlne → Pārdēvēt.",
         "data": {
           "service_action": "Pakalpojuma darbība",
-          "service_data_yaml": "Pakalpojuma dati (YAML)",
           "response_data_path": "Atbildes datu ceļš",
           "attribute_name": "Atribūta nosaukums",
           "update_mode": "Atjaunināšanas režīms",
@@ -44,8 +41,7 @@
           "trigger_to_state": "Aktivizēt uz stāvokli"
         },
         "data_description": {
-          "service_action": "Izvēlieties pakalpojumu/darbību, ko izsaukt",
-          "service_data_yaml": "Neobligāti pakalpojuma dati. Jūs varat ielīmēt pilnu YAML no Izstrādātāja rīkiem - visi lauki zem 'data:' tiek saglabāti.",
+          "service_action": "Izvēlies izsaucamo pakalpojumu/darbību un konfigurē tā parametrus. Izmanto 'Rādīt YAML' lai tieši ielīmētu vai rediģētu YAML.",
           "response_data_path": "Neobligāts ceļš datu izvilkšanai no atbildes (piem., 'results.0.items'). Atstājiet tukšu pilnai atbildei.",
           "attribute_name": "Atribūta nosaukums, kas saturēs atbildes datus. Noklusējums ir 'data'.",
           "update_mode": "Kā tiek aktivizētas atjaunināšanas: Aptauja (cikliska ar intervālu), Manuāla (caur update_entity pakalpojumu) vai Entītijas stāvokļa aktivizētājs (kad cita entītija maina stāvokli).",
