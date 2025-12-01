@@ -39,8 +39,61 @@ from custom_components.service_result.const import (
 from homeassistant import data_entry_flow
 from homeassistant.helpers import selector
 
-# Section key for advanced options
+# Section key for advanced options (response data path, attribute name)
 SECTION_ADVANCED_OPTIONS = "advanced_options"
+
+
+def _get_advanced_options_schema(defaults: Mapping[str, Any] | None = None) -> data_entry_flow.section:
+    """
+    Get the schema for the advanced options section.
+
+    This helper function creates the collapsible advanced options section
+    that is shared across all mode-specific settings steps.
+
+    Args:
+        defaults: Optional dictionary of default values. Can contain either
+                  flat keys (CONF_RESPONSE_DATA_PATH, CONF_ATTRIBUTE_NAME)
+                  or nested under SECTION_ADVANCED_OPTIONS.
+
+    Returns:
+        A data entry flow section containing the advanced options schema.
+    """
+    defaults = defaults or {}
+
+    # Support both flat and nested defaults
+    advanced_defaults = defaults.get(SECTION_ADVANCED_OPTIONS, {})
+    response_path_default = advanced_defaults.get(
+        CONF_RESPONSE_DATA_PATH,
+        defaults.get(CONF_RESPONSE_DATA_PATH, ""),
+    )
+    attribute_name_default = advanced_defaults.get(
+        CONF_ATTRIBUTE_NAME,
+        defaults.get(CONF_ATTRIBUTE_NAME, DEFAULT_ATTRIBUTE_NAME),
+    )
+
+    return data_entry_flow.section(
+        vol.Schema(
+            {
+                vol.Optional(
+                    CONF_RESPONSE_DATA_PATH,
+                    default=response_path_default,
+                ): selector.TextSelector(
+                    selector.TextSelectorConfig(
+                        type=selector.TextSelectorType.TEXT,
+                    ),
+                ),
+                vol.Optional(
+                    CONF_ATTRIBUTE_NAME,
+                    default=attribute_name_default,
+                ): selector.TextSelector(
+                    selector.TextSelectorConfig(
+                        type=selector.TextSelectorType.TEXT,
+                    ),
+                ),
+            },
+        ),
+        {"collapsed": True},
+    )
 
 
 def get_user_schema(defaults: Mapping[str, Any] | None = None) -> vol.Schema:
@@ -127,7 +180,6 @@ def get_polling_settings_schema(defaults: Mapping[str, Any] | None = None) -> vo
         Voluptuous schema for polling settings.
     """
     defaults = defaults or {}
-    advanced_defaults = defaults.get(SECTION_ADVANCED_OPTIONS, {})
 
     return vol.Schema(
         {
@@ -143,35 +195,7 @@ def get_polling_settings_schema(defaults: Mapping[str, Any] | None = None) -> vo
                     unit_of_measurement="seconds",
                 ),
             ),
-            vol.Optional(SECTION_ADVANCED_OPTIONS): data_entry_flow.section(
-                vol.Schema(
-                    {
-                        vol.Optional(
-                            CONF_RESPONSE_DATA_PATH,
-                            default=advanced_defaults.get(
-                                CONF_RESPONSE_DATA_PATH,
-                                defaults.get(CONF_RESPONSE_DATA_PATH, ""),
-                            ),
-                        ): selector.TextSelector(
-                            selector.TextSelectorConfig(
-                                type=selector.TextSelectorType.TEXT,
-                            ),
-                        ),
-                        vol.Optional(
-                            CONF_ATTRIBUTE_NAME,
-                            default=advanced_defaults.get(
-                                CONF_ATTRIBUTE_NAME,
-                                defaults.get(CONF_ATTRIBUTE_NAME, DEFAULT_ATTRIBUTE_NAME),
-                            ),
-                        ): selector.TextSelector(
-                            selector.TextSelectorConfig(
-                                type=selector.TextSelectorType.TEXT,
-                            ),
-                        ),
-                    },
-                ),
-                {"collapsed": True},
-            ),
+            vol.Optional(SECTION_ADVANCED_OPTIONS): _get_advanced_options_schema(defaults),
         },
     )
 
@@ -187,7 +211,6 @@ def get_state_trigger_settings_schema(defaults: Mapping[str, Any] | None = None)
         Voluptuous schema for state trigger settings.
     """
     defaults = defaults or {}
-    advanced_defaults = defaults.get(SECTION_ADVANCED_OPTIONS, {})
 
     return vol.Schema(
         {
@@ -211,35 +234,7 @@ def get_state_trigger_settings_schema(defaults: Mapping[str, Any] | None = None)
                     type=selector.TextSelectorType.TEXT,
                 ),
             ),
-            vol.Optional(SECTION_ADVANCED_OPTIONS): data_entry_flow.section(
-                vol.Schema(
-                    {
-                        vol.Optional(
-                            CONF_RESPONSE_DATA_PATH,
-                            default=advanced_defaults.get(
-                                CONF_RESPONSE_DATA_PATH,
-                                defaults.get(CONF_RESPONSE_DATA_PATH, ""),
-                            ),
-                        ): selector.TextSelector(
-                            selector.TextSelectorConfig(
-                                type=selector.TextSelectorType.TEXT,
-                            ),
-                        ),
-                        vol.Optional(
-                            CONF_ATTRIBUTE_NAME,
-                            default=advanced_defaults.get(
-                                CONF_ATTRIBUTE_NAME,
-                                defaults.get(CONF_ATTRIBUTE_NAME, DEFAULT_ATTRIBUTE_NAME),
-                            ),
-                        ): selector.TextSelector(
-                            selector.TextSelectorConfig(
-                                type=selector.TextSelectorType.TEXT,
-                            ),
-                        ),
-                    },
-                ),
-                {"collapsed": True},
-            ),
+            vol.Optional(SECTION_ADVANCED_OPTIONS): _get_advanced_options_schema(defaults),
         },
     )
 
@@ -256,40 +251,9 @@ def get_manual_settings_schema(defaults: Mapping[str, Any] | None = None) -> vol
     Returns:
         Voluptuous schema for manual mode settings.
     """
-    defaults = defaults or {}
-    advanced_defaults = defaults.get(SECTION_ADVANCED_OPTIONS, {})
-
     return vol.Schema(
         {
-            vol.Optional(SECTION_ADVANCED_OPTIONS): data_entry_flow.section(
-                vol.Schema(
-                    {
-                        vol.Optional(
-                            CONF_RESPONSE_DATA_PATH,
-                            default=advanced_defaults.get(
-                                CONF_RESPONSE_DATA_PATH,
-                                defaults.get(CONF_RESPONSE_DATA_PATH, ""),
-                            ),
-                        ): selector.TextSelector(
-                            selector.TextSelectorConfig(
-                                type=selector.TextSelectorType.TEXT,
-                            ),
-                        ),
-                        vol.Optional(
-                            CONF_ATTRIBUTE_NAME,
-                            default=advanced_defaults.get(
-                                CONF_ATTRIBUTE_NAME,
-                                defaults.get(CONF_ATTRIBUTE_NAME, DEFAULT_ATTRIBUTE_NAME),
-                            ),
-                        ): selector.TextSelector(
-                            selector.TextSelectorConfig(
-                                type=selector.TextSelectorType.TEXT,
-                            ),
-                        ),
-                    },
-                ),
-                {"collapsed": True},
-            ),
+            vol.Optional(SECTION_ADVANCED_OPTIONS): _get_advanced_options_schema(defaults),
         },
     )
 
