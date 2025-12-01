@@ -101,19 +101,19 @@
       "message": "Theip ar pharsáil YAML sonraí seirbhíse: {error}"
     },
     "service_not_found": {
-      "message": "Níor aimsíodh an tseirbhís chumraithe '{service}'. B'fhéidir gur baineadh an comhtháthú nó nach bhfuil sé luchtaithe."
+      "message": "Níor aimsíodh an tseirbhís chumraithe \"{service}\". B'fhéidir gur baineadh an comhtháthú nó nach bhfuil sé luchtaithe."
     },
     "service_call_failed": {
-      "message": "Theip ar ghlao ar sheirbhís '{service}': {error}"
+      "message": "Theip ar ghlao ar sheirbhís \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Tá seirbhís '{service}' neamh-infhaighte go sealadach. Déanfar iarracht arís go huathoibríoch."
+      "message": "Tá seirbhís \"{service}\" neamh-infhaighte go sealadach. Déanfar iarracht arís go huathoibríoch."
     },
     "response_path_invalid": {
-      "message": "Níl an cosán freagartha cumraithe '{path}' ann i bhfreagra na seirbhíse."
+      "message": "Níl an cosán freagartha cumraithe \"{path}\" ann i bhfreagra na seirbhíse."
     },
     "trigger_entity_unavailable": {
-      "message": "Níl an eintiteas truicir '{entity}' ar fáil."
+      "message": "Níl an eintiteas truicir \"{entity}\" ar fáil."
     }
   },
   "entity": {

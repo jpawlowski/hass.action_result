@@ -101,19 +101,19 @@
       "message": "Nie udało się przeanalizować danych YAML usługi: {error}"
     },
     "service_not_found": {
-      "message": "Skonfigurowana usługa '{service}' nie została znaleziona. Integracja mogła zostać usunięta lub nie jest załadowana."
+      "message": "Skonfigurowana usługa \"{service}\" nie została znaleziona. Integracja mogła zostać usunięta lub nie jest załadowana."
     },
     "service_call_failed": {
-      "message": "Nie udało się wywołać usługi '{service}': {error}"
+      "message": "Nie udało się wywołać usługi \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Usługa '{service}' jest tymczasowo niedostępna. Nastąpi automatyczna ponowna próba."
+      "message": "Usługa \"{service}\" jest tymczasowo niedostępna. Nastąpi automatyczna ponowna próba."
     },
     "response_path_invalid": {
-      "message": "Skonfigurowana ścieżka odpowiedzi '{path}' nie istnieje w odpowiedzi usługi."
+      "message": "Skonfigurowana ścieżka odpowiedzi \"{path}\" nie istnieje w odpowiedzi usługi."
     },
     "trigger_entity_unavailable": {
-      "message": "Encja wyzwalająca '{entity}' jest niedostępna."
+      "message": "Encja wyzwalająca \"{entity}\" jest niedostępna."
     }
   },
   "entity": {

@@ -101,19 +101,19 @@
       "message": "Nem sikerült elemezni a szolgáltatás adatok YAML-ját: {error}"
     },
     "service_not_found": {
-      "message": "A konfigurált szolgáltatás '{service}' nem található. Az integráció eltávolításra kerülhetett vagy nincs betöltve."
+      "message": "A konfigurált szolgáltatás \"{service}\" nem található. Az integráció eltávolításra kerülhetett vagy nincs betöltve."
     },
     "service_call_failed": {
-      "message": "Nem sikerült meghívni a szolgáltatást '{service}': {error}"
+      "message": "Nem sikerült meghívni a szolgáltatást \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "A szolgáltatás '{service}' átmenetileg nem elérhető. Automatikusan újrapróbálkozik."
+      "message": "A szolgáltatás \"{service}\" átmenetileg nem elérhető. Automatikusan újrapróbálkozik."
     },
     "response_path_invalid": {
-      "message": "A konfigurált válasz útvonal '{path}' nem létezik a szolgáltatás válaszában."
+      "message": "A konfigurált válasz útvonal \"{path}\" nem létezik a szolgáltatás válaszában."
     },
     "trigger_entity_unavailable": {
-      "message": "A trigger entitás '{entity}' nem elérhető."
+      "message": "A trigger entitás \"{entity}\" nem elérhető."
     }
   },
   "entity": {

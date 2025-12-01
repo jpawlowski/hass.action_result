@@ -101,19 +101,19 @@
       "message": "Neizdevās parsēt pakalpojuma datu YAML: {error}"
     },
     "service_not_found": {
-      "message": "Konfigurētais pakalpojums '{service}' nav atrasts. Integrācija, iespējams, ir noņemta vai nav ielādēta."
+      "message": "Konfigurētais pakalpojums \"{service}\" nav atrasts. Integrācija, iespējams, ir noņemta vai nav ielādēta."
     },
     "service_call_failed": {
-      "message": "Neizdevās izsaukt pakalpojumu '{service}': {error}"
+      "message": "Neizdevās izsaukt pakalpojumu \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Pakalpojums '{service}' ir īslaicīgi nepieejams. Automātiski mēģinās vēlreiz."
+      "message": "Pakalpojums \"{service}\" ir īslaicīgi nepieejams. Automātiski mēģinās vēlreiz."
     },
     "response_path_invalid": {
-      "message": "Konfigurētais atbildes ceļš '{path}' neeksistē pakalpojuma atbildē."
+      "message": "Konfigurētais atbildes ceļš \"{path}\" neeksistē pakalpojuma atbildē."
     },
     "trigger_entity_unavailable": {
-      "message": "Aktivizētāja entītija '{entity}' nav pieejama."
+      "message": "Aktivizētāja entītija \"{entity}\" nav pieejama."
     }
   },
   "entity": {

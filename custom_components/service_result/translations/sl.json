@@ -101,19 +101,19 @@
       "message": "Razčlenjevanje YAML podatkov storitve ni uspelo: {error}"
     },
     "service_not_found": {
-      "message": "Nastavljena storitev '{service}' ni najdena. Integracija je morda odstranjena ali ni naložena."
+      "message": "Nastavljena storitev \"{service}\" ni najdena. Integracija je morda odstranjena ali ni naložena."
     },
     "service_call_failed": {
-      "message": "Klic storitve '{service}' ni uspel: {error}"
+      "message": "Klic storitve \"{service}\" ni uspel: {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Storitev '{service}' je začasno nedosegljiva. Samodejno bo poskusila znova."
+      "message": "Storitev \"{service}\" je začasno nedosegljiva. Samodejno bo poskusila znova."
     },
     "response_path_invalid": {
-      "message": "Nastavljena pot odgovora '{path}' ne obstaja v odgovoru storitve."
+      "message": "Nastavljena pot odgovora \"{path}\" ne obstaja v odgovoru storitve."
     },
     "trigger_entity_unavailable": {
-      "message": "Sprožilna entiteta '{entity}' ni dosegljiva."
+      "message": "Sprožilna entiteta \"{entity}\" ni dosegljiva."
     }
   },
   "entity": {

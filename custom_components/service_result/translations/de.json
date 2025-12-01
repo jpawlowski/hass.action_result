@@ -101,19 +101,19 @@
       "message": "Fehler beim Parsen der Service-Daten YAML: {error}"
     },
     "service_not_found": {
-      "message": "Der konfigurierte Service '{service}' wurde nicht gefunden. Die Integration wurde möglicherweise entfernt oder ist nicht geladen."
+      "message": "Der konfigurierte Service \"{service}\" wurde nicht gefunden. Die Integration wurde möglicherweise entfernt oder ist nicht geladen."
     },
     "service_call_failed": {
-      "message": "Fehler beim Aufrufen des Service '{service}': {error}"
+      "message": "Fehler beim Aufrufen des Service \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Service '{service}' ist vorübergehend nicht verfügbar. Automatischer Wiederholungsversuch."
+      "message": "Service \"{service}\" ist vorübergehend nicht verfügbar. Automatischer Wiederholungsversuch."
     },
     "response_path_invalid": {
-      "message": "Der konfigurierte Antwortpfad '{path}' existiert nicht in der Service-Antwort."
+      "message": "Der konfigurierte Antwortpfad \"{path}\" existiert nicht in der Service-Antwort."
     },
     "trigger_entity_unavailable": {
-      "message": "Die Trigger-Entität '{entity}' ist nicht verfügbar."
+      "message": "Die Trigger-Entität \"{entity}\" ist nicht verfügbar."
     }
   },
   "entity": {

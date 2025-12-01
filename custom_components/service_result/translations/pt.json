@@ -101,19 +101,19 @@
       "message": "Falha ao analisar os dados YAML do serviço: {error}"
     },
     "service_not_found": {
-      "message": "O serviço configurado '{service}' não foi encontrado. A integração pode ter sido removida ou não está carregada."
+      "message": "O serviço configurado \"{service}\" não foi encontrado. A integração pode ter sido removida ou não está carregada."
     },
     "service_call_failed": {
-      "message": "Falha ao chamar o serviço '{service}': {error}"
+      "message": "Falha ao chamar o serviço \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "O serviço '{service}' está temporariamente indisponível. Tentará novamente automaticamente."
+      "message": "O serviço \"{service}\" está temporariamente indisponível. Tentará novamente automaticamente."
     },
     "response_path_invalid": {
-      "message": "O caminho de resposta configurado '{path}' não existe na resposta do serviço."
+      "message": "O caminho de resposta configurado \"{path}\" não existe na resposta do serviço."
     },
     "trigger_entity_unavailable": {
-      "message": "A entidade gatilho '{entity}' está indisponível."
+      "message": "A entidade gatilho \"{entity}\" está indisponível."
     }
   },
   "entity": {

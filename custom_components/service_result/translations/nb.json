@@ -101,19 +101,19 @@
       "message": "Kunne ikke parse tjenestedata-YAML: {error}"
     },
     "service_not_found": {
-      "message": "Den konfigurerte tjenesten '{service}' ble ikke funnet. Integrasjonen kan ha blitt fjernet eller er ikke lastet."
+      "message": "Den konfigurerte tjenesten \"{service}\" ble ikke funnet. Integrasjonen kan ha blitt fjernet eller er ikke lastet."
     },
     "service_call_failed": {
-      "message": "Kunne ikke kalle tjenesten '{service}': {error}"
+      "message": "Kunne ikke kalle tjenesten \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Tjenesten '{service}' er midlertidig utilgjengelig. Prøver igjen automatisk."
+      "message": "Tjenesten \"{service}\" er midlertidig utilgjengelig. Prøver igjen automatisk."
     },
     "response_path_invalid": {
-      "message": "Den konfigurerte svarstien '{path}' eksisterer ikke i tjenestesvaret."
+      "message": "Den konfigurerte svarstien \"{path}\" eksisterer ikke i tjenestesvaret."
     },
     "trigger_entity_unavailable": {
-      "message": "Triggerentiteten '{entity}' er utilgjengelig."
+      "message": "Triggerentiteten \"{entity}\" er utilgjengelig."
     }
   },
   "entity": {

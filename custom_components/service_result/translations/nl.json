@@ -101,19 +101,19 @@
       "message": "Fout bij het parseren van de YAML-servicegegevens: {error}"
     },
     "service_not_found": {
-      "message": "De geconfigureerde service '{service}' is niet gevonden. De integratie is mogelijk verwijderd of niet geladen."
+      "message": "De geconfigureerde service \"{service}\" is niet gevonden. De integratie is mogelijk verwijderd of niet geladen."
     },
     "service_call_failed": {
-      "message": "Fout bij het aanroepen van service '{service}': {error}"
+      "message": "Fout bij het aanroepen van service \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Service '{service}' is tijdelijk niet beschikbaar. Wordt automatisch opnieuw geprobeerd."
+      "message": "Service \"{service}\" is tijdelijk niet beschikbaar. Wordt automatisch opnieuw geprobeerd."
     },
     "response_path_invalid": {
-      "message": "Het geconfigureerde antwoordpad '{path}' bestaat niet in het serviceantwoord."
+      "message": "Het geconfigureerde antwoordpad \"{path}\" bestaat niet in het serviceantwoord."
     },
     "trigger_entity_unavailable": {
-      "message": "De trigger-entiteit '{entity}' is niet beschikbaar."
+      "message": "De trigger-entiteit \"{entity}\" is niet beschikbaar."
     }
   },
   "entity": {

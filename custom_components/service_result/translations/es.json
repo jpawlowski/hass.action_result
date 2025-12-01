@@ -101,19 +101,19 @@
       "message": "Error al analizar los datos YAML del servicio: {error}"
     },
     "service_not_found": {
-      "message": "El servicio configurado '{service}' no fue encontrado. La integración puede haber sido eliminada o no está cargada."
+      "message": "El servicio configurado \"{service}\" no fue encontrado. La integración puede haber sido eliminada o no está cargada."
     },
     "service_call_failed": {
-      "message": "Error al llamar al servicio '{service}': {error}"
+      "message": "Error al llamar al servicio \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "El servicio '{service}' está temporalmente no disponible. Se reintentará automáticamente."
+      "message": "El servicio \"{service}\" está temporalmente no disponible. Se reintentará automáticamente."
     },
     "response_path_invalid": {
-      "message": "La ruta de respuesta configurada '{path}' no existe en la respuesta del servicio."
+      "message": "La ruta de respuesta configurada \"{path}\" no existe en la respuesta del servicio."
     },
     "trigger_entity_unavailable": {
-      "message": "La entidad disparadora '{entity}' no está disponible."
+      "message": "La entidad disparadora \"{entity}\" no está disponible."
     }
   },
   "entity": {

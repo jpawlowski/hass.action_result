@@ -101,19 +101,19 @@
       "message": "Nije uspjelo parsiranje YAML podataka usluge: {error}"
     },
     "service_not_found": {
-      "message": "Konfigurirana usluga '{service}' nije pronađena. Integracija je možda uklonjena ili nije učitana."
+      "message": "Konfigurirana usluga \"{service}\" nije pronađena. Integracija je možda uklonjena ili nije učitana."
     },
     "service_call_failed": {
-      "message": "Nije uspjelo pozvati uslugu '{service}': {error}"
+      "message": "Nije uspjelo pozvati uslugu \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Usluga '{service}' je privremeno nedostupna. Automatski će pokušati ponovno."
+      "message": "Usluga \"{service}\" je privremeno nedostupna. Automatski će pokušati ponovno."
     },
     "response_path_invalid": {
-      "message": "Konfigurirani put odgovora '{path}' ne postoji u odgovoru usluge."
+      "message": "Konfigurirani put odgovora \"{path}\" ne postoji u odgovoru usluge."
     },
     "trigger_entity_unavailable": {
-      "message": "Okidač entitet '{entity}' nije dostupan."
+      "message": "Okidač entitet \"{entity}\" nije dostupan."
     }
   },
   "entity": {

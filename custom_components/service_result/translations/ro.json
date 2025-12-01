@@ -101,19 +101,19 @@
       "message": "Nu s-a putut analiza YAML-ul datelor serviciului: {error}"
     },
     "service_not_found": {
-      "message": "Serviciul configurat '{service}' nu a fost găsit. Integrarea poate fi fost eliminată sau nu este încărcată."
+      "message": "Serviciul configurat \"{service}\" nu a fost găsit. Integrarea poate fi fost eliminată sau nu este încărcată."
     },
     "service_call_failed": {
-      "message": "Nu s-a putut apela serviciul '{service}': {error}"
+      "message": "Nu s-a putut apela serviciul \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Serviciul '{service}' este temporar indisponibil. Se va reîncerca automat."
+      "message": "Serviciul \"{service}\" este temporar indisponibil. Se va reîncerca automat."
     },
     "response_path_invalid": {
-      "message": "Calea de răspuns configurată '{path}' nu există în răspunsul serviciului."
+      "message": "Calea de răspuns configurată \"{path}\" nu există în răspunsul serviciului."
     },
     "trigger_entity_unavailable": {
-      "message": "Entitatea declanșator '{entity}' este indisponibilă."
+      "message": "Entitatea declanșator \"{entity}\" este indisponibilă."
     }
   },
   "entity": {

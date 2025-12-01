@@ -101,19 +101,19 @@
       "message": "Falliment fl-analiżi tal-YAML tad-data tas-servizz: {error}"
     },
     "service_not_found": {
-      "message": "Is-servizz ikkonfigurat '{service}' ma nstabx. L-integrazzjoni tista' tneħħiet jew mhix loaded."
+      "message": "Is-servizz ikkonfigurat \"{service}\" ma nstabx. L-integrazzjoni tista' tneħħiet jew mhix loaded."
     },
     "service_call_failed": {
-      "message": "Falliment fis-sejħa tas-servizz '{service}': {error}"
+      "message": "Falliment fis-sejħa tas-servizz \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Is-servizz '{service}' huwa temporanjament indisponibli. Se jerġa' jipprova awtomatikament."
+      "message": "Is-servizz \"{service}\" huwa temporanjament indisponibli. Se jerġa' jipprova awtomatikament."
     },
     "response_path_invalid": {
-      "message": "It-triq tar-risposta kkonfigurat '{path}' ma jeżistix fir-risposta tas-servizz."
+      "message": "It-triq tar-risposta kkonfigurat \"{path}\" ma jeżistix fir-risposta tas-servizz."
     },
     "trigger_entity_unavailable": {
-      "message": "L-entità tat-trigger '{entity}' mhix disponibbli."
+      "message": "L-entità tat-trigger \"{entity}\" mhix disponibbli."
     }
   },
   "entity": {

@@ -101,19 +101,19 @@
       "message": "Palveludata-YAML:n jäsentäminen epäonnistui: {error}"
     },
     "service_not_found": {
-      "message": "Määritettyä palvelua '{service}' ei löydy. Integraatio on ehkä poistettu tai sitä ei ole ladattu."
+      "message": "Määritettyä palvelua \"{service}\" ei löydy. Integraatio on ehkä poistettu tai sitä ei ole ladattu."
     },
     "service_call_failed": {
-      "message": "Palvelun '{service}' kutsuminen epäonnistui: {error}"
+      "message": "Palvelun \"{service}\" kutsuminen epäonnistui: {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Palvelu '{service}' on tilapäisesti poissa käytöstä. Yritetään uudelleen automaattisesti."
+      "message": "Palvelu \"{service}\" on tilapäisesti poissa käytöstä. Yritetään uudelleen automaattisesti."
     },
     "response_path_invalid": {
-      "message": "Määritettyä vastauspolkua '{path}' ei ole palveluvastauksessa."
+      "message": "Määritettyä vastauspolkua \"{path}\" ei ole palveluvastauksessa."
     },
     "trigger_entity_unavailable": {
-      "message": "Laukaisuentiteetti '{entity}' ei ole käytettävissä."
+      "message": "Laukaisuentiteetti \"{entity}\" ei ole käytettävissä."
     }
   },
   "entity": {

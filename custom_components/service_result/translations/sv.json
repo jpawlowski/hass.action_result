@@ -101,19 +101,19 @@
       "message": "Kunde inte analysera servicedata-YAML: {error}"
     },
     "service_not_found": {
-      "message": "Den konfigurerade tjänsten '{service}' hittades inte. Integrationen kan ha tagits bort eller är inte laddad."
+      "message": "Den konfigurerade tjänsten \"{service}\" hittades inte. Integrationen kan ha tagits bort eller är inte laddad."
     },
     "service_call_failed": {
-      "message": "Kunde inte anropa tjänsten '{service}': {error}"
+      "message": "Kunde inte anropa tjänsten \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Tjänsten '{service}' är tillfälligt otillgänglig. Försöker igen automatiskt."
+      "message": "Tjänsten \"{service}\" är tillfälligt otillgänglig. Försöker igen automatiskt."
     },
     "response_path_invalid": {
-      "message": "Den konfigurerade svarssökvägen '{path}' finns inte i servicesvaret."
+      "message": "Den konfigurerade svarssökvägen \"{path}\" finns inte i servicesvaret."
     },
     "trigger_entity_unavailable": {
-      "message": "Triggerentiteten '{entity}' är otillgänglig."
+      "message": "Triggerentiteten \"{entity}\" är otillgänglig."
     }
   },
   "entity": {

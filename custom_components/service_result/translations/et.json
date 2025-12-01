@@ -101,19 +101,19 @@
       "message": "Teenuse andmete YAML parsimine ebaõnnestus: {error}"
     },
     "service_not_found": {
-      "message": "Seadistatud teenust '{service}' ei leitud. Integratsioon võib olla eemaldatud või pole laaditud."
+      "message": "Seadistatud teenust \"{service}\" ei leitud. Integratsioon võib olla eemaldatud või pole laaditud."
     },
     "service_call_failed": {
-      "message": "Teenuse '{service}' kutsumine ebaõnnestus: {error}"
+      "message": "Teenuse \"{service}\" kutsumine ebaõnnestus: {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Teenus '{service}' on ajutiselt kättesaamatu. Proovitakse automaatselt uuesti."
+      "message": "Teenus \"{service}\" on ajutiselt kättesaamatu. Proovitakse automaatselt uuesti."
     },
     "response_path_invalid": {
-      "message": "Seadistatud vastuse tee '{path}' ei eksisteeri teenuse vastuses."
+      "message": "Seadistatud vastuse tee \"{path}\" ei eksisteeri teenuse vastuses."
     },
     "trigger_entity_unavailable": {
-      "message": "Päästiku olem '{entity}' pole saadaval."
+      "message": "Päästiku olem \"{entity}\" pole saadaval."
     }
   },
   "entity": {

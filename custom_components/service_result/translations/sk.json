@@ -101,19 +101,19 @@
       "message": "Nepodarilo sa analyzovať YAML dát služby: {error}"
     },
     "service_not_found": {
-      "message": "Nakonfigurovaná služba '{service}' nebola nájdená. Integrácia mohla byť odstránená alebo nie je načítaná."
+      "message": "Nakonfigurovaná služba \"{service}\" nebola nájdená. Integrácia mohla byť odstránená alebo nie je načítaná."
     },
     "service_call_failed": {
-      "message": "Nepodarilo sa zavolať službu '{service}': {error}"
+      "message": "Nepodarilo sa zavolať službu \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Služba '{service}' je dočasne nedostupná. Automaticky sa pokúsi znova."
+      "message": "Služba \"{service}\" je dočasne nedostupná. Automaticky sa pokúsi znova."
     },
     "response_path_invalid": {
-      "message": "Nakonfigurovaná cesta odpovede '{path}' v odpovedi služby neexistuje."
+      "message": "Nakonfigurovaná cesta odpovede \"{path}\" v odpovedi služby neexistuje."
     },
     "trigger_entity_unavailable": {
-      "message": "Spúšťacia entita '{entity}' nie je dostupná."
+      "message": "Spúšťacia entita \"{entity}\" nie je dostupná."
     }
   },
   "entity": {

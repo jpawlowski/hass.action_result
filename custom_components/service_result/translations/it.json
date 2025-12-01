@@ -101,19 +101,19 @@
       "message": "Errore nell'analisi dei dati YAML del servizio: {error}"
     },
     "service_not_found": {
-      "message": "Il servizio configurato '{service}' non è stato trovato. L'integrazione potrebbe essere stata rimossa o non è caricata."
+      "message": "Il servizio configurato \"{service}\" non è stato trovato. L'integrazione potrebbe essere stata rimossa o non è caricata."
     },
     "service_call_failed": {
-      "message": "Errore nella chiamata al servizio '{service}': {error}"
+      "message": "Errore nella chiamata al servizio \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Il servizio '{service}' è temporaneamente non disponibile. Nuovo tentativo automatico."
+      "message": "Il servizio \"{service}\" è temporaneamente non disponibile. Nuovo tentativo automatico."
     },
     "response_path_invalid": {
-      "message": "Il percorso di risposta configurato '{path}' non esiste nella risposta del servizio."
+      "message": "Il percorso di risposta configurato \"{path}\" non esiste nella risposta del servizio."
     },
     "trigger_entity_unavailable": {
-      "message": "L'entità trigger '{entity}' non è disponibile."
+      "message": "L'entità trigger \"{entity}\" non è disponibile."
     }
   },
   "entity": {

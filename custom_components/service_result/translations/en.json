@@ -101,19 +101,19 @@
       "message": "Failed to parse service data YAML: {error}"
     },
     "service_not_found": {
-      "message": "The configured service '{service}' was not found. The integration may have been removed or is not loaded."
+      "message": "The configured service \"{service}\" was not found. The integration may have been removed or is not loaded."
     },
     "service_call_failed": {
-      "message": "Failed to call service '{service}': {error}"
+      "message": "Failed to call service \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Service '{service}' is temporarily unavailable. Will retry automatically."
+      "message": "Service \"{service}\" is temporarily unavailable. Will retry automatically."
     },
     "response_path_invalid": {
-      "message": "The configured response path '{path}' does not exist in the service response."
+      "message": "The configured response path \"{path}\" does not exist in the service response."
     },
     "trigger_entity_unavailable": {
-      "message": "The trigger entity '{entity}' is unavailable."
+      "message": "The trigger entity \"{entity}\" is unavailable."
     }
   },
   "entity": {

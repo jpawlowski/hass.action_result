@@ -101,19 +101,19 @@
       "message": "Nepavyko išanalizuoti paslaugos duomenų YAML: {error}"
     },
     "service_not_found": {
-      "message": "Sukonfigūruota paslauga '{service}' nerasta. Integracija galėjo būti pašalinta arba nėra įkelta."
+      "message": "Sukonfigūruota paslauga \"{service}\" nerasta. Integracija galėjo būti pašalinta arba nėra įkelta."
     },
     "service_call_failed": {
-      "message": "Nepavyko iškviesti paslaugos '{service}': {error}"
+      "message": "Nepavyko iškviesti paslaugos \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Paslauga '{service}' laikinai nepasiekiama. Bus automatiškai bandoma iš naujo."
+      "message": "Paslauga \"{service}\" laikinai nepasiekiama. Bus automatiškai bandoma iš naujo."
     },
     "response_path_invalid": {
-      "message": "Sukonfigūruotas atsakymo kelias '{path}' neegzistuoja paslaugos atsakyme."
+      "message": "Sukonfigūruotas atsakymo kelias \"{path}\" neegzistuoja paslaugos atsakyme."
     },
     "trigger_entity_unavailable": {
-      "message": "Paleidimo esybė '{entity}' nepasiekiama."
+      "message": "Paleidimo esybė \"{entity}\" nepasiekiama."
     }
   },
   "entity": {

@@ -101,19 +101,19 @@
       "message": "Échec de l'analyse du YAML des données du service : {error}"
     },
     "service_not_found": {
-      "message": "Le service configuré '{service}' n'a pas été trouvé. L'intégration a peut-être été supprimée ou n'est pas chargée."
+      "message": "Le service configuré \"{service}\" n'a pas été trouvé. L'intégration a peut-être été supprimée ou n'est pas chargée."
     },
     "service_call_failed": {
-      "message": "Échec de l'appel du service '{service}' : {error}"
+      "message": "Échec de l'appel du service \"{service}\" : {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Le service '{service}' est temporairement indisponible. Nouvelle tentative automatique."
+      "message": "Le service \"{service}\" est temporairement indisponible. Nouvelle tentative automatique."
     },
     "response_path_invalid": {
-      "message": "Le chemin de réponse configuré '{path}' n'existe pas dans la réponse du service."
+      "message": "Le chemin de réponse configuré \"{path}\" n'existe pas dans la réponse du service."
     },
     "trigger_entity_unavailable": {
-      "message": "L'entité déclencheur '{entity}' est indisponible."
+      "message": "L'entité déclencheur \"{entity}\" est indisponible."
     }
   },
   "entity": {
