@@ -48,18 +48,18 @@ Then:
 1. Click "Download" to install the integration
 2. **Restart Home Assistant** (required after installation)
 
-### Step 2: Add a Service Result Entity
+### Step 2: Add a Action Result Entity
 
 [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=action_result)
 
 Configure:
 
 1. **Name**: A friendly name for this sensor (e.g., "Tibber Prices")
-2. **Service Domain**: The service domain (e.g., `tibber`)
-3. **Service Name**: The service name (e.g., `get_price_info`)
-4. **Service Data (YAML)**: Optional YAML data for the service call
+2. **Action Domain**: The service domain (e.g., `tibber`)
+3. **Action Name**: The service name (e.g., `get_price_info`)
+4. **Action Data (YAML)**: Optional YAML data for the service call
 
-> **Tip**: Copy the YAML directly from Developer Tools → Services
+> **Tip**: Copy the YAML directly from Developer Tools → Actions
 
 ### Step 3: Access the Data
 
@@ -86,9 +86,9 @@ Example template to access the data:
 | Field | Required | Description |
 |-------|----------|-------------|
 | Name | Yes | Friendly name for the sensor |
-| Service Domain | Yes | Domain of the service to call |
-| Service Name | Yes | Name of the service to call |
-| Service Data (YAML) | No | Optional YAML data for the service |
+| Action Domain | Yes | Domain of the service to call |
+| Action Name | Yes | Name of the service to call |
+| Action Data (YAML) | No | Optional YAML data for the service |
 
 ### Options (After Setup)
 
@@ -100,19 +100,19 @@ Example template to access the data:
 
 ### Example 1: Tibber Price Info
 
-**Service Domain**: `tibber`  
-**Service Name**: `get_price_info`  
+**Action Domain**: `tibber`
+**Action Name**: `get_price_info`
 **Polling Interval**: 3600 (1 hour)
 
 The sensor's `data` attribute will contain the price information returned by Tibber.
 
-### Example 2: Simple Test (No External Services Required)
+### Example 2: Simple Test (No External Actions Required)
 
 To test the integration without requiring external integrations:
 
-**Service Domain**: `homeassistant`  
-**Service Name**: `reload_core_config`  
-**Service Data (YAML)**: *(leave empty)*  
+**Action Domain**: `homeassistant`
+**Action Name**: `reload_core_config`
+**Action Data (YAML)**: *(leave empty)*
 **Polling Interval**: 300
 
 This will call a built-in Home Assistant service. The sensor state will show `ok` if successful.
@@ -121,9 +121,9 @@ This will call a built-in Home Assistant service. The sensor state will show `ok
 
 ## 🔧 Troubleshooting
 
-### Service Not Found
+### Action Not Found
 
-Verify the service exists in Developer Tools → Services.
+Verify the service exists in Developer Tools → Actions.
 
 ### YAML Parse Error
 

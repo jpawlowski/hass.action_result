@@ -11,8 +11,15 @@ https://developers.home-assistant.io/docs/core/entity/index/#common-properties
 
 from __future__ import annotations
 
-from custom_components.action_result.const import ATTRIBUTION, CONF_NAME
+from custom_components.action_result.const import (
+    CONF_ENTITY_CATEGORY,
+    CONF_NAME,
+    CONF_PARENT_DEVICE,
+    CONF_SERVICE_ACTION,
+)
 from custom_components.action_result.coordinator import ActionResultEntitiesDataUpdateCoordinator
+from homeassistant.const import EntityCategory
+from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
@@ -24,14 +31,13 @@ class ActionResultEntitiesEntity(CoordinatorEntity[ActionResultEntitiesDataUpdat
     All entities in this integration inherit from this class, which provides:
     - Automatic coordinator updates
     - Device info management
-    - Attribution and naming conventions
+    - Dynamic attribution based on service domain
+    - Naming conventions
 
     For more information:
     https://developers.home-assistant.io/docs/core/entity
     https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
     """
-
-    _attr_attribution = ATTRIBUTION
 
     def __init__(
         self,
@@ -48,14 +54,125 @@ class ActionResultEntitiesEntity(CoordinatorEntity[ActionResultEntitiesDataUpdat
         # Get name from config entry
         entry_name = coordinator.config_entry.data.get(CONF_NAME, coordinator.config_entry.title)
 
-        self._attr_device_info = DeviceInfo(
-            identifiers={
-                (
-                    coordinator.config_entry.domain,
-                    coordinator.config_entry.entry_id,
-                ),
-            },
-            name=entry_name,
-            manufacturer="Action Result Entities",
-            model="Service Response Bridge",
-        )
+        # Check if we should associate with a parent device
+        parent_device_id = coordinator.config_entry.data.get(CONF_PARENT_DEVICE, "")
+        via_device_tuple = None
+
+        if parent_device_id:
+            # Look up the parent device in the device registry
+            device_registry = dr.async_get(coordinator.hass)
+            parent_device = device_registry.async_get(parent_device_id)
+
+            if parent_device and parent_device.identifiers:
+                # Use the first identifier as via_device
+                via_device_tuple = next(iter(parent_device.identifiers))
+
+        # Build device info - either standalone or associated with parent
+        if via_device_tuple:
+            # Associate with parent device
+            self._attr_device_info = DeviceInfo(
+                identifiers={
+                    (
+                        coordinator.config_entry.domain,
+                        coordinator.config_entry.entry_id,
+                    ),
+                },
+                name=entry_name,
+                manufacturer="Action Result Entities",
+                model="Action Response Bridge",
+                via_device=via_device_tuple,
+            )
+        else:
+            # Standalone device
+            self._attr_device_info = DeviceInfo(
+                identifiers={
+                    (
+                        coordinator.config_entry.domain,
+                        coordinator.config_entry.entry_id,
+                    ),
+                },
+                name=entry_name,
+                manufacturer="Action Result Entities",
+                model="Action Response Bridge",
+            )
+
+    @property
+    def attribution(self) -> str | None:
+        """
+        Return dynamic attribution based on the service action's integration.
+
+        Attempts to get the friendly name of the integration that provides
+        the service being called. Uses the integration's manifest name,
+        which may be localized if the integration provides translations.
+
+        Returns:
+            Attribution string showing data source integration, or None.
+        """
+        # Get service action from config
+        service_action = self.coordinator.config_entry.data.get(CONF_SERVICE_ACTION)
+        if not service_action:
+            return None
+
+        # Extract domain from service action
+        # Handle both list format (sequence) and dict format (single action)
+        domain = None
+        if isinstance(service_action, list):
+            if service_action:
+                first_action = service_action[0]
+                if isinstance(first_action, dict):
+                    action_str = first_action.get("action", "")
+                    if "." in action_str:
+                        domain = action_str.split(".", 1)[0]
+        elif isinstance(service_action, dict):
+            action_str = service_action.get("action", "")
+            if "." in action_str:
+                domain = action_str.split(".", 1)[0]
+
+        if not domain:
+            return None
+
+        # Get the integration's friendly name from the loader
+        integration_name = self._get_integration_name(domain)
+
+        # Return attribution message
+        return f"Data from the {integration_name} integration"
+
+    @property
+    def entity_category(self) -> EntityCategory | None:
+        """Return the entity category if configured.
+
+        Returns:
+            EntityCategory.CONFIG or EntityCategory.DIAGNOSTIC if configured, None otherwise.
+        """
+        category = self.coordinator.config_entry.data.get(CONF_ENTITY_CATEGORY)
+        if category == "config":
+            return EntityCategory.CONFIG
+        if category == "diagnostic":
+            return EntityCategory.DIAGNOSTIC
+        return None
+
+    def _get_integration_name(self, domain: str) -> str:
+        """
+        Get the friendly name of an integration by domain.
+
+        Attempts to load the integration manifest and extract the name.
+        Falls back to a formatted version of the domain if unavailable.
+
+        Args:
+            domain: The integration domain (e.g., 'tibber', 'homeassistant').
+
+        Returns:
+            The integration's friendly name or formatted domain.
+        """
+        try:
+            # Try to get cached integration info
+            integrations = self.hass.data.get("integrations")
+            if integrations and domain in integrations:
+                integration = integrations[domain]
+                if hasattr(integration, "name"):
+                    return integration.name
+        except Exception:  # noqa: BLE001
+            pass
+
+        # Fallback: Format domain as title case
+        return domain.replace("_", " ").title()

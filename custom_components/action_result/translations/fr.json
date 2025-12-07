@@ -53,7 +53,7 @@
       }
     },
     "error": {
-      "service_not_found": "Service non trouvé. Vérifie que l'action sélectionnée existe et que l'intégration est chargée.",
+      "service_not_found": "Action non trouvé. Vérifie que l'action sélectionnée existe et que l'intégration est chargée.",
       "yaml_parse_error": "Syntaxe YAML invalide. Vérifie le format des données du service.",
       "yaml_not_dict": "Les données du service doivent être un dictionnaire YAML (paires clé: valeur).",
       "data_not_dict": "La section 'data' dans le YAML doit être un dictionnaire (paires clé: valeur).",
@@ -120,6 +120,11 @@
           "error": "Erreur",
           "unavailable": "Indisponible",
           "retrying": "Nouvelle tentative"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Données de l'intégration {integration}"
+          }
         }
       }
     }

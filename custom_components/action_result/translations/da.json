@@ -120,6 +120,11 @@
           "error": "Fejl",
           "unavailable": "Utilgængelig",
           "retrying": "Prøver igen"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Data fra {integration} integrationen"
+          }
         }
       }
     }

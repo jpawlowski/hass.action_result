@@ -120,6 +120,11 @@
           "error": "Σφάλμα",
           "unavailable": "Μη διαθέσιμο",
           "retrying": "Επανάληψη"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Δεδομένα από την ενσωμάτωση {integration}"
+          }
         }
       }
     }

@@ -29,7 +29,7 @@
       },
       "reconfigure": {
         "title": "Erġa' Kkonfigura Riżultat tas-Servizz",
-        "description": "Aġġorna l-konfigurazzjoni tas-servizz għal dan is-sensur.\n\nBiex issemmi mill-ġdid din l-entrata, uża Settings → Devices & Services → [entrata] → menu bi tliet tikek → Semmi mill-ġdid.",
+        "description": "Aġġorna l-konfigurazzjoni tas-servizz għal dan is-sensur.\n\nBiex issemmi mill-ġdid din l-entrata, uża Settings → Devices & Actions → [entrata] → menu bi tliet tikek → Semmi mill-ġdid.",
         "data": {
           "service_action": "Azzjoni tas-servizz",
           "response_data_path": "Triq tad-data tar-risposta",
@@ -120,6 +120,11 @@
           "error": "Żball",
           "unavailable": "Indisponibli",
           "retrying": "Qed jerġa' jipprova"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Data mill-integrazzjoni {integration}"
+          }
         }
       }
     }

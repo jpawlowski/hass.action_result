@@ -60,7 +60,7 @@ automation:
       to: "on"
 ```
 
-## Service Calls
+## Action Calls
 
 **Use `action:` key (not deprecated `service:`):**
 

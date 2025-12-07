@@ -120,6 +120,11 @@
           "error": "Napaka",
           "unavailable": "Nedosegljiv",
           "retrying": "Ponovni poskus"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Podatki iz integracije {integration}"
+          }
         }
       }
     }

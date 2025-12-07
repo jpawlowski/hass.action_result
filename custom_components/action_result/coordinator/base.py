@@ -34,7 +34,8 @@ from custom_components.action_result.const import (
     MAX_RETRY_DELAY_SECONDS,
     SERVICE_CALL_TIMEOUT_SECONDS,
 )
-from homeassistant.exceptions import HomeAssistantError, ServiceNotFound
+from homeassistant.exceptions import ConfigEntryAuthFailed, HomeAssistantError, ServiceNotFound
+from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
 
@@ -72,23 +73,36 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         self.consecutive_errors: int = 0
         self.is_retrying: bool = False
 
-    def _get_service_info(self) -> tuple[str, str]:
+    def get_service_info(self) -> tuple[str, str]:
         """
         Extract service domain and name from config entry.
 
         Supports both new format (service_action) and legacy format
         (service_domain + service_name).
 
+        The ActionSelector can return data in two formats:
+        - Single action: {"action": "domain.service", "data": {...}, "target": {...}}
+        - Multiple actions: [{"action": "...", ...}, {"action": "...", ...}]
+
         Returns:
             A tuple of (domain, service_name).
         """
         # Try new format first
         service_action = self.config_entry.data.get(CONF_SERVICE_ACTION)
-        if service_action and isinstance(service_action, dict):
-            action = service_action.get("action", "")
-            if action and "." in action:
-                parts = action.split(".", 1)
-                return (parts[0], parts[1])
+        if service_action:
+            # Handle list format (sequence of actions) - take first action
+            if isinstance(service_action, list):
+                if service_action:
+                    service_action = service_action[0]
+                else:
+                    service_action = None
+
+            # Handle dict format (single action)
+            if isinstance(service_action, dict):
+                action = service_action.get("action", "")
+                if action and "." in action:
+                    parts = action.split(".", 1)
+                    return (parts[0], parts[1])
 
         # Fall back to legacy format
         domain = self.config_entry.data.get(CONF_SERVICE_DOMAIN, "")
@@ -103,13 +117,26 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         service data in the 'data' key. For backwards compatibility, also checks
         the legacy 'service_data_yaml' field.
 
+        The ActionSelector can return data in two formats:
+        - Single action: {"action": "domain.service", "data": {...}, "target": {...}}
+        - Multiple actions: [{"action": "...", ...}, {"action": "...", ...}]
+
         Returns:
             A dictionary of service data parameters.
         """
         # Try new format first: ActionSelector stores data in the 'data' key
         service_action = self.config_entry.data.get(CONF_SERVICE_ACTION)
-        if service_action and isinstance(service_action, dict):
-            return service_action.get("data", {}) or {}
+        if service_action:
+            # Handle list format (sequence of actions) - take first action
+            if isinstance(service_action, list):
+                if service_action:
+                    service_action = service_action[0]
+                else:
+                    service_action = None
+
+            # Handle dict format (single action)
+            if isinstance(service_action, dict):
+                return service_action.get("data", {}) or {}
 
         # Fall back to legacy YAML field for backwards compatibility
         service_data_yaml = self.config_entry.data.get("service_data_yaml", "")
@@ -121,6 +148,32 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
                 return {}
 
         return {}
+
+    def _get_service_target(self) -> dict[str, Any] | None:
+        """
+        Extract target data from config entry.
+
+        The ActionSelector stores target information (entity_id, device_id, etc.)
+        in the 'target' key.
+
+        Returns:
+            A dictionary of target data, or None if no target is specified.
+        """
+        service_action = self.config_entry.data.get(CONF_SERVICE_ACTION)
+        if service_action:
+            # Handle list format (sequence of actions) - take first action
+            if isinstance(service_action, list):
+                if service_action:
+                    service_action = service_action[0]
+                else:
+                    service_action = None
+
+            # Handle dict format (single action)
+            if isinstance(service_action, dict):
+                target = service_action.get("target", {})
+                return target if target else None
+
+        return None
 
     def _classify_error(self, exc: Exception) -> str:
         """
@@ -177,6 +230,75 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         # Default to unknown (treat as potentially temporary)
         return ERROR_TYPE_UNKNOWN
 
+    def _is_auth_error(self, exc: Exception) -> bool:
+        """
+        Check if an exception represents an authentication/authorization error.
+
+        Auth errors should trigger a reauth flow instead of just marking
+        the entity as unavailable.
+
+        Args:
+            exc: The exception to check.
+
+        Returns:
+            True if this is an authentication error, False otherwise.
+        """
+        error_str = str(exc).lower()
+
+        # Authentication/authorization error indicators
+        auth_indicators = [
+            "unauthorized",
+            "forbidden",
+            "authentication failed",
+            "invalid api key",
+            "invalid token",
+            "invalid credentials",
+            "permission denied",
+            "access denied",
+            "401",
+            "403",
+        ]
+
+        return any(indicator in error_str for indicator in auth_indicators)
+
+    def _create_repair_issue(self, issue_type: str, error_msg: str) -> None:
+        """
+        Create a repair issue for persistent problems.
+
+        Args:
+            issue_type: Type of issue (service_not_found, auth_failed, etc.)
+            error_msg: Error message to display to user.
+        """
+        service_domain, service_name = self.get_service_info()
+        service_full_name = f"{service_domain}.{service_name}"
+        entry_name = self.config_entry.data.get(CONF_NAME, "Unknown")
+
+        issue_id = f"{self.config_entry.entry_id}_{issue_type}"
+
+        ir.async_create_issue(
+            self.hass,
+            domain=self.config_entry.domain,
+            issue_id=issue_id,
+            is_fixable=True,
+            severity=ir.IssueSeverity.ERROR,
+            translation_key=issue_type,
+            translation_placeholders={
+                "name": entry_name,
+                "service": service_full_name,
+                "error": error_msg,
+            },
+        )
+
+    def _delete_repair_issue(self, issue_type: str) -> None:
+        """
+        Delete a repair issue when problem is resolved.
+
+        Args:
+            issue_type: Type of issue to delete.
+        """
+        issue_id = f"{self.config_entry.entry_id}_{issue_type}"
+        ir.async_delete_issue(self.hass, self.config_entry.domain, issue_id)
+
     async def _async_setup(self) -> None:
         """
         Set up the coordinator.
@@ -184,9 +306,9 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         This method is called automatically during async_config_entry_first_refresh()
         and is the ideal place for one-time initialization tasks.
         """
-        service_domain, service_name = self._get_service_info()
+        service_domain, service_name = self.get_service_info()
         LOGGER.debug(
-            "Coordinator setup complete for %s (service: %s.%s)",
+            "Coordinator setup complete for %s (action: %s.%s)",
             self.config_entry.entry_id,
             service_domain,
             service_name,
@@ -201,8 +323,8 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         the response for the sensor entity to expose.
 
         Error handling:
-        - Service not found: Permanent if persistent, temporary if integration loading
-        - Service call errors: Classified and retried if temporary
+        - Action not found: Permanent if persistent, temporary if integration loading
+        - Action call errors: Classified and retried if temporary
         - Timeouts: Temporary, will retry
 
         Returns:
@@ -211,14 +333,15 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         Raises:
             UpdateFailed: If the service call fails.
         """
-        service_domain, service_name = self._get_service_info()
+        service_domain, service_name = self.get_service_info()
         service_data = self._get_service_data()
+        service_target = self._get_service_target()
         entry_name = self.config_entry.data.get(CONF_NAME, "Unknown")
         service_full_name = f"{service_domain}.{service_name}"
 
         # Verify service exists
         if not self.hass.services.has_service(service_domain, service_name):
-            self.last_error = f"Service {service_full_name} not found"
+            self.last_error = f"Action {service_full_name} not found"
             # Check if this might be temporary (integration still loading)
             # After multiple failures, treat as permanent
             if self.consecutive_errors >= MAX_RETRY_COUNT:
@@ -229,12 +352,20 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
 
             self.consecutive_errors += 1
             LOGGER.warning(
-                "Service %s not found for '%s' (attempt %d/%d)",
+                "Action %s not found for '%s' (attempt %d/%d)",
                 service_full_name,
                 entry_name,
                 self.consecutive_errors,
                 MAX_RETRY_COUNT,
             )
+
+            # Create repair issue if this becomes permanent
+            if self.consecutive_errors >= MAX_RETRY_COUNT:
+                self._create_repair_issue(
+                    "service_not_found",
+                    f"Service {service_full_name} not found",
+                )
+
             raise UpdateFailed(
                 translation_domain="action_result",
                 translation_key="service_not_found",
@@ -254,18 +385,19 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
                     domain=service_domain,
                     service=service_name,
                     service_data=service_data,
+                    target=service_target,
                     blocking=True,
                     return_response=True,
                 ),
                 timeout=SERVICE_CALL_TIMEOUT_SECONDS,
             )
         except TimeoutError as exc:
-            self.last_error = "Service call timed out"
+            self.last_error = "Action call timed out"
             self.last_error_type = ERROR_TYPE_TEMPORARY
             self.is_retrying = True
             self.consecutive_errors += 1
             LOGGER.warning(
-                "Service %s timed out for '%s' (attempt %d)",
+                "Action %s timed out for '%s' (attempt %d)",
                 service_full_name,
                 entry_name,
                 self.consecutive_errors,
@@ -276,11 +408,11 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
                 translation_placeholders={"service": service_full_name},
             ) from exc
         except ServiceNotFound as exc:
-            self.last_error = f"Service {service_full_name} not found"
+            self.last_error = f"Action {service_full_name} not found"
             self.last_error_type = ERROR_TYPE_PERMANENT
             self.consecutive_errors += 1
             LOGGER.error(
-                "Service %s not found for '%s': %s",
+                "Action %s not found for '%s': %s",
                 service_full_name,
                 entry_name,
                 exc,
@@ -293,10 +425,27 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
         except HomeAssistantError as exc:
             error_msg = str(exc)
             self.last_error = error_msg
-            self.last_error_type = self._classify_error(exc)
+            error_type = self._classify_error(exc)
+            self.last_error_type = error_type
             self.consecutive_errors += 1
 
-            if self.last_error_type == ERROR_TYPE_TEMPORARY:
+            # Check if this is an authentication error
+            if self._is_auth_error(exc):
+                LOGGER.error(
+                    "Authentication error calling service %s for '%s': %s",
+                    service_full_name,
+                    entry_name,
+                    exc,
+                )
+                # Create repair issue for auth error
+                self._create_repair_issue(
+                    "auth_failed",
+                    str(exc),
+                )
+                # Raise ConfigEntryAuthFailed to trigger reauth flow
+                raise ConfigEntryAuthFailed(f"Authentication failed for {service_full_name}: {error_msg}") from exc
+
+            if error_type == ERROR_TYPE_TEMPORARY:
                 self.is_retrying = True
                 LOGGER.warning(
                     "Temporary error calling service %s for '%s' (attempt %d): %s",
@@ -316,6 +465,14 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
                 entry_name,
                 exc,
             )
+
+            # Create repair issue if this is a permanent error
+            if error_type == ERROR_TYPE_PERMANENT or self.consecutive_errors >= MAX_RETRY_COUNT:
+                self._create_repair_issue(
+                    "service_call_failed",
+                    error_msg,
+                )
+
             raise UpdateFailed(
                 translation_domain="action_result",
                 translation_key="service_call_failed",
@@ -344,7 +501,7 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
                 },
             ) from exc
         else:
-            # Success - reset error state
+            # Success - reset error state and delete any repair issues
             self.service_response = response
             self.last_error = None
             self.last_error_type = ERROR_TYPE_UNKNOWN
@@ -352,8 +509,13 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
             self.is_retrying = False
             self.last_success_time = dt_util.utcnow().isoformat()
 
+            # Delete repair issues if they exist
+            self._delete_repair_issue("service_not_found")
+            self._delete_repair_issue("auth_failed")
+            self._delete_repair_issue("service_call_failed")
+
             LOGGER.debug(
-                "Service %s returned response for '%s': %s",
+                "Action %s returned response for '%s': %s",
                 service_full_name,
                 entry_name,
                 type(response).__name__,
@@ -361,7 +523,7 @@ class ActionResultEntitiesDataUpdateCoordinator(DataUpdateCoordinator):
 
             return {
                 "response": response,
-                "service": service_full_name,
+                "action": service_full_name,
                 "last_update": self.last_success_time,
                 "success": True,
                 "error": None,

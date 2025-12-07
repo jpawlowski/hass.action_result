@@ -34,7 +34,7 @@ This guide will help you install and set up the Action Result Entities custom in
 
 After installation, add the integration:
 
-1. Go to **Settings** → **Devices & Services**
+1. Go to **Settings** → **Devices & Actions**
 2. Click **+ Add Integration**
 3. Search for "Action Result Entities"
 4. Follow the configuration steps:

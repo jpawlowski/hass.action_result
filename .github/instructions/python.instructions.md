@@ -143,7 +143,7 @@ See [Integration Setup Failures](https://developers.home-assistant.io/docs/integ
 - Use `dt_util.utcnow().isoformat()` from `homeassistant.util`
 - Never use relative time ("2 hours ago") in state/attributes
 
-**Service Actions:**
+**Action Actions:**
 
 - Format: `<integration_domain>.<action_name>`
 - Register under integration domain (not platform domain)

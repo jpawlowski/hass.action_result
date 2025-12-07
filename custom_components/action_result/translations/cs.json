@@ -120,6 +120,11 @@
           "error": "Chyba",
           "unavailable": "Nedostupný",
           "retrying": "Zkouší znovu"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Data z integrace {integration}"
+          }
         }
       }
     }

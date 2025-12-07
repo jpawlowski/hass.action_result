@@ -177,7 +177,7 @@ This integration uses the following identifiers consistently:
 - `config_flow_handler/` - Config flow, options, validators
 - `entity/` - Base entity classes
 - `[platform]/` - Entity platforms (sensor, switch, etc.)
-- `services/` - Service implementations
+- `service_actions/` - Action implementations
 - `utils/` - Shared utilities
 
 **Key patterns:**
@@ -286,10 +286,10 @@ python3 -m script.scaffold config_flow_oauth2     # OAuth2 flow
 
 See `.github/instructions/config_flow.instructions.md` for comprehensive patterns.
 
-**Services:**
+**Services (end-users call them Actions):**
 
 - Define in `services.yaml` with full descriptions
-- Implement handlers in `services/` directory
+- Implement handlers in `service_actions/` directory
 - **Register in `async_setup()`** - NOT in `async_setup_entry()` (Quality Scale!)
 - Format: `<integration_domain>.<action_name>`
 

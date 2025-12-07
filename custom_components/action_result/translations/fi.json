@@ -120,6 +120,11 @@
           "error": "Virhe",
           "unavailable": "Ei käytettävissä",
           "retrying": "Yritetään uudelleen"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Tiedot {integration}-integraatiosta"
+          }
         }
       }
     }

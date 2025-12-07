@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from .data import ActionResultEntitiesConfigEntry
 
 # Fields to redact from diagnostics - CRITICAL for security!
-# Service data (from ActionSelector) may contain sensitive information
+# Action data (from ActionSelector) may contain sensitive information
 TO_REDACT = {
     "service_action",  # Contains action + data which may have secrets
     "service_data_yaml",  # Legacy field, may contain sensitive data

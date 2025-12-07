@@ -57,7 +57,7 @@ Run `script/check` to lint and type-check your code before submitting, or `scrip
 This project includes [prompt files](./.github/prompts/) to help you work more efficiently with GitHub Copilot. These reusable templates provide context and requirements for common tasks:
 
 - **Add New Sensor** - Create sensors with proper structure
-- **Add New Service** - Implement services with validation
+- **Add New Action** - Implement actions with validation
 - **Add Config Option** - Add configuration options to flows
 - **Add Entity to Device** - Expand device capabilities
 - **Debug Coordinator Issue** - Diagnose data update problems

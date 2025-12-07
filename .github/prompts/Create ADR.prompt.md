@@ -164,7 +164,7 @@ Create a new ADR in `docs/development/adr/NNNN-title-of-decision.md`:
 
 ### Architecture
 - Single device vs multi-device support
-- Service implementation location
+- Action implementation location
 - Diagnostic data structure
 - Extension points for future features
 

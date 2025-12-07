@@ -120,6 +120,11 @@
           "error": "Грешка",
           "unavailable": "Недостъпен",
           "retrying": "Повторен опит"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Данни от интеграцията {integration}"
+          }
         }
       }
     }

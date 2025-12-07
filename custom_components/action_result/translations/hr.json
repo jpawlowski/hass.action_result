@@ -120,6 +120,11 @@
           "error": "Greška",
           "unavailable": "Nedostupan",
           "retrying": "Ponovni pokušaj"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Podaci iz {integration} integracije"
+          }
         }
       }
     }

@@ -120,6 +120,11 @@
           "error": "Earráid",
           "unavailable": "Neamh-infhaighte",
           "retrying": "Ag triail arís"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Sonraí ón chomhtháthú {integration}"
+          }
         }
       }
     }

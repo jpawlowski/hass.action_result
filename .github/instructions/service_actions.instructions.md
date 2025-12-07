@@ -1,10 +1,10 @@
 ---
-applyTo: "custom_components/**/services/**/*.py"
+applyTo: "custom_components/**/service_actions/**/*.py"
 ---
 
-# Services Instructions
+# Service Actions Instructions
 
-**Applies to:** Service implementation files
+**Applies to:** Service action implementation files
 
 **Reference:** [Home Assistant Service Actions Documentation](https://developers.home-assistant.io/docs/dev_101_services/)
 
@@ -12,11 +12,10 @@ applyTo: "custom_components/**/services/**/*.py"
 
 **Registration location (Silver Quality Scale requirement):**
 
-- ✅ Register services in `async_setup()` (component level)
+- ✅ Register service actions in `async_setup()` (component level)
 - ❌ Never register in `async_setup_entry()` (per config entry)
-- Check `hass.services.has_service(DOMAIN, "service_name")` before registering
-
-**Service naming:**
+- Check `hass.services.has_service(DOMAIN, "action_name")` before registering
+  **Service naming:**
 
 - Format: `<integration_domain>.<action_name>`
 - Always use integration DOMAIN, never platform domain (e.g., `sensor`, `switch`)

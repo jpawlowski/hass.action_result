@@ -120,6 +120,11 @@
           "error": "Eroare",
           "unavailable": "Indisponibil",
           "retrying": "Se reîncearcă"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Date de la integrarea {integration}"
+          }
         }
       }
     }

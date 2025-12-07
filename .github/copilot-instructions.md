@@ -50,7 +50,7 @@ Generate code that passes these checks on first run.
 
 - All entities inherit: `(PlatformEntity, ActionResultEntitiesEntity)` - order matters for MRO
 - Unique ID format: `{entry_id}_{description.key}` (set in base entity)
-- Services registered in `async_setup()`, NOT `async_setup_entry()` (Quality Scale requirement)
+- Actions registered in `async_setup()`, NOT `async_setup_entry()` (Quality Scale requirement)
 - Config entry data accessed via `entry.runtime_data.client` and `entry.runtime_data.coordinator`
 
 ## Workflow Approach

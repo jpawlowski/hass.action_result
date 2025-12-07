@@ -1,0 +1,15 @@
+{
+  "entity": {
+    "sensor": {
+      "action_result": {
+        "default": "mdi:api",
+        "state": {
+          "ok": "mdi:check-circle",
+          "error": "mdi:alert-circle",
+          "retrying": "mdi:reload",
+          "unavailable": "mdi:help-circle"
+        }
+      }
+    }
+  }
+}

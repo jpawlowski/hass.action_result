@@ -22,7 +22,7 @@ custom_components/action_result/
 │   └── base.py              # Base entity class implementation
 ├── manifest.json            # Integration metadata
 ├── repairs.py               # Repair flows for fixing issues
-├── services.yaml            # Service definitions
+├── services.yaml            # Action definitions
 ├── api/                     # External API communication
 │   ├── __init__.py
 │   └── client.py            # API client implementation
@@ -44,7 +44,7 @@ custom_components/action_result/
 │   ├── __init__.py
 │   ├── device_info.py       # Device information helpers
 │   └── state_helpers.py     # State management utilities
-├── services/                # Service implementations
+├── service_actions/         # Action implementations
 │   ├── __init__.py
 │   └── example_service.py   # Example service handler
 ├── translations/            # Localization files
@@ -206,8 +206,8 @@ This project includes comprehensive instruction files for AI coding assistants (
 | `manifest.instructions.md` | `**/manifest.json` | Integration manifest requirements, quality scale, IoT class |
 | `configuration_yaml.instructions.md` | `**/configuration.yaml` | Home Assistant configuration patterns (deprecated for device integrations) |
 | `config_flow.instructions.md` | `**/config_flow_handler/**/*.py`, `**/config_flow.py` | Config flow patterns, discovery, reauth, reconfigure, unique IDs |
-| `services.instructions.md` | `**/services/**/*.py` | Service implementation, registration in `async_setup()`, error handling |
-| `services_yaml.instructions.md` | `**/services.yaml` | Service definitions, schema, descriptions, examples |
+| `services.instructions.md` | `**/service_actions/**/*.py` | Action implementation, registration in `async_setup()`, error handling |
+| `services_yaml.instructions.md` | `**/services.yaml` | Action definitions, schema, descriptions, examples |
 | `entities.instructions.md` | Entity platform files | Entity implementation, EntityDescription, device info, state management |
 | `coordinator.instructions.md` | `**/coordinator/**/*.py`, `**/api/**/*.py` | DataUpdateCoordinator patterns, error handling, caching, pull vs push |
 | `api.instructions.md` | `**/api/**/*.py`, `**/coordinator/**/*.py` | API client implementation, exceptions, rate limiting, pagination |
@@ -302,7 +302,7 @@ To add new functionality:
 
 ### Adding a New Service
 
-1. Create service handler in `services/<service_name>.py`
+1. Create service handler in `service_actions/<service_name>.py`
 2. Define service in `services.yaml` with schema
 3. Register service in `__init__.py:async_setup_entry()`
 

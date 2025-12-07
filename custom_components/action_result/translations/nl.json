@@ -2,11 +2,11 @@
   "config": {
     "step": {
       "user": {
-        "title": "Service Resultaat Configureren",
+        "title": "Action Resultaat Configureren",
         "description": "Configureer een sensor die het antwoord van een Home Assistant service-aanroep weergeeft.\n\nSelecteer en configureer een service-actie met de visuele editor hieronder.",
         "data": {
           "name": "Naam",
-          "service_action": "Service actie",
+          "service_action": "Action actie",
           "response_data_path": "Antwoord gegevenspad",
           "attribute_name": "Attribuutnaam",
           "update_mode": "Update modus",
@@ -28,10 +28,10 @@
         }
       },
       "reconfigure": {
-        "title": "Service Resultaat Herconfigureren",
-        "description": "Werk de serviceconfiguratie voor deze sensor bij.\n\nOm deze invoer te hernoemen, gebruik Instellingen → Apparaten & Services → [invoer] → driepuntsmenu → Hernoemen.",
+        "title": "Action Resultaat Herconfigureren",
+        "description": "Werk de serviceconfiguratie voor deze sensor bij.\n\nOm deze invoer te hernoemen, gebruik Instellingen → Apparaten & Actions → [invoer] → driepuntsmenu → Hernoemen.",
         "data": {
-          "service_action": "Service actie",
+          "service_action": "Action actie",
           "response_data_path": "Antwoord gegevenspad",
           "attribute_name": "Attribuutnaam",
           "update_mode": "Update modus",
@@ -53,7 +53,7 @@
       }
     },
     "error": {
-      "service_not_found": "Service niet gevonden. Controleer of de geselecteerde actie bestaat en de integratie is geladen.",
+      "service_not_found": "Action niet gevonden. Controleer of de geselecteerde actie bestaat en de integratie is geladen.",
       "yaml_parse_error": "Ongeldige YAML-syntax. Controleer het formaat van de servicegegevens.",
       "yaml_not_dict": "Servicegegevens moeten een YAML-dictionary zijn (sleutel: waarde paren).",
       "data_not_dict": "De 'data'-sectie in de YAML moet een dictionary zijn (sleutel: waarde paren).",
@@ -102,7 +102,7 @@
       "message": "Fout bij het aanroepen van service \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Service \"{service}\" is tijdelijk niet beschikbaar. Wordt automatisch opnieuw geprobeerd."
+      "message": "Action \"{service}\" is tijdelijk niet beschikbaar. Wordt automatisch opnieuw geprobeerd."
     },
     "response_path_invalid": {
       "message": "Het geconfigureerde antwoordpad \"{path}\" bestaat niet in het serviceantwoord."
@@ -114,12 +114,17 @@
   "entity": {
     "sensor": {
       "action_result": {
-        "name": "Service Resultaat",
+        "name": "Action Resultaat",
         "state": {
           "ok": "OK",
           "error": "Fout",
           "unavailable": "Niet beschikbaar",
           "retrying": "Opnieuw proberen"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Gegevens van de {integration} integratie"
+          }
         }
       }
     }

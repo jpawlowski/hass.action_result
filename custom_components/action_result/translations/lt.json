@@ -120,6 +120,11 @@
           "error": "Klaida",
           "unavailable": "Nepasiekiamas",
           "retrying": "Bandoma iš naujo"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Duomenys iš {integration} integracijos"
+          }
         }
       }
     }

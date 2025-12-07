@@ -30,7 +30,7 @@ These options are configured during initial setup via the Home Assistant UI.
 
 After initial setup, you can modify settings:
 
-1. Go to **Settings** → **Devices & Services**
+1. Go to **Settings** → **Devices & Actions**
 2. Find "Action Result Entities"
 3. Click **Configure**
 4. Modify settings
@@ -51,7 +51,7 @@ Customize entities via the UI or `configuration.yaml`:
 
 #### Via Home Assistant UI
 
-1. Go to **Settings** → **Devices & Services** → **Entities**
+1. Go to **Settings** → **Devices & Actions** → **Entities**
 2. Find and click the entity
 3. Click the settings icon
 4. Modify:
@@ -76,14 +76,14 @@ homeassistant:
 
 If you don't need certain entities:
 
-1. Go to **Settings** → **Devices & Services** → **Entities**
+1. Go to **Settings** → **Devices & Actions** → **Entities**
 2. Find the entity
 3. Click it, then click **Settings** icon
 4. Toggle **Enable entity** off
 
 Disabled entities won't update or consume resources.
 
-## Services
+## Actions
 
 The integration provides the following services:
 
@@ -91,7 +91,7 @@ The integration provides the following services:
 
 Execute an example service action on the device.
 
-**Service data:**
+**Action data:**
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -110,7 +110,7 @@ data:
   value: 42
 ```
 
-### Using Services in Automations
+### Using Actions in Automations
 
 ```yaml
 automation:
@@ -133,7 +133,7 @@ automation:
 
 You can add multiple instances of this integration for different devices:
 
-1. Go to **Settings** → **Devices & Services**
+1. Go to **Settings** → **Devices & Actions**
 2. Click **+ Add Integration**
 3. Search for "Action Result Entities"
 4. Configure with different connection details
@@ -167,7 +167,7 @@ Adjust based on your needs:
 
 The integration provides diagnostic data for troubleshooting:
 
-1. Go to **Settings** → **Devices & Services**
+1. Go to **Settings** → **Devices & Actions**
 2. Find "Action Result Entities"
 3. Click on the device
 4. Click **Download Diagnostics**

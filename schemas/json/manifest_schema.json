@@ -107,7 +107,7 @@
             {
               "type": "string",
               "pattern": "^.*\\.local\\.$",
-              "description": "Service domain to search for devices."
+              "description": "Action domain to search for devices."
             },
             {
               "type": "object",

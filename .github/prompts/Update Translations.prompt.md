@@ -65,7 +65,7 @@ If not provided, ask for:
    }
    ```
 
-3. **Services:**
+3. **Actions:**
 
    ```json
    "services": {

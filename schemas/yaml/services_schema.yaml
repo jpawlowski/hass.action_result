@@ -1,14 +1,14 @@
 # YAML Schema for Home Assistant services.yaml
 # Based on: https://developers.home-assistant.io/docs/dev_101_services/
 $schema: http://json-schema.org/draft-07/schema#
-title: Home Assistant Service Actions Definition
+title: Home Assistant Action Actions Definition
 description: Schema for Home Assistant services.yaml file that defines service actions for custom integrations
 
 type: object
 patternProperties:
   "^[a-z][a-z0-9_]*$":
     type: object
-    description: Service action definition (key is the service action name)
+    description: Action action definition (key is the service action name)
     additionalProperties: false
     properties:
       name:
@@ -91,7 +91,7 @@ patternProperties:
         patternProperties:
           "^[a-z][a-z0-9_]*$":
             type: object
-            description: Service action field definition
+            description: Action action field definition
             additionalProperties: false
             properties:
               name:

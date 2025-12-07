@@ -1,7 +1,7 @@
-"""Services package for action_result.
+"""Action handlers package for action_result.
 
 This integration does not register any custom services.
-Service responses are captured via the DataUpdateCoordinator by calling
+Action responses are captured via the DataUpdateCoordinator by calling
 existing Home Assistant services with return_response=True.
 """
 
@@ -13,9 +13,9 @@ if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
 
 
-async def async_setup_services(hass: HomeAssistant) -> None:
+async def async_setup_service_actions(hass: HomeAssistant) -> None:
     """
-    Register services for the integration.
+    Register service actions for the integration.
 
     Currently, this integration does not provide any custom services.
     The core functionality is to call existing HA services and expose

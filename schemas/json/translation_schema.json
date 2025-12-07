@@ -162,11 +162,11 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "Service action name"
+            "description": "Action action name"
           },
           "description": {
             "type": "string",
-            "description": "Service action description"
+            "description": "Action action description"
           },
           "fields": {
             "type": "object",

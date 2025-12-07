@@ -120,6 +120,11 @@
           "error": "Erro",
           "unavailable": "Indisponível",
           "retrying": "Tentando novamente"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Dados da integração {integration}"
+          }
         }
       }
     }

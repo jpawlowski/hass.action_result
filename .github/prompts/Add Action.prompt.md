@@ -4,13 +4,14 @@ tools: ["search/codebase", "edit", "search"]
 description: "Add a new service to the integration with proper schema and registration"
 ---
 
-# Add Service
+# Add Action
 
-Your goal is to add a new service to this Home Assistant integration that users can call from automations, scripts, or the UI.
+Your goal is to add a new action to this Home Assistant integration that users can call from automations, scripts, or the UI.
+Note that Home Assistant internally still calls these "services", but we refer to them as "actions" here to avoid confusion with the integration/service domain.
 
 If not provided, ask for:
 
-- Service name and purpose
+- Action name and purpose
 - Parameters required (with types and validation)
 - What the service does (API call, state change, etc.)
 - Response data (if any)
@@ -18,7 +19,7 @@ If not provided, ask for:
 
 ## Implementation Steps
 
-### 1. Define Service in `services.yaml`
+### 1. Define Action in `services.yaml`
 
 **File:** `custom_components/action_result/services.yaml`
 
@@ -36,7 +37,7 @@ Add service definition:
       # OR
       integration: action_result
 
-  # Service parameters
+  # Action parameters
   fields:
     [parameter_name]:
       name: [Parameter display name]
@@ -61,14 +62,14 @@ Add service definition:
           mode: slider
 ```
 
-### 2. Create Service Handler
+### 2. Create Action Handler
 
-**Option A: Simple service in `services/` directory**
+**Option A: Simple service in `service_actions/` directory**
 
-Create `custom_components/action_result/services/[service_name].py`:
+Create `custom_components/action_result/service_actions/[service_name].py`:
 
 ```python
-"""[Service name] service for Action Result Entities."""
+"""[Action name] service for Action Result Entities."""
 
 from __future__ import annotations
 
@@ -84,10 +85,10 @@ from ..const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
-# Service parameter constants
+# Action parameter constants
 ATTR_PARAMETER = "parameter_name"
 
-# Service schema for validation
+# Action schema for validation
 SERVICE_SCHEMA = vol.Schema(
     {
         vol.Required(ATTR_PARAMETER): cv.string,
@@ -107,7 +108,7 @@ async def async_setup_service(hass: HomeAssistant) -> None:
         optional_value = call.data.get("optional_param", 100)
 
         _LOGGER.debug(
-            "Service [service_name] called with: %s=%s",
+            "Action [service_name] called with: %s=%s",
             ATTR_PARAMETER,
             parameter_value,
         )
@@ -166,16 +167,16 @@ async def async_setup_service(hass: HomeAssistant) -> None:
     )
 ```
 
-### 3. Register Service in `__init__.py`
+### 3. Register Action in `__init__.py`
 
 **File:** `custom_components/action_result/__init__.py`
 
-**CRITICAL:** Services must register in `async_setup` or `setup`, NOT in `async_setup_entry`!
+**CRITICAL:** Actions must register in `async_setup` or `setup`, NOT in `async_setup_entry`!
 
-Services are integration-wide, not per config entry.
+Actions are integration-wide, not per config entry.
 
 ```python
-from .services.[service_name] import async_setup_service as async_setup_[service_name]_service
+from .service_actions.[service_name] import async_setup_service as async_setup_[service_name]_service
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up the integration."""
@@ -208,7 +209,7 @@ async def async_setup_entry(...) -> None:
     # Register entity services
     platform = entity_platform.async_get_current_platform()
 
-    from ..services.[service_name] import (
+    from ..service_actions.[service_name] import (
         SERVICE_SCHEMA,
         async_handle_entity_service,
     )
@@ -220,15 +221,15 @@ async def async_setup_entry(...) -> None:
     )
 ```
 
-### 4. Add Service Constants
+### 4. Add Action Constants
 
 **File:** `custom_components/action_result/const.py`
 
 ```python
-# Service names
+# Action names
 SERVICE_[SERVICE_NAME] = "[service_name]"
 
-# Service parameters
+# Action parameters
 ATTR_[PARAMETER_NAME] = "[parameter_name]"
 ```
 
@@ -240,7 +241,7 @@ ATTR_[PARAMETER_NAME] = "[parameter_name]"
 {
   "services": {
     "[service_name]": {
-      "name": "[Service Name]",
+      "name": "[Action Name]",
       "description": "[What the service does]",
       "fields": {
         "[parameter_name]": {
@@ -259,7 +260,7 @@ ATTR_[PARAMETER_NAME] = "[parameter_name]"
 {
   "services": {
     "[service_name]": {
-      "name": "[German Service Name]",
+      "name": "[German Action Name]",
       "description": "[German description]",
       "fields": {
         "[parameter_name]": {
@@ -302,9 +303,9 @@ hass.services.async_register(
 
 **SupportsResponse values:**
 
-- `NONE` (default): Service does not return data
-- `OPTIONAL`: Service may conditionally return data
-- `ONLY`: Service always returns data
+- `NONE` (default): Action does not return data
+- `OPTIONAL`: Action may conditionally return data
+- `ONLY`: Action always returns data
 
 ### 7. Field Filtering by supported_features (Advanced)
 
@@ -327,7 +328,7 @@ For entity services with dynamic fields based on capabilities:
           options: [] # Entity provides options dynamically
 ```
 
-### 8. Service Icons (2025 Best Practice)
+### 8. Action Icons (2025 Best Practice)
 
 Define service icons in `icons.json` instead of hardcoding:
 
@@ -341,7 +342,7 @@ Define service icons in `icons.json` instead of hardcoding:
 }
 ```
 
-## Service Types
+## Action Types
 
 ### Integration-Wide Service
 
@@ -417,25 +418,25 @@ async def async_handle_service(call: ServiceCall) -> None:
 
 ## Validation Checklist
 
-- [ ] Service defined in `services.yaml` with proper schema
-- [ ] Service handler implemented with error handling
-- [ ] Service registered in `async_setup` (integration-wide) or platform `async_setup_entry` (entity service)
+- [ ] Action defined in `services.yaml` with proper schema
+- [ ] Action handler implemented with error handling
+- [ ] Action registered in `async_setup` (integration-wide) or platform `async_setup_entry` (entity service)
 - [ ] **CRITICAL:** Integration services NOT registered in `async_setup_entry`
 - [ ] Constants added to `const.py`
 - [ ] Translations added (en, de)
-- [ ] Service icons defined in `icons.json` (optional but recommended)
+- [ ] Action icons defined in `icons.json` (optional but recommended)
 - [ ] SupportsResponse imported if service returns data
 - [ ] Type hints complete
 - [ ] Docstrings added
 - [ ] `script/check` passes
-- [ ] Service appears in HA Developer Tools > Services
-- [ ] Service executes correctly
+- [ ] Action appears in HA Developer Tools > Actions
+- [ ] Action executes correctly
 - [ ] Error cases handled appropriately
 
 ## Testing
 
 1. Start Home Assistant: `script/develop`
-2. Go to Developer Tools > Services
+2. Go to Developer Tools > Actions
 3. Find service: `action_result.[service_name]`
 4. Test with valid parameters
 5. Test with invalid parameters (should show validation errors)
@@ -445,8 +446,8 @@ async def async_handle_service(call: ServiceCall) -> None:
 ## Integration Context
 
 - **Domain:** `action_result`
-- **Services directory:** `custom_components/action_result/services/`
-- **Services definition:** `custom_components/action_result/services.yaml`
+- **Actions directory:** `custom_components/action_result/service_actions/`
+- **Actions definition:** `custom_components/action_result/services.yaml`
 
 Follow patterns from existing services in the integration.
 

@@ -120,6 +120,11 @@
           "error": "Viga",
           "unavailable": "Pole saadaval",
           "retrying": "Proovitakse uuesti"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Andmed integratsioonist {integration}"
+          }
         }
       }
     }

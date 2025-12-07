@@ -120,6 +120,11 @@
           "error": "Kļūda",
           "unavailable": "Nepieejams",
           "retrying": "Mēģina vēlreiz"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Dati no {integration} integrācijas"
+          }
         }
       }
     }

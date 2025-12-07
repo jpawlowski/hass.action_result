@@ -15,7 +15,7 @@
       },
       "update_mode": {
         "title": "Aktualisierungsmodus",
-        "description": "Wähle, wie der Service aufgerufen werden soll, um den Sensor zu aktualisieren.",
+        "description": "Wähle, wie der Action aufgerufen werden soll, um den Sensor zu aktualisieren.",
         "data": {
           "update_mode": "Aktualisierungsmodus"
         },
@@ -30,7 +30,7 @@
           "scan_interval": "Abfrageintervall"
         },
         "data_description": {
-          "scan_interval": "Wie oft der Service aufgerufen wird in Sekunden. Minimum 10 Sekunden."
+          "scan_interval": "Wie oft der Action aufgerufen wird in Sekunden. Minimum 10 Sekunden."
         },
         "sections": {
           "advanced_options": {
@@ -75,7 +75,7 @@
       },
       "manual_settings": {
         "title": "Manuelle Aktualisierungseinstellungen",
-        "description": "Der Sensor wird nur aktualisiert, wenn du den homeassistant.update_entity Service aufrufst.",
+        "description": "Der Sensor wird nur aktualisiert, wenn du den homeassistant.update_entity Action aufrufst.",
         "sections": {
           "advanced_options": {
             "name": "Erweiterte Optionen",
@@ -102,7 +102,7 @@
       },
       "reconfigure_update_mode": {
         "title": "Aktualisierungsmodus",
-        "description": "Wähle, wie der Service aufgerufen werden soll, um den Sensor zu aktualisieren.",
+        "description": "Wähle, wie der Action aufgerufen werden soll, um den Sensor zu aktualisieren.",
         "data": {
           "update_mode": "Aktualisierungsmodus"
         },
@@ -117,7 +117,7 @@
           "scan_interval": "Abfrageintervall"
         },
         "data_description": {
-          "scan_interval": "Wie oft der Service aufgerufen wird in Sekunden. Minimum 10 Sekunden."
+          "scan_interval": "Wie oft der Action aufgerufen wird in Sekunden. Minimum 10 Sekunden."
         },
         "sections": {
           "advanced_options": {
@@ -162,7 +162,7 @@
       },
       "reconfigure_manual_settings": {
         "title": "Manuelle Aktualisierungseinstellungen",
-        "description": "Der Sensor wird nur aktualisiert, wenn du den homeassistant.update_entity Service aufrufst.",
+        "description": "Der Sensor wird nur aktualisiert, wenn du den homeassistant.update_entity Action aufrufst.",
         "sections": {
           "advanced_options": {
             "name": "Erweiterte Optionen",
@@ -179,13 +179,13 @@
       }
     },
     "error": {
-      "service_not_found": "Service nicht gefunden. Überprüfe, ob die gewählte Aktion existiert und die Integration geladen ist.",
+      "service_not_found": "Action nicht gefunden. Überprüfe, ob die gewählte Aktion existiert und die Integration geladen ist.",
       "yaml_parse_error": "Ungültige YAML-Syntax. Bitte überprüfe das Format der Service-Daten.",
       "yaml_not_dict": "Service-Daten müssen ein YAML-Wörterbuch sein (Schlüssel: Wert Paare).",
       "data_not_dict": "Der 'data'-Abschnitt im YAML muss ein Wörterbuch sein (Schlüssel: Wert Paare).",
       "no_service_selected": "Bitte wähle eine Service-Aktion aus dem Dropdown oder gib sie im YAML an.",
       "service_call_failed": "Service-Aufruf fehlgeschlagen: {error_message}",
-      "service_no_response": "Dieser Service liefert keine Antwortdaten. Bitte wähle einen Service, der Daten zurückgibt.",
+      "service_no_response": "Dieser Action liefert keine Antwortdaten. Bitte wähle einen Service, der Daten zurückgibt.",
       "trigger_entity_not_found": "Die Trigger-Entität existiert nicht. Bitte wähle eine gültige Entität.",
       "invalid_trigger_state": "Der angegebene Trigger-Status ist für die gewählte Entität nicht gültig.",
       "unknown": "Ein unerwarteter Fehler ist aufgetreten. Bitte überprüfe die Logs für Details."
@@ -203,7 +203,7 @@
           "scan_interval": "Abfrageintervall"
         },
         "data_description": {
-          "scan_interval": "Wie oft der Service aufgerufen wird (in Sekunden). Minimum 10 Sekunden."
+          "scan_interval": "Wie oft der Action aufgerufen wird (in Sekunden). Minimum 10 Sekunden."
         }
       }
     }
@@ -222,13 +222,13 @@
       "message": "Fehler beim Parsen der Service-Daten YAML: {error}"
     },
     "service_not_found": {
-      "message": "Der konfigurierte Service \"{service}\" wurde nicht gefunden. Die Integration wurde möglicherweise entfernt oder ist nicht geladen."
+      "message": "Der konfigurierte Action \"{service}\" wurde nicht gefunden. Die Integration wurde möglicherweise entfernt oder ist nicht geladen."
     },
     "service_call_failed": {
-      "message": "Fehler beim Aufrufen des Service \"{service}\": {error}"
+      "message": "Fehler beim Aufrufen des Action \"{service}\": {error}"
     },
     "service_temporarily_unavailable": {
-      "message": "Service \"{service}\" ist vorübergehend nicht verfügbar. Automatischer Wiederholungsversuch."
+      "message": "Action \"{service}\" ist vorübergehend nicht verfügbar. Automatischer Wiederholungsversuch."
     },
     "response_path_invalid": {
       "message": "Der konfigurierte Antwortpfad \"{path}\" existiert nicht in der Service-Antwort."
@@ -246,6 +246,11 @@
           "error": "Fehler",
           "unavailable": "Nicht verfügbar",
           "retrying": "Wiederholung"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Daten von der {integration} Integration"
+          }
         }
       }
     }

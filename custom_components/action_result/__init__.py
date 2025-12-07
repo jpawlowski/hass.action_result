@@ -25,12 +25,14 @@ from typing import TYPE_CHECKING
 
 from homeassistant.const import Platform
 from homeassistant.core import Event, EventStateChangedData, callback
+from homeassistant.exceptions import ConfigEntryNotReady
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.event import async_track_state_change_event
 from homeassistant.loader import async_get_loaded_integration
 
 from .const import (
     CONF_SCAN_INTERVAL,
+    CONF_SENSOR_TYPE,
     CONF_SERVICE_ACTION,
     CONF_SERVICE_DOMAIN,
     CONF_SERVICE_NAME,
@@ -38,12 +40,16 @@ from .const import (
     CONF_TRIGGER_FROM_STATE,
     CONF_TRIGGER_TO_STATE,
     CONF_UPDATE_MODE,
+    CONF_VALUE_TYPE,
     DEFAULT_SCAN_INTERVAL_SECONDS,
     DEFAULT_UPDATE_MODE,
     DOMAIN,
     LOGGER,
+    SENSOR_TYPE_DATA,
+    SENSOR_TYPE_VALUE,
     UPDATE_MODE_POLLING,
     UPDATE_MODE_STATE_TRIGGER,
+    VALUE_TYPE_BOOLEAN,
 )
 from .coordinator import ActionResultEntitiesDataUpdateCoordinator
 from .data import ActionResultEntitiesData
@@ -54,9 +60,20 @@ if TYPE_CHECKING:
 
     from .data import ActionResultEntitiesConfigEntry
 
-PLATFORMS: list[Platform] = [
-    Platform.SENSOR,
-]
+
+# Determine platforms based on sensor type
+def _get_platforms_for_entry(entry: ConfigEntry) -> list[Platform]:
+    """Get the platforms to set up based on sensor type."""
+    sensor_type = entry.data.get(CONF_SENSOR_TYPE, SENSOR_TYPE_DATA)
+    value_type = entry.data.get(CONF_VALUE_TYPE, "")
+
+    # Binary sensor for boolean values
+    if sensor_type == SENSOR_TYPE_VALUE and value_type == VALUE_TYPE_BOOLEAN:
+        return [Platform.BINARY_SENSOR]
+
+    # Regular sensor for everything else
+    return [Platform.SENSOR]
+
 
 # This integration is configured via config entries only
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
@@ -138,7 +155,7 @@ async def async_setup_entry(
     1. User configures service via action selector and YAML data in config flow
     2. Configuration stored in entry.data
     3. Coordinator calls the configured service with return_response=True
-    4. Service response stored in coordinator.data
+    4. Action response stored in coordinator.data
     5. Sensor entity exposes the response via its 'data' attribute
 
     Args:
@@ -176,10 +193,57 @@ async def async_setup_entry(
         coordinator=coordinator,
     )
 
-    # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
-    await coordinator.async_config_entry_first_refresh()
+    # Check if the target service exists before attempting first refresh
+    # This ensures we don't fail if the service's integration hasn't loaded yet
+    service_domain, service_name = coordinator.get_service_info()
+    if not hass.services.has_service(service_domain, service_name):
+        LOGGER.info(
+            "Service %s.%s not yet available, will retry setup",
+            service_domain,
+            service_name,
+        )
+        raise ConfigEntryNotReady(
+            f"Service {service_domain}.{service_name} not yet available. "
+            f"The {service_domain} integration may still be loading."
+        )
 
-    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
+    # If first refresh fails with UpdateFailed, treat as ConfigEntryNotReady
+    # so Home Assistant will retry the setup later
+    try:
+        await coordinator.async_config_entry_first_refresh()
+    except Exception as exc:
+        # Convert any exception during first refresh to ConfigEntryNotReady
+        # This ensures HA will retry setup instead of marking entry as failed
+        raise ConfigEntryNotReady(f"Failed to fetch initial data from {service_domain}.{service_name}: {exc}") from exc
+
+    # Set up platforms based on sensor type
+    platforms = _get_platforms_for_entry(entry)
+    await hass.config_entries.async_forward_entry_setups(entry, platforms)
+
+    # Set up service registry listener to handle service removal at runtime
+    @callback
+    def async_service_removed_listener(event: Event) -> None:
+        """Handle service removal events."""
+        removed_domain = event.data.get("domain")
+        removed_service = event.data.get("service")
+
+        if removed_domain == service_domain and removed_service == service_name:
+            LOGGER.warning(
+                "Service %s.%s was removed, entities will become unavailable",
+                service_domain,
+                service_name,
+            )
+            # The coordinator will automatically mark entities as unavailable
+            # when the next update attempt fails
+
+    # Listen for service removal events
+    entry.async_on_unload(
+        hass.bus.async_listen(
+            "service_removed",
+            async_service_removed_listener,
+        )
+    )
 
     # Set up state change listener for state_trigger mode
     if update_mode == UPDATE_MODE_STATE_TRIGGER:
@@ -263,7 +327,8 @@ async def async_unload_entry(
     Returns:
         True if unload was successful.
     """
-    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    platforms = _get_platforms_for_entry(entry)
+    return await hass.config_entries.async_unload_platforms(entry, platforms)
 
 
 async def async_reload_entry(
@@ -274,10 +339,45 @@ async def async_reload_entry(
     Reload config entry.
 
     This is called when the integration configuration or options have changed.
-    It unloads and then reloads the integration with the new configuration.
+    It merges options into config entry data and then reloads the integration.
+
+    Options flow allows changing:
+    - Update mode (polling, manual, state_trigger)
+    - Mode-specific settings (scan_interval, trigger_entity, etc.)
+
+    These changes are merged into entry.data to ensure they're used on next load.
 
     Args:
         hass: The Home Assistant instance.
         entry: The config entry being reloaded.
     """
+    # Merge options into data if options were changed
+    if entry.options:
+        new_data = dict(entry.data)
+
+        # Update mode and mode-specific settings from options
+        if CONF_UPDATE_MODE in entry.options:
+            new_data[CONF_UPDATE_MODE] = entry.options[CONF_UPDATE_MODE]
+
+        if CONF_SCAN_INTERVAL in entry.options:
+            new_data[CONF_SCAN_INTERVAL] = entry.options[CONF_SCAN_INTERVAL]
+
+        if CONF_TRIGGER_ENTITY in entry.options:
+            new_data[CONF_TRIGGER_ENTITY] = entry.options[CONF_TRIGGER_ENTITY]
+
+        if CONF_TRIGGER_FROM_STATE in entry.options:
+            new_data[CONF_TRIGGER_FROM_STATE] = entry.options[CONF_TRIGGER_FROM_STATE]
+
+        if CONF_TRIGGER_TO_STATE in entry.options:
+            new_data[CONF_TRIGGER_TO_STATE] = entry.options[CONF_TRIGGER_TO_STATE]
+
+        # Update the config entry with merged data
+        hass.config_entries.async_update_entry(entry, data=new_data, options={})
+
+        LOGGER.debug(
+            "Merged options into config entry data for %s: update_mode=%s",
+            entry.entry_id,
+            new_data.get(CONF_UPDATE_MODE, DEFAULT_UPDATE_MODE),
+        )
+
     await hass.config_entries.async_reload(entry.entry_id)

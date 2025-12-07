@@ -2,7 +2,7 @@
 applyTo: "**/services.yaml"
 ---
 
-# Services Definition Instructions
+# Actions Definition Instructions
 
 **Applies to:** `services.yaml` files
 
@@ -33,7 +33,7 @@ service_name:
 
 ## Key Requirements
 
-**Service definition:**
+**Action definition:**
 
 - `name` - User-visible name (required)
 - `description` - Clear explanation with Markdown support (required)
@@ -108,10 +108,10 @@ turn_on:
 
 ## Related Files
 
-Service implementations are in `custom_components/action_result/services/`.
+Action implementations are in `custom_components/action_result/services/`.
 
 ## Validation
 
-Services are validated by Home Assistant on integration load. Check logs for schema errors.
+Actions are validated by Home Assistant on integration load. Check logs for schema errors.
 
 Reference: https://developers.home-assistant.io/docs/dev_101_services/

@@ -120,6 +120,11 @@
           "error": "Hiba",
           "unavailable": "Nem elérhető",
           "retrying": "Újrapróbálkozás"
+        },
+        "state_attributes": {
+          "attribution": {
+            "description": "Adatok a(z) {integration} integrációtól"
+          }
         }
       }
     }
