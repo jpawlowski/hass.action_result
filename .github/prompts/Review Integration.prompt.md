@@ -40,7 +40,7 @@ Report any errors found. Fix critical issues before proceeding.
 
 **Entity Organization:**
 
-- [ ] Entities inherit from both platform base and `ActionResultEntitiesEntity`
+- [ ] Entities inherit from both platform base and `IntegrationBlueprintEntity`
 - [ ] `_attr_has_entity_name = True` for all new entities (MANDATORY 2025)
 - [ ] Entity names use `translation_key` instead of hardcoded `name`
 - [ ] Entity IDs are stable (won't change on restart)
@@ -123,7 +123,7 @@ requests.get(url)
 
 **Naming Conventions:**
 
-- [ ] Classes use `PascalCase` with `ActionResultEntities` prefix
+- [ ] Classes use `PascalCase` with `IntegrationBlueprint` prefix
 - [ ] Functions and variables use `snake_case`
 - [ ] Constants use `UPPER_SNAKE_CASE`
 - [ ] Private members have `_leading_underscore`
@@ -146,8 +146,8 @@ requests.get(url)
 - [ ] ✅ Entities become unavailable when device unreachable
 - [ ] ✅ Config entry data properly stored and accessed
 - [ ] ✅ Proper cleanup in `async_unload_entry`
-- [ ] ✅ Integration services registered in `async_setup`, NOT `async_setup_entry`
-- [ ] ✅ Entity services registered in platform `async_setup_entry`
+- [ ] ✅ Integration service actions registered in `async_setup`, NOT `async_setup_entry`
+- [ ] ✅ Entity service actions registered in platform `async_setup_entry`
 - [ ] ✅ Entity unique IDs never change
 - [ ] ✅ Coordinator handles `UpdateFailed` gracefully
 
@@ -173,7 +173,7 @@ requests.get(url)
 - [ ] `docs/user/CONFIGURATION.md` covers all options
 - [ ] `docs/development/ARCHITECTURE.md` reflects current design
 - [ ] `AGENTS.md` is up to date with project patterns
-- [ ] `icons.json` used for entity and service icons (not hardcoded)
+- [ ] `icons.json` used for entity and action icons (not hardcoded)
 
 ### 6. Translation Review
 
@@ -181,7 +181,7 @@ requests.get(url)
 
 - [ ] All config flow steps translated
 - [ ] All entity names translated
-- [ ] All services translated
+- [ ] All service actions translated (under `services` key)
 - [ ] Error messages are clear
 - [ ] Help text is helpful
 
@@ -358,8 +358,8 @@ Create report in `.ai-scratch/review-report.md`:
 
 ## Integration Context
 
-- **Domain:** `action_result`
-- **Class prefix:** `ActionResultEntities`
+- **Domain:** `ha_integration_domain`
+- **Class prefix:** `IntegrationBlueprint`
 - **Instructions:** `.github/instructions/*.instructions.md`
 - **Guidelines:** `AGENTS.md`, `CONTRIBUTING.md`
 
