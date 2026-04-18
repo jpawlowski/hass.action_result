@@ -25,6 +25,8 @@ jobs:
     # Skip when running inside the template repository itself
     if: github.repository != 'jpawlowski/hacs.integration_blueprint'
     runs-on: ubuntu-latest
+    env:
+      TEMPLATE_SYNC_TARGET_PAT: ${{ secrets.TEMPLATE_SYNC_TARGET_PAT }}
     permissions:
       contents: write
       pull-requests: write
@@ -36,7 +38,7 @@ jobs:
           # Use PAT when configured; otherwise fall back to github.token.
           # persist-credentials=false is recommended by actions-template-sync
           # when a custom token is used for push operations.
-          token: ${{ secrets['TEMPLATE_SYNC_TARGET_PAT'] || github.token }}
+          token: ${{ env.TEMPLATE_SYNC_TARGET_PAT || github.token }}
           persist-credentials: false
 
       - name: Sync from blueprint template (prechecks + pull)
@@ -47,7 +49,7 @@ jobs:
           steps: "prechecks,pull"
 
       - name: Drop workflow updates when no PAT is configured
-        if: ${{ secrets['TEMPLATE_SYNC_TARGET_PAT'] == '' }}
+        if: env.TEMPLATE_SYNC_TARGET_PAT == ''
         run: |
           # Without PAT 'workflows' permission, pushing workflow file changes fails.
           # Keep syncing all other files by restoring workflow files to HEAD.
@@ -58,7 +60,7 @@ jobs:
         with:
           # Needed only for changes in .github/workflows/*.yml.
           # Falls back to github.token for normal syncs.
-          target_gh_token: ${{ secrets['TEMPLATE_SYNC_TARGET_PAT'] || github.token }}
+          target_gh_token: ${{ env.TEMPLATE_SYNC_TARGET_PAT || github.token }}
           source_repo_path: jpawlowski/hacs.integration_blueprint
           upstream_branch: main
           pr_labels: template-sync
