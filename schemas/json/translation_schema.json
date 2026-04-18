@@ -162,11 +162,11 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "Action action name"
+            "description": "Service action name"
           },
           "description": {
             "type": "string",
-            "description": "Action action description"
+            "description": "Service action description"
           },
           "fields": {
             "type": "object",
@@ -187,13 +187,17 @@
           },
           "sections": {
             "type": "object",
-            "description": "Collapsible section labels",
+            "description": "Collapsible section labels and descriptions",
             "additionalProperties": {
               "type": "object",
               "properties": {
                 "name": {
                   "type": "string",
                   "description": "Section name"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Section description (optional, supports Markdown)"
                 }
               }
             }

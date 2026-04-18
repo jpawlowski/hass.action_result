@@ -1,7 +1,7 @@
 ---
 agent: "agent"
 tools: ["edit", "search", "runCommands"]
-description: "Update or add translation strings for entities, config flow, services, and error messages"
+description: "Update or add translation strings for entities, config flow, actions, and error messages"
 ---
 
 # Update Translations
@@ -11,7 +11,7 @@ Your goal is to update translation strings for this Home Assistant integration.
 If not provided, ask for:
 
 - Which language to update (English is required, German optional)
-- What to translate (entities, config flow, services, errors)
+- What to translate (entities, config flow, actions, errors)
 - New or changed strings
 
 ## Requirements
@@ -65,7 +65,7 @@ If not provided, ask for:
    }
    ```
 
-3. **Actions:**
+3. **Service Actions:**
 
    ```json
    "services": {
@@ -83,6 +83,7 @@ If not provided, ask for:
    ```
 
 4. **Options Flow:**
+
    ```json
    "options": {
      "step": {
@@ -120,8 +121,8 @@ If not provided, ask for:
 
 **Related Files:**
 
-- English: [#file:custom_components/action_result/translations/en.json]
-- German: [#file:custom_components/action_result/translations/de.json]
+- English: [#file:custom_components/ha_integration_domain/translations/en.json]
+- German: [#file:custom_components/ha_integration_domain/translations/de.json]
 - Schema: [#file:schemas/json/translation_schema.json]
 - Documentation: Reference [#file:.github/instructions/translations.instructions.md]
 
@@ -130,6 +131,6 @@ If not provided, ask for:
 - Validate JSON syntax with `script/check`
 - Restart Home Assistant to load new translations
 - Verify translations appear correctly in UI
-- Check all affected screens (config, options, entities, services)
+- Check all affected screens (config, options, entities, actions)
 
 **DO NOT create tests unless explicitly requested.**
