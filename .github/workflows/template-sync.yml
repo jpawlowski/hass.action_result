@@ -41,21 +41,26 @@ jobs:
           token: ${{ env.TEMPLATE_SYNC_TARGET_PAT || github.token }}
           persist-credentials: false
 
-      - name: Sync from blueprint template (prechecks + pull)
-        uses: AndreasAugustin/actions-template-sync@v2
-        with:
-          source_repo_path: jpawlowski/hacs.integration_blueprint
-          upstream_branch: main
-          steps: "prechecks,pull"
-
-      - name: Drop workflow updates when no PAT is configured
-        if: env.TEMPLATE_SYNC_TARGET_PAT == ''
+      - name: Prepare runtime ignore file
         run: |
-          # Without PAT 'workflows' permission, pushing workflow file changes fails.
-          # Keep syncing all other files by restoring workflow files to HEAD.
-          git restore --staged --worktree .github/workflows || true
+          cp .templatesyncignore .templatesyncignore.runtime
 
-      - name: Sync from blueprint template (commit + push + pr)
+          if [[ -z "${TEMPLATE_SYNC_TARGET_PAT:-}" ]]; then
+            {
+              echo ".github/workflows/*.yml"
+              echo ".github/workflows/*.yaml"
+            } >> .templatesyncignore.runtime
+
+            {
+              echo "### Template sync notice"
+              echo
+              echo "TEMPLATE_SYNC_TARGET_PAT is not configured."
+              echo "Workflow file updates (.github/workflows/*) are skipped for this run."
+              echo "All other template changes are still synced."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Sync from blueprint template
         uses: AndreasAugustin/actions-template-sync@v2
         with:
           # Needed only for changes in .github/workflows/*.yml.
@@ -63,8 +68,8 @@ jobs:
           target_gh_token: ${{ env.TEMPLATE_SYNC_TARGET_PAT || github.token }}
           source_repo_path: jpawlowski/hacs.integration_blueprint
           upstream_branch: main
+          template_sync_ignore_file_path: .templatesyncignore.runtime
           pr_labels: template-sync
           pr_title: "chore: sync updates from integration blueprint template"
           pr_commit_msg: "chore(template): sync blueprint updates :up:"
           is_pr_cleanup: true
-          steps: "commit,push,pr"
