@@ -17,6 +17,10 @@ description: >-
 Work from evidence, not from guesses. The order below is deliberate: reproduce, read the log, localise to a layer, then
 fix.
 
+| File                                                     | When to read                                                                          |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [`references/async-rules.md`](references/async-rules.md) | A blocking-call warning, a thread-safety error, or a hang with no traceback behind it |
+
 ## 1. Reproduce with a clean instance
 
 Always use the project scripts — hand-rolled `hass` or `pip` invocations miss the venv, `PYTHONPATH`, port cleanup, and
@@ -145,6 +149,13 @@ logger:
 
 Read the **first** error in a cascade, not the last. A wall of "Error doing job" usually has one root cause above it.
 
+Two debug modes catch what no log level shows: Home Assistant's own, and asyncio's. With both on, calling an `async_*`
+API from the wrong thread and blocking the event loop are reported the moment they happen, instead of surfacing later
+as an unexplained hang or a state that quietly went wrong.
+
+**A config flow missing after a restart is usually the frontend cache, not the code.** Hard-refresh the browser before
+debugging the flow.
+
 ## 3. Localise the failure
 
 Each symptom has one command that produces the evidence, so you are reading state rather than guessing at it.
@@ -181,9 +192,8 @@ implements diagnostics.
 
 `_async_update_data` communicates through exception type, and getting it wrong is the root of most availability bugs.
 The exception mapping table is in
-[`blueprint.coordinator.instructions.md`](../../instructions/blueprint.coordinator.instructions.md) and
-[`blueprint.api.instructions.md`](../../instructions/blueprint.api.instructions.md). Read the coordinator
-against it and check for the four failures that table cannot express:
+[`blueprint.coordinator.instructions.md`](../../instructions/blueprint.coordinator.instructions.md). Read the
+coordinator against it and check for the four failures that table cannot express:
 
 - **Signalling failure by returning** `None` or an empty dict instead of raising. Entities then show `unknown` forever
   instead of going unavailable, and nothing retries.

@@ -20,17 +20,27 @@ permanent.
 
 **Read [`blueprint.config_flow.instructions.md`](../../instructions/blueprint.config_flow.instructions.md)
 first.** It is the authoritative rule set: data-vs-options, reserved step names, acceptable unique IDs and their
-normalisation, the MUST/NEVER lists for user, discovery, reauth, reconfigure and subentry flows, title placeholders,
-and the migration contract. Copilot injects it automatically when you edit a config flow file; other agents must open
-it. This skill is the order of operations and the decisions.
+normalisation, schema hygiene, title placeholders, and the migration contract. Copilot injects it automatically when
+you edit a config flow file; other agents must open it. This skill is the order of operations and the decisions; the
+MUST/NEVER list for each individual flow is in the first reference below.
+
+| File                                                                   | When to read                                                                    |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [`references/flow-types.md`](references/flow-types.md)                 | Implementing one flow — user, discovery, reauth, reconfigure, options, subentry |
+| [`references/discovery-matchers.md`](references/discovery-matchers.md) | Writing a `manifest.json` discovery matcher, or using a discovery helper API    |
+| [`references/oauth2.md`](references/oauth2.md)                         | The service authenticates with OAuth2 rather than an API key or a password      |
 
 ## Package layout
+
+Where each piece goes. Only the first four exist from the start; create the rest when something needs them, rather
+than leaving empty scaffolding behind.
 
 ```text
 config_flow_handler/
 ├── __init__.py          # exports
 ├── config_flow.py       # user, reauth, reauth_confirm, reconfigure, discovery steps
 ├── options_flow.py      # post-setup options
+├── handler.py           # logic shared between the flows above
 ├── subentry_flow.py     # multi-device / multi-account subentries
 ├── schemas/
 │   ├── config.py        # voluptuous schemas for setup steps
@@ -54,13 +64,17 @@ The top-level `config_flow.py` is a thin shim Home Assistant discovers — leave
 
 ## Adding discovery
 
-1. Add the matcher to `manifest.json`:
+1. Add the matcher to `manifest.json` — read
+   [`references/discovery-matchers.md`](references/discovery-matchers.md) first, because each protocol has a rule
+   that fails silently when you guess (lowercase-only zeroconf properties, DHCP MACs arriving without separators,
+   VID/PID pairs shared by hundreds of devices):
 
    ```json
    "zeroconf": [{ "type": "_myservice._tcp.local.", "name": "blueprint*" }]
    ```
 
-2. Implement the matching `async_step_<method>()` following the discovery MUST/NEVER list in the instructions.
+2. Implement the matching `async_step_<method>()` following the discovery MUST/NEVER list in
+   [`references/flow-types.md`](references/flow-types.md).
 3. Decide what the discovery payload gives you as a stable unique ID. If it offers nothing stable, stop and discuss it
    — do not fall back to the IP address.
 4. Confirm the flow end-to-end in the UI: the card shows a useful name, a second discovery of the same device aborts,
