@@ -32,6 +32,7 @@ device mean scaffolding already happened. Adding an entity to an existing integr
 | **Where its values come from**                 | Everything below; see the branch under it                           |
 | **A real payload, or the real source**         | The coordinator's data shape, and every entity's value accessor     |
 | What drives an update, and how often           | `iot_class`, `UPDATE_INTERVAL`, whether a listener replaces polling |
+| **How long one response stays true**           | Whether the integration can start from cache with no network        |
 | A stable per-install identifier, if one exists | The config entry `unique_id`                                        |
 
 **Where the values come from is the branch, and it decides which further facts you need.**
@@ -91,14 +92,41 @@ above it exists.
    imports. Raise your own auth/connection/unknown exceptions and let the coordinator translate them. **When nothing
    is fetched, this package has nothing to hold — delete it** rather than leaving a client that wraps a calculation.
 2. **`coordinator/`** — replace `_async_update_data` with the real call and return the shape the entities will read.
-   Translate API exceptions into `ConfigEntryAuthFailed` or `UpdateFailed` there and only there
+   Translate API exceptions into `ConfigEntryAuthFailed`, `UpdateFailed` or — when the failure will never resolve by
+   itself, such as a closed account — `ConfigEntryError`, there and only there
    ([`ha-coordinator-debug`](../ha-coordinator-debug/SKILL.md)). If the values are produced rather than fetched, this
    is where the computation lives, driven by a state listener or a timer instead of a poll — and a coordinator that
    would only re-run a local calculation on a timer should be replaced by the listener outright.
 3. **`data.py` / `const.py`** — the runtime data container and the constants the platforms share.
 
+If one response stays true for a defined period — a day's prices, a published forecast — decide **now** whether the
+integration persists it and starts from that without a network. It changes the coordinator's shape (a `Store`, a
+validity window, a scheduler instead of a short interval) and is awkward to retrofit; the rules are in
+[`blueprint.coordinator`](../../instructions/blueprint.coordinator.instructions.md).
+
 Decide the coordinator's data shape deliberately: a parsed model or `TypedDict` beats passing raw JSON around,
 because every entity would otherwise repeat the same defensive key lookups.
+
+### Bluetooth is a different coordinator
+
+`DataUpdateCoordinator` polls, and a BLE device that broadcasts advertisements has nothing to poll. Pick by how the
+data actually arrives:
+
+| The device…                                                | Coordinator                                                            |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Broadcasts, and feeds `sensor` / `binary_sensor` / `event` | `PassiveBluetoothProcessorCoordinator`                                 |
+| Broadcasts, but some values need a connection              | `ActiveBluetoothProcessorCoordinator`                                  |
+| Broadcasts, and feeds other platforms                      | `PassiveBluetoothCoordinator` / `ActiveBluetoothDataUpdateCoordinator` |
+| Only answers when connected to                             | plain `DataUpdateCoordinator`                                          |
+
+- `bluetooth_adapters` goes in `dependencies` — it guarantees remote adapters are connected before you use them.
+- Get the scanner from `bluetooth.async_get_scanner(hass)` and hand it to the library; never construct your own.
+- Do not reuse a `BleakClient` across connections, use a connection timeout of at least 10 seconds, and go through
+  `bleak-retry-connector`.
+- Start the coordinator **after** `async_forward_entry_setups`, so every platform has had a chance to subscribe:
+  `entry.async_on_unload(coordinator.async_start())`.
+- An advertisement-only device needs `connectable: false` in the manifest matcher
+  ([`ha-config-flow`](../ha-config-flow/references/discovery-matchers.md)).
 
 ## 4. Keep, adapt, delete each platform
 
@@ -141,6 +169,10 @@ verification is the developer's to do, not yours to claim.
 ## 7. Finish the paperwork, then retire this skill
 
 - Update `README.md` and `docs/user/` to describe the real integration.
+- Add the brand images. Since Home Assistant 2026.3 a custom integration ships its own, in
+  `custom_components/<domain>/brand/` as `icon.png` and `logo.png`; local images take precedence over the
+  `home-assistant/brands` repository, which only Core integrations can use. Ask the developer for the files — do not
+  invent placeholders, and do not open a pull request against `home-assistant/brands`.
 - Record the library-versus-own-client decision in `docs/development/DECISIONS.md` if you have not already.
 - Commit in reviewable pieces, following [`ha-release`](../ha-release/SKILL.md). Never commit unasked.
 
