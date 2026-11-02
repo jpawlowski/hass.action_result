@@ -52,9 +52,9 @@ then validate with W" is a procedure. When a skill needs a rule in order to make
 it. Two copies of a rule become two contradicting rules within a release or two.
 
 Copilot, VS Code and Claude Code all inject the matching instructions file automatically when a file of that type is
-touched. Codex does not — its nested `AGENTS.md` support keys off the working directory, not the edited file. That is
+touched. Codex and OpenCode do not — their nested `AGENTS.md` support keys off directories, not file types. That is
 why the pointer at the top of each skill names _what_ is in the instructions file rather than just linking it: for
-Codex the skill is the only bridge.
+them the skill is the only bridge.
 
 **The pointer runs both ways, and a pair is only done when both ends exist.** The skill opens with a
 `**Read … first**` block; its instructions file opens with a `**Procedure:**` line naming the skill. They cover
@@ -119,8 +119,8 @@ that repository and excluded from template sync, so the checker requires new syn
 README; it still verifies that every existing link in `AGENTS.md` resolves. It cannot check that the "Use when" text
 is any good.
 
-No other file carries a catalogue, and none should. Codex and Copilot read `AGENTS.md` natively, and `CLAUDE.md`
-imports it — all three already have the table. Every extra copy is another place to forget.
+No other file carries a catalogue, and none should. Codex, Copilot and OpenCode read `AGENTS.md` natively, and
+`CLAUDE.md` imports it — all of them already have the table. Every extra copy is another place to forget.
 
 `README.md` and `CONTRIBUTING.md` describe the set by theme rather than by name, so they only need touching when a
 whole new area appears. Neither states a skill count — do not reintroduce one, it is a maintenance trap that goes
@@ -142,6 +142,17 @@ Renaming changes the invocation name (`/skill-name`) and every catalogue entry, 
 go, remove the directory, all catalogue entries, the `**Procedure:**` pointer in its partner instructions file, and any
 cross-links from other skills. `script/skills-check` covers all four — it link-checks the skills, the two catalogues
 and `.agents/instructions/` — so run it and fix what it names rather than hunting by hand.
+
+## A change the template sync cannot deliver
+
+A file listed in `.templatesyncignore` never reaches the repositories made from the blueprint, and neither does a step
+only their maintainer can take. When a change needs either — a new section in `AGENTS.md`, a new step in
+`template-sync.yml`, a new exclusion entry — add an entry at the top of
+[`blueprint-update/references/manual-steps.md`](../blueprint-update/references/manual-steps.md) in the same change:
+an id, the date, a check that passes once it is done, and what to do and why. A watched file's diff alone is not
+enough when the change is easy to miss or needs a decision; the entry is what puts it in front of the developer.
+`script/blueprint-update` watches its files through `WATCHED` in `script/.lib/blueprint_update.py` — extend that list
+when the blueprint starts maintaining another excluded file.
 
 ## After a Home Assistant version bump
 
